@@ -96,7 +96,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
                           image: AssetImage("images/ismael-paramo.jpg"),
-                          fit: BoxFit.cover
+                          fit: BoxFit.fill
                       ),
                     ),
                   ),

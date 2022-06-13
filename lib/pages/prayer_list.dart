@@ -36,7 +36,7 @@ class _PrayerListState extends State<PrayerList> {
         _currPageValue = _pageController.page!;
       });
     });
-    readJson().then((value) => scriptureList);
+    readJson();
    // _currPageValue = getTodaysDay().toDouble();
   }
 
@@ -46,10 +46,15 @@ class _PrayerListState extends State<PrayerList> {
   }
   Future<void> readJson() async {
     //read the json file
-    final jsonData = await rootBundle.rootBundle.loadString('json/scriptures.json');
+    await DefaultAssetBundle.of(context).loadString("json/scriptures.json").then((jsonData){
+      setState((){
+        final list = json.decode(jsonData) as List<dynamic>;
+        scriptureList = list.map((e) => Scripture.fromJson(e)).toList();
+      });
+    });
 
-    final list = json.decode(jsonData) as List<dynamic>;
-    scriptureList = list.map((e) => Scripture.fromJson(e)).toList();
+
+
   }
 
 
