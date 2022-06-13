@@ -10,7 +10,7 @@ class Scripture {
    Scripture.fromJson(Map<String, dynamic> json) {
      id = json['id'];
      title = json['title'];
-     verse = json['verse'];
+     verse = json['verses'];
      prayerPoint = json['prayer_point'];
      date = json['date'];
     }

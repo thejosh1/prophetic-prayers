@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Poppins'
         ),
 
-        home:  PrayerScreen()
+        home:  PrayerListScreen()
     );
   }
 }

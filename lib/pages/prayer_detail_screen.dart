@@ -2,12 +2,14 @@ import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:prophetic_prayers/controller/scripture_controller.dart';
+import 'package:prophetic_prayers/pages/prayer_list.dart';
 
 class PrayerDetailScreen extends StatelessWidget {
   const PrayerDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var data = Get.arguments;
     final int _checkedStars = 4;
     return Scaffold(
       body: Container(
@@ -19,11 +21,11 @@ class PrayerDetailScreen extends StatelessWidget {
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: 400,
+                  height: 300,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("images/mountain.jpeg"),
+                          image: AssetImage("images/diana-simum.jpg"),
                           fit: BoxFit.cover)),
                 )),
             Positioned(
@@ -73,12 +75,12 @@ class PrayerDetailScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Icon(
-                                  Icons.location_on,
+                                  Icons.hourglass_bottom_outlined,
                                   color: Color(0xFFBEC2CE),
                                   size: 15,
                                 ),
                                 Text(
-                                  "Prayer For Today",
+                                  data[2],
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -97,7 +99,7 @@ class PrayerDetailScreen extends StatelessWidget {
                           height: 7,
                         ),
                         Text(
-                          "Climbing Mont Blanc in the Winter",
+                          data[0],
                           style: TextStyle(
                               color: Color(0xFF1E2432),
                               fontSize: 28,
@@ -107,20 +109,20 @@ class PrayerDetailScreen extends StatelessWidget {
                         SizedBox(height: 12),
                         Row(
                           children: [
-                            Wrap(
-                              children: List.generate(5, (index) {
-                                return Icon(Icons.star,
-                                    color: index < _checkedStars
-                                        ? Colors.amberAccent
-                                        : Color(0xFFBEC2CE));
-                              }),
-                            )
+                            Icon(Icons.bolt, color: Colors.amberAccent, size: 18,),
+                            SizedBox(width: 3,),
+                            Text("streak 2", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
+                            SizedBox(width: 6,),
+                            Icon(Icons.sunny, size: 18, color: Colors.amberAccent,),
+                            SizedBox(width: 3,),
+                            Text("weeks 32", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),)
                           ],
                         ),
                         SizedBox(
                           height: 18.3,
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -128,7 +130,7 @@ class PrayerDetailScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(
-                                      Icons.location_on,
+                                      Icons.add_alert_rounded,
                                       size: 29.89,
                                       color: Color(0xFFD1D1D6),
                                     ),
@@ -141,17 +143,17 @@ class PrayerDetailScreen extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          "distance",
-                                          style: TextStyle(
+                                          "set",
+                                          style:TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w200,
                                               color: Color(0xFF1E2432)),
                                         ),
                                         Text(
-                                          "32 km",
+                                          "timer",
                                           style: TextStyle(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w200,
                                               color: Color(0xFF1E2432)),
                                         )
                                       ],
@@ -169,7 +171,7 @@ class PrayerDetailScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(
-                                      Icons.landscape_outlined,
+                                      Icons.group,
                                       size: 29.89,
                                       color: Color(0xFFD1D1D6),
                                     ),
@@ -182,17 +184,17 @@ class PrayerDetailScreen extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          "Elevation",
+                                          "Testimonies",
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w200,
                                               color: Color(0xFF1E2432)),
                                         ),
                                         Text(
-                                          "2371 m",
+                                          "4 Testimonies",
                                           style: TextStyle(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w200,
                                               color: Color(0xFF1E2432)),
                                         )
                                       ],
@@ -248,38 +250,56 @@ class PrayerDetailScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                          height: 12,
+                          height: 20,
                         ),
-                        Text(
-                          "Every good and perfect gift is from above, coming down from the Father of the heavenly lights, who does not change like shifting shadows.",
-                          style: TextStyle(
-
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w200,
-                              color: Color(0xFF1E2432)
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Container(
-                              width: double.infinity,
-                              height: 50,
-                              color: const Color(0xff515BDE),
-                              alignment: Alignment.center,
-                              child: const Text(
-                                'BOOKS FROM \$845.00',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Verse", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
+                            Text(
+                              data[3],
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w200,
+                                  color: Color(0xFF1E2432)
                               ),
                             ),
-                          ),
+                            SizedBox(height: 20,),
+                            Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
+                            Text(
+                              data[1],
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w200,
+                                  color: Color(0xFF1E2432)
+                              ),
+                            ),
+
+                          ],
                         ),
+                        SizedBox(height: 10,),
+                        // GestureDetector(
+                        //   onTap: () {},
+                        //   child: ClipRRect(
+                        //     borderRadius: BorderRadius.circular(12),
+                        //     child: Container(
+                        //       width: double.infinity,
+                        //       height: 50,
+                        //       color: const Color(0xff515BDE),
+                        //       alignment: Alignment.center,
+                        //       child: const Text(
+                        //         'BOOKS FROM \$845.00',
+                        //         style: TextStyle(
+                        //           color: Colors.white,
+                        //           fontSize: 18,
+                        //           fontWeight: FontWeight.w700,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

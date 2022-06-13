@@ -75,10 +75,14 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
   Widget buildScriptures(List<Scripture> scriptures) => ListView.builder(
       itemCount: scriptures == null? 0: scriptures.length ,
       itemBuilder: (_, index) {
-        final scripture = scriptures[index];
+        final scriptureList = scriptures[index];
         return GestureDetector(
           onTap: (){
-            Get.to(()=> const PrayerDetailScreen());
+            Get.to(()=> const PrayerDetailScreen(), arguments: [
+                scriptureList.title,
+            scriptureList.prayerPoint,
+            scriptureList.id,
+            scriptureList.verse]);
           },
           child: Column(
             children: [
@@ -91,8 +95,8 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                          image: AssetImage("images/logo.jpg"),
-                          fit: BoxFit.fill
+                          image: AssetImage("images/ismael-paramo.jpg"),
+                          fit: BoxFit.cover
                       ),
                     ),
                   ),
@@ -102,14 +106,14 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                     children: [
                       Container(
                           width: 150,
-                          child: Text(scripture.title.toString(), style: TextStyle(color: Color(0xFF000000), fontSize: 16, fontWeight: FontWeight.bold),)
+                          child: Text(scriptureList.title.toString(), style: TextStyle(color: Color(0xFF000000), fontSize: 16, fontWeight: FontWeight.bold),)
                       ),
                       SizedBox(height: 13,),
                       Row(
                         children: [
                           Icon(Icons.star, color: Colors.amberAccent, size: 13.95,),
                           SizedBox(width: 6.2,),
-                          Text(scripture.date.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Color(0xFFBEC2CE)),),
+                          Text(scriptureList.date.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Color(0xFFBEC2CE)),),
                           SizedBox(width: 6.2,),
                           Text("|", style: TextStyle(fontWeight: FontWeight.w200, fontSize: 14, color: Color(0xFFBEC2CE)),),
                           SizedBox(width: 6.2,),

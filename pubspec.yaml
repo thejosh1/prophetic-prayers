@@ -74,9 +74,10 @@ flutter:
     - images/mountain.jpeg
     - images/logo.jpg
     - images/lonely_man.jpg
-    - images/Icon-96.png
-    - images/Icon-144.png
     - images/Icon-48.png
+    - images/gracious-adebayo.jpg
+    - images/diana-simum.jpg
+    - images/ismael-paramo.jpg
 
   fonts:
     - family: Poppins

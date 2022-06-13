@@ -61,11 +61,11 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         ),
                         SizedBox(width: 17),
                         CircleAvatar(
-                            backgroundImage: AssetImage("images/logo.jpg")),
+                            backgroundImage: AssetImage("images/gracious-adebayo.jpg")),
                       ],
                     ),
                     SizedBox(height: 12),
-                    BigText(text: "Prayers For The Year"),
+                    BigText(text: "Good Morning Josh"),
                     SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,

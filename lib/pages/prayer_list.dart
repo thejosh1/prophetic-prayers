@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'package:prophetic_prayers/models/prayers.dart';
+import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 
 
 class PrayerList extends StatefulWidget {
@@ -15,6 +18,8 @@ class PrayerList extends StatefulWidget {
 
 class _PrayerListState extends State<PrayerList> {
   final PageController _pageController = PageController(viewportFraction: 0.95);
+  Color _iconColor = Color(0xFFE5E5EA);
+  bool isTapped = false;
 
   double _currPageValue = 0.0;
   final double _scaleFactor = 0.8;
@@ -31,7 +36,7 @@ class _PrayerListState extends State<PrayerList> {
         _currPageValue = _pageController.page!;
       });
     });
-    readJson();
+    readJson().then((value) => scriptureList);
    // _currPageValue = getTodaysDay().toDouble();
   }
 
@@ -56,13 +61,90 @@ class _PrayerListState extends State<PrayerList> {
         Container(
           height: 500,
           width: size.width,
-          child: PageView.builder(
-              itemCount: 3,
-              controller: _pageController,
-              itemBuilder: (context, index) {
-                return _buildPage(index);
-              }
-          )
+          child:GestureDetector(
+            onTap: () {
+              Get.to(PrayerDetailScreen(), arguments: [
+                scriptureList[getTodaysDay()].title,
+                scriptureList[getTodaysDay()].prayerPoint,
+                scriptureList[getTodaysDay()].id,
+                scriptureList[getTodaysDay()].verse]);
+            },
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 6, right: 6),
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      image: DecorationImage(
+                        image: AssetImage("images/diana-simum.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                    child: Container(
+                        width: 296,
+                        margin: EdgeInsets.only(left: 20, bottom: 13),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          //mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 10.0),
+                              child: Text("Verse Of The Day", style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900), textAlign: TextAlign.start,),
+                            ),
+                            Expanded(child: Container(),),
+                            Text(scriptureList[getTodaysDay()].title.toString(), style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900), textAlign: TextAlign.start,),
+                            SizedBox(height: 20,),
+                            Row(
+                              children: [
+                                Icon(Icons.bolt, color: Colors.amberAccent, size: 18,),
+                                SizedBox(width: 3,),
+                                Text("streak 2", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                                SizedBox(width: 6,),
+                                Icon(Icons.sunny, size: 18, color: Colors.amberAccent,),
+                                SizedBox(width: 3,),
+                                Text("weeks 32", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
+                              ],
+                            ),
+                            SizedBox(height: 14.3,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container()
+                                    // Icon(Icons.add_alert_rounded, color: Colors.white, size: 18,),
+                                    // Text("send me this daily", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    // Icon(Icons.favorite, color: Color(0xFFE5E5EA), size: 30,),
+                                    IconButton(onPressed: (){
+                                      setState((){
+                                        isTapped = true;
+                                      });
+                                    }, icon:  Icon(Icons.favorite, color: isTapped==false?_iconColor:Colors.red, size: 30,))
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        )
+                    )
+                )
+              ],
+            ),
+          ),
         ),
         SizedBox(
           height: 10,
@@ -105,67 +187,7 @@ class _PrayerListState extends State<PrayerList> {
     }
     return Transform(
       transform: matrix,
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              margin: EdgeInsets.only(right: 16),
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                image: DecorationImage(
-                  image: AssetImage("images/mountain.jpeg"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-              child: Container(
-                  width: 296,
-                  margin: EdgeInsets.only(left: 20, bottom: 13),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(scriptureList[getTodaysDay()].title.toString(), style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900), textAlign: TextAlign.start,),
-                      SizedBox(height: 20,),
-                      Row(
-                        children: [
-                          Wrap(
-                            children: List.generate(5, (index) {
-                              return Icon(
-                                  Icons.star,
-                                  color: index<_checkedStars?Colors.amberAccent:Color(0xFFBEC2CE)
-                              );
-                            }),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 14.3,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("\$845.00", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
-                          Row(
-                            children: [
-                              Icon(Icons.favorite, color: Color(0xFFE5E5EA), size: 18,),
-                              Text("6531", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w200, color: Color(0xFFBEC2CE)),)
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  )
-              )
-          )
-        ],
-      ),
+      child: Container()
     );
   }
 }
