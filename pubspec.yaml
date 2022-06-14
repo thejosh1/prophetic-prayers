@@ -78,6 +78,9 @@ flutter:
     - images/gracious-adebayo.jpg
     - images/diana-simum.jpg
     - images/ismael-paramo.jpg
+    - images/patrick-fore.jpg
+    - images/jon-tyson.jpg
+    - images/adrianna-geo.jpg
 
   fonts:
     - family: Poppins

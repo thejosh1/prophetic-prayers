@@ -15,6 +15,12 @@ class PrayerListScreen extends StatefulWidget {
 }
 
 class _PrayerListScreenState extends State<PrayerListScreen> {
+
+  @override
+  void iniState(){
+    super.initState();
+    readJson();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +48,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                  child: Column(
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
-                     Text("Scriptures For the Year", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
+                     Text("Prayers For the Year", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
                      SizedBox(height: 27,),
                      Container(
                        height: 532.5,
