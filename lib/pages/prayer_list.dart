@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' as rootBundle;
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -29,7 +28,7 @@ class _PrayerListState extends State<PrayerList> {
   final int _checkedStars = 4;
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     _pageController.addListener(() {
       setState(() {
@@ -37,38 +36,39 @@ class _PrayerListState extends State<PrayerList> {
       });
     });
     readJson();
-   // _currPageValue = getTodaysDay().toDouble();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
   }
+
   Future<void> readJson() async {
     //read the json file
-    await DefaultAssetBundle.of(context).loadString("json/scriptures.json").then((jsonData){
-      setState((){
+    await DefaultAssetBundle.of(context)
+        .loadString("json/scriptures.json")
+        .then((jsonData) {
+      setState(() {
         final list = json.decode(jsonData) as List<dynamic>;
         scriptureList = list.map((e) => Scripture.fromJson(e)).toList();
       });
     });
-
-
-
   }
 
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Column(
+    Size size = MediaQuery
+        .of(context)
+        .size;
+    return scriptureList.length > 0 ? Column(
       children: [
         Container(
           height: 500,
           width: size.width,
-          child:GestureDetector(
+          child: GestureDetector(
             onTap: () {
-              Get.to(PrayerDetailScreen(), arguments: [
+              Get.to(()=> const PrayerDetailScreen(), arguments: [
                 scriptureList[getTodaysDay()].title,
                 scriptureList[getTodaysDay()].prayerPoint,
                 scriptureList[getTodaysDay()].id,
@@ -104,20 +104,37 @@ class _PrayerListState extends State<PrayerList> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(top: 10.0),
-                              child: Text("Verse Of The Day", style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900), textAlign: TextAlign.start,),
+                              child: Text("Verse Of The Day", style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w900),
+                                textAlign: TextAlign.start,),
                             ),
                             Expanded(child: Container(),),
-                            Text(scriptureList[getTodaysDay()].title.toString(), style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900), textAlign: TextAlign.start,),
+                            Text(scriptureList.length > 0
+                                ? scriptureList[getTodaysDay()].title.toString()
+                                : "", style: TextStyle(color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w900),
+                              textAlign: TextAlign.start,),
                             SizedBox(height: 20,),
                             Row(
                               children: [
-                                Icon(Icons.bolt, color: Colors.amberAccent, size: 18,),
+                                Icon(Icons.bolt, color: Colors.amberAccent,
+                                  size: 18,),
                                 SizedBox(width: 3,),
-                                Text("streak 2", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+                                Text(scriptureList.length > 0 ? "streak 2" : "",
+                                  style: TextStyle(color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),),
                                 SizedBox(width: 6,),
-                                Icon(Icons.sunny, size: 18, color: Colors.amberAccent,),
+                                Icon(Icons.sunny, size: 18,
+                                  color: Colors.amberAccent,),
                                 SizedBox(width: 3,),
-                                Text("weeks 32", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
+                                Text(scriptureList.length > 0 ? "weeks 32" : "",
+                                  style: TextStyle(color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),)
                               ],
                             ),
                             SizedBox(height: 14.3,),
@@ -134,11 +151,15 @@ class _PrayerListState extends State<PrayerList> {
                                 Row(
                                   children: [
                                     // Icon(Icons.favorite, color: Color(0xFFE5E5EA), size: 30,),
-                                    IconButton(onPressed: (){
-                                      setState((){
-                                        isTapped = true;
+                                    IconButton(onPressed: () {
+                                      setState(() {
+                                        isTapped = !isTapped;
                                       });
-                                    }, icon:  Icon(Icons.favorite, color: isTapped==false?_iconColor:Colors.red, size: 30,))
+                                    },
+                                        icon: Icon(Icons.favorite,
+                                          color: isTapped == false
+                                              ? _iconColor
+                                              : Colors.red, size: 30,))
                                   ],
                                 )
                               ],
@@ -156,44 +177,14 @@ class _PrayerListState extends State<PrayerList> {
         ),
 
       ],
-    );
+    ) : Container();
   }
+
   int getTodaysDay() {
     final date = DateTime.now();
     final diff = date.difference(new DateTime(date.year, 1, 1, 0, 0));
     final diffInDays = diff.inDays;
     print(diffInDays);
     return diffInDays;
-
-  }
-
-  Widget _buildPage(int index) {
-    Matrix4 matrix = new Matrix4.identity();
-    if (index == _currPageValue.floor()) {
-      var _currScale = 1.0 - (_currPageValue - index) * (1 - _scaleFactor);
-      var _currTrans = _height * (1 - _currScale) / 2;
-      matrix = Matrix4.diagonal3Values(1, _currScale, 1)
-        ..setTranslationRaw(0, _currTrans, 0);
-    } else if (index == _currPageValue.floor() + 1) {
-      var _currScale =
-          _scaleFactor + (_currPageValue - index + 1) * (1 - _scaleFactor);
-      var _currTrans = _height * (1 - _currScale) / 2;
-      matrix = Matrix4.diagonal3Values(1, _currScale, 1)
-        ..setTranslationRaw(1, _currTrans, 2);
-    } else if (index == _currPageValue.floor() - 1) {
-      var _currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
-      var _currTrans = _height * (1 - _currScale) / 2;
-      matrix = Matrix4.diagonal3Values(1, _currScale, 1)
-        ..setTranslationRaw(1, _currTrans, 1);
-    } else {
-      var _currScale = 0.95;
-      matrix = Matrix4.diagonal3Values(1, _currScale, 1)
-        ..setTranslationRaw(0, _height * (1 - _currScale), 1);
-    }
-    return Transform(
-      transform: matrix,
-      child: Container()
-    );
   }
 }
-

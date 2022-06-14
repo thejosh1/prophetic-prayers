@@ -32,7 +32,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                child: Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
-                   IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back, size: 18, color: Color(0xFF000000),)),
+                   IconButton(onPressed: (){Get.back();}, icon: Icon(Icons.arrow_back, size: 18, color: Color(0xFF000000),)),
                    IconButton(onPressed: (){}, icon: Icon(Icons.more_vert, size: 20, color: Color(0xFF000000),))
                  ],
                ),
@@ -102,7 +102,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
                           image: AssetImage("images/ismael-paramo.jpg"),
-                          fit: BoxFit.fill
+                          fit: BoxFit.cover
                       ),
                     ),
                   ),

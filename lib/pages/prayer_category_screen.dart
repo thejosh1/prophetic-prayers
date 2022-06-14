@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/auth_pages/sign_up.dart';
+import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
 
 class PrayerCategoryScreen extends StatelessWidget {
   const PrayerCategoryScreen({Key? key}) : super(key: key);
@@ -22,22 +23,27 @@ class PrayerCategoryScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        image: DecorationImage(
-                          image: AssetImage(
-                            "images/adrianna-geo.jpg"
-                          ),fit: BoxFit.cover
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(()=>PrayerListScreen());
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          image: DecorationImage(
+                            image: AssetImage(
+                              "images/adrianna-geo.jpg"
+                            ),fit: BoxFit.cover
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(height: 13,),
-                    Text("Caucasus", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                    Text("Children", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                     SizedBox(height: 2,),
-                    Text("Georgia", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFFC2C4CA)),)
+                    //Text("", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFFC2C4CA)),)
                   ],
                 ),
                 SizedBox(width: 18,),
@@ -57,14 +63,14 @@ class PrayerCategoryScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 13,),
-                    Text("Alps", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                    Text("Prosperity", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                     SizedBox(height: 2,),
-                    Text("Austria", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFFC2C4CA)),)
+                    //Text("Austria", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFFC2C4CA)),)
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 29,),
+            SizedBox(height: 19,),
             Row(
               children: [
                 Column(
@@ -77,15 +83,15 @@ class PrayerCategoryScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         image: DecorationImage(
                             image: AssetImage(
-                                "images/adrianna-geo.jpg"
+                                "images/ismael-paramo.jpg"
                             ),fit: BoxFit.cover
                         ),
                       ),
                     ),
                     SizedBox(height: 13,),
-                    Text("Carpathian", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                    Text("Marriage", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                     SizedBox(height: 2,),
-                    Text("Romania", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFFC2C4CA)),)
+                    //Text("Romania", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFFC2C4CA)),)
                   ],
                 ),
                 SizedBox(width: 18,),
@@ -99,15 +105,15 @@ class PrayerCategoryScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         image: DecorationImage(
                             image: AssetImage(
-                                "images/jon-tyson.jpg"
+                                "images/diana-simum.jpg"
                             ),fit: BoxFit.cover
                         ),
                       ),
                     ),
                     SizedBox(height: 13,),
-                    Text("Pirin", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                    Text("Business", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
                     SizedBox(height: 2,),
-                    Text("Bulgaria", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFFC2C4CA)),)
+                    //Text("Bulgaria", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFFC2C4CA)),)
                   ],
                 ),
               ],

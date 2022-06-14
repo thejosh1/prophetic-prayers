@@ -1,14 +1,25 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:prophetic_prayers/controller/scripture_controller.dart';
-import 'package:prophetic_prayers/pages/prayer_list.dart';
+import 'package:intl/intl.dart';
+import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
+import 'package:prophetic_prayers/pages/testimony_screen.dart';
+import 'package:prophetic_prayers/widgets/my_input_field.dart';
 
-class PrayerDetailScreen extends StatelessWidget {
+class PrayerDetailScreen extends StatefulWidget {
   const PrayerDetailScreen({Key? key}) : super(key: key);
 
   @override
+  State<PrayerDetailScreen> createState() => _PrayerDetailScreenState();
+}
+
+class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
+  DateTime _selectedDate = DateTime.now();
+  String _startTime = DateFormat("hh:mm, a").format(DateTime.now()).toString();
+  String _endTime = "10:30 am";
+  @override
   Widget build(BuildContext context) {
+
     var data = Get.arguments;
     final int _checkedStars = 4;
     return Scaffold(
@@ -127,40 +138,91 @@ class PrayerDetailScreen extends StatelessWidget {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.add_alert_rounded,
-                                      size: 29.89,
-                                      color: Color(0xFFD1D1D6),
-                                    ),
-                                    SizedBox(
-                                      width: 8.6,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "set",
-                                          style:TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w200,
-                                              color: Color(0xFF1E2432)),
-                                        ),
-                                        Text(
-                                          "timer",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w200,
-                                              color: Color(0xFF1E2432)),
-                                        )
-                                      ],
-                                    )
-                                  ],
+                                InkWell(
+                                  onTap: (){
+                                    showModalBottomSheet(context: context, builder: (context) => _buildSheet());
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.add_alert_rounded,
+                                        size: 29.89,
+                                        color: Color(0xFFD1D1D6),
+                                      ),
+                                      SizedBox(
+                                        width: 8.6,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "set",
+                                            style:TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w200,
+                                                color: Color(0xFF1E2432)),
+                                          ),
+                                          Text(
+                                            "timer",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w200,
+                                                color: Color(0xFF1E2432)),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 )
                               ],
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                Get.to(()=>const TestimonyScreen());
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.group,
+                                        size: 29.89,
+                                        color: Color(0xFFD1D1D6),
+                                      ),
+                                      SizedBox(
+                                        width: 8.6,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "Testimonies",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w200,
+                                                color: Color(0xFF1E2432)),
+                                          ),
+                                          Text(
+                                            "4 Testimonies",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w200,
+                                                color: Color(0xFF1E2432)),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                             SizedBox(
                               width: 8,
@@ -171,74 +233,38 @@ class PrayerDetailScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(
-                                      Icons.group,
+                                      Icons.list,
                                       size: 29.89,
                                       color: Color(0xFFD1D1D6),
                                     ),
                                     SizedBox(
                                       width: 8.6,
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "Testimonies",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w200,
-                                              color: Color(0xFF1E2432)),
-                                        ),
-                                        Text(
-                                          "4 Testimonies",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w200,
-                                              color: Color(0xFF1E2432)),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.hourglass_bottom_outlined,
-                                      size: 29.89,
-                                      color: Color(0xFFD1D1D6),
-                                    ),
-                                    SizedBox(
-                                      width: 8.6,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "Time",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w200,
-                                              color: Color(0xFF1E2432)),
-                                        ),
-                                        Text(
-                                          "24 h",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xFF1E2432)),
-                                        )
-                                      ],
+                                    GestureDetector(
+                                      onTap: (){
+                                        Get.to(()=> const PrayerListScreen());
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "Other",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w200,
+                                                color: Color(0xFF1E2432)),
+                                          ),
+                                          Text(
+                                            "Prayers",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFF1E2432)),
+                                          )
+                                        ],
+                                      ),
                                     )
                                   ],
                                 )
@@ -307,6 +333,67 @@ class PrayerDetailScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSheet() {
+    return Container(
+      margin: EdgeInsets.only(left: 20, right: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Set Timer", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
+          SizedBox(height: 30,),
+          Row(
+            children: [
+              Expanded(child: MyInputField(
+                title: "Start Time",
+                hint: _startTime,
+                widget: IconButton(
+                  onPressed: (){
+                    _getUserTime(isStartTime: true);
+                  },
+                  icon: Icon(Icons.access_time_filled_outlined, color: Colors.grey,),
+                ),
+              )),
+              SizedBox(width: 12,),
+              Expanded(child: MyInputField(
+                title: "end Time",
+                hint: _endTime,
+                widget: IconButton(
+                  onPressed: (){
+                    _getUserTime(isStartTime: false);
+                  },
+                  icon: Icon(Icons.access_time_filled_outlined, color: Colors.grey,),
+                ),
+              ))
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  _getUserTime({required bool isStartTime}) async {
+    var pickedTime = await _showTimePicker();
+    String formattedTime = pickedTime.format(context);
+    if(pickedTime == null) {
+
+    } else if(isStartTime == true) {
+      _startTime = formattedTime;
+    } else if(isStartTime == false) {
+      _endTime = formattedTime;
+    }
+  }
+
+  _showTimePicker(){
+    return showTimePicker(
+      initialEntryMode: TimePickerEntryMode.input,
+        context: context,
+        initialTime: TimeOfDay(
+            hour: int.parse(_startTime.split(":")[0]),
+            minute: int.parse(_startTime.split(":")[1].split(" ")[0])
+        )
     );
   }
 }

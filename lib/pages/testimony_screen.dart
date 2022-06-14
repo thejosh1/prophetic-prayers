@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
+import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
 
 class TestimonyScreen extends StatefulWidget {
   const TestimonyScreen({Key? key}) : super(key: key);
@@ -23,7 +25,9 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.back();
+                        },
                         icon: Icon(
                           Icons.arrow_back,
                           size: 18,
@@ -58,7 +62,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                         Row(
                           children: [
                             Text(
-                              "REVIEWS",
+                              "TESTIMONIES",
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w800,
@@ -75,7 +79,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                                   color: Color(0xFFE2952A)),
                               child: Center(
                                 child: Text(
-                                    "15",
+                                    "4",
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w800,
@@ -92,15 +96,20 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(color: Color(0xFF515BDE), width: 1.5),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(
-                                Icons.mail_outline_outlined,
-                                color: Color(0xFF515BDE),
-                              ),
-                              Text("Write a review")
-                            ],
+                          child: GestureDetector(
+                            onTap: (){
+                              Get.to(()=> const CreateTestimonyScreen());
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Icon(
+                                  Icons.mail_outline_outlined,
+                                  color: Color(0xFF515BDE),
+                                ),
+                                Text("Testify")
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -111,11 +120,11 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            height:550,
+                            height:500,
                             width: 340,
                             margin: EdgeInsets.only(right: 16),
                             child: ListView.separated(
-                              itemCount: 30,
+                              itemCount: 4,
                               itemBuilder: (_, index){
                                 return _buildList(index);
                               }, separatorBuilder: (BuildContext context, int index) { return Divider(); },
@@ -140,7 +149,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                         gradient: LinearGradient(
                             begin: Alignment.center,
                             end: Alignment.bottomCenter,
-                            colors: [Colors.transparent, Colors.grey.withOpacity(0.3)]
+                            colors: [Colors.transparent, Colors.grey.withOpacity(0.1)]
                         )
                     ),
                   ),
@@ -154,58 +163,63 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
   }
 
   Widget _buildList(int index) {
-    return Container(
-      height: 158,
-      width: 340,
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CircleAvatar(
-                backgroundImage: AssetImage("images/gracious-adebayo.jpg"),
-              ),
-              SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Gracious Adebayo", style: TextStyle(
-                    fontSize:16,
-                    fontWeight: FontWeight.bold,)
-                  ),
-                  SizedBox(height: 5,),
-                  Row(
-                    children: [
-                      Icon(Icons.access_time_rounded, size: 16, color: Color(0xffBEC2CE),),
-                      Text("2 hours Ago", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xffBEC2CE)),)
-                    ],
-                  ),
-                  SizedBox(height: 4,),
-                  Container(
-                    height: 81,
-                    width: 250,
-                    child: Text("There are many variations of messages of lorem ipsum available, but the majority have suffered",
-                    style: TextStyle(fontWeight: FontWeight.w200, fontSize: 16, color: Colors.black),),
-                  ),
-                ]
-              ),
-            ],
-          ),
-          SizedBox(height: 5,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(),
-              SizedBox(width: 11,),
-              Row(
-                children: [
-                  Icon(Icons.launch_rounded, size: 13.21, color: Color(0xffBEC2CE),),
-                  Text("See More")
-                ],
-              )
-            ],
-          ),
-        ],
+    return GestureDetector(
+      onTap: (){
+        Get.to(()=> const TestimonyDetailPage());
+      },
+      child: Container(
+        height: 158,
+        width: 340,
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage("images/gracious-adebayo.jpg"),
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Anonymous", style: TextStyle(
+                      fontSize:16,
+                      fontWeight: FontWeight.bold,)
+                    ),
+                    SizedBox(height: 5,),
+                    Row(
+                      children: [
+                        Icon(Icons.access_time_rounded, size: 16, color: Color(0xffBEC2CE),),
+                        Text("2 hours Ago", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xffBEC2CE)),)
+                      ],
+                    ),
+                    SizedBox(height: 4,),
+                    Container(
+                      height: 81,
+                      width: 250,
+                      child: Text("There are many variations of messages of lorem ipsum available, but the majority have suffered",
+                      style: TextStyle(fontWeight: FontWeight.w200, fontSize: 16, color: Colors.black),),
+                    ),
+                  ]
+                ),
+              ],
+            ),
+            SizedBox(height: 5,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(),
+                SizedBox(width: 11,),
+                Row(
+                  children: [
+                    Icon(Icons.launch_rounded, size: 13.21, color: Color(0xffBEC2CE),),
+                    Text("See More")
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

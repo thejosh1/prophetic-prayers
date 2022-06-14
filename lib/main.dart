@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/pages/auth_pages/sign_up.dart';
-import 'package:prophetic_prayers/pages/prayer_category_screen.dart';
-import 'package:prophetic_prayers/pages/prayer_list.dart';
-import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
+import 'package:prophetic_prayers/pages/main_page.dart';
 import 'package:prophetic_prayers/pages/prayer_screen.dart';
-import 'package:prophetic_prayers/pages/testimony_screen.dart';
-import 'package:prophetic_prayers/pages/welcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,8 +21,10 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             fontFamily: 'Poppins'
         ),
-
-        home:  TestimonyScreen()
+        initialRoute: "/",
+        getPages: [
+          GetPage(name: "/", page: ()=> const MainPage()),
+        ],
     );
   }
 }
