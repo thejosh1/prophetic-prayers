@@ -21,7 +21,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.only(left: 13, right: 13, top: 36),
+                padding: const EdgeInsets.only(left: 13, right: 13, top: 46),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -36,7 +36,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                               color: Color(0xFFEDEEF0),
                             ),
                             padding: const EdgeInsets.only(
-                                left: 20, right: 12, top: 10),
+                                left: 20, right: 12, top: 20),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,14 +64,14 @@ class _PrayerScreenState extends State<PrayerScreen> {
                             backgroundImage: AssetImage("images/gracious-adebayo.jpg")),
                       ],
                     ),
-                    SizedBox(height: 6),
+                    SizedBox(height: 12),
                     BigText(text: "Good Morning Josh"),
-                    SizedBox(height: 8),
+                    SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: const [Icon(Icons.bookmark)],
                     ),
-                    SizedBox(height: 5),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),

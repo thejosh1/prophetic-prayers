@@ -142,37 +142,23 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                   onTap: (){
                                     showModalBottomSheet(context: context, builder: (context) => _buildSheet());
                                   },
-                                  child: Row(
+                                  child: Column(
                                     children: [
                                       Icon(
-                                        Icons.add_alert_rounded,
+                                        Icons.notifications,
                                         size: 29.89,
                                         color: Color(0xFFD1D1D6),
                                       ),
                                       SizedBox(
-                                        width: 8.6,
+                                        height: 8.6,
                                       ),
-                                      Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "set",
-                                            style:TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w200,
-                                                color: Color(0xFF1E2432)),
-                                          ),
-                                          Text(
-                                            "timer",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w200,
-                                                color: Color(0xFF1E2432)),
-                                          )
-                                        ],
-                                      )
+                                      Text(
+                                        "Reminders",
+                                        style:TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w200,
+                                            color: Color(0xFF1E2432)),
+                                      ),
                                     ],
                                   ),
                                 )
@@ -188,37 +174,45 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Row(
+                                  Column(
                                     children: [
-                                      Icon(
-                                        Icons.group,
-                                        size: 29.89,
-                                        color: Color(0xFFD1D1D6),
+                                      Stack(
+                                        children: <Widget>[
+                                          Icon(Icons.church, size: 29.89, color: Color(0xFFD1D1D6),),
+                                          Positioned(
+                                            right: 0,
+                                            child: Container(
+                                              padding: EdgeInsets.all(1),
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFF1E2432),
+                                                borderRadius: BorderRadius.circular(6),
+                                              ),
+                                              constraints: BoxConstraints(
+                                                minWidth: 12,
+                                                minHeight: 12,
+                                              ),
+                                              child: Text(
+                                                '5',
+                                                style: new TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 8,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                       SizedBox(
                                         width: 8.6,
                                       ),
-                                      Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "Testimonies",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w200,
-                                                color: Color(0xFF1E2432)),
-                                          ),
-                                          Text(
-                                            "4 Testimonies",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w200,
-                                                color: Color(0xFF1E2432)),
-                                          )
-                                        ],
-                                      )
+                                      Text(
+                                        "Testimonies",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w200,
+                                            color: Color(0xFF1E2432)),
+                                      ),
                                     ],
                                   )
                                 ],
@@ -228,46 +222,22 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                               width: 8,
                             ),
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.list,
-                                      size: 29.89,
-                                      color: Color(0xFFD1D1D6),
-                                    ),
-                                    SizedBox(
-                                      width: 8.6,
-                                    ),
-                                    GestureDetector(
-                                      onTap: (){
-                                        Get.to(()=> const PrayerListScreen());
-                                      },
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "Other",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w200,
-                                                color: Color(0xFF1E2432)),
-                                          ),
-                                          Text(
-                                            "Prayers",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color(0xFF1E2432)),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
+                                Icon(
+                                  Icons.list,
+                                  size: 29.89,
+                                  color: Color(0xFFD1D1D6),
+                                ),
+                                SizedBox(
+                                  width: 8.6,
+                                ),
+                                Text(
+                                  "prayers",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w200,
+                                      color: Color(0xFF1E2432)),
+                                ),
                               ],
                             ),
                             SizedBox(

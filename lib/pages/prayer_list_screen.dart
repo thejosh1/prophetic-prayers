@@ -64,7 +64,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
 
                              return buildScriptures(_scriptures);
                            } else {
-                             return Center(child: Text("no data"),);
+                             return Center(child: Text("Loading"),);
                            }
                          }
                        )

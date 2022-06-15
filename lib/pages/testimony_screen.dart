@@ -52,7 +52,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                 height: 20,
               ),
               Container(
-                margin: EdgeInsets.only(left: 20, right: 6),
+                margin: EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -66,7 +66,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w800,
-                                  color: Color(0xFF1E2432)),
+                                  color: Color(0xFFE2952A)),
                             ),
                             SizedBox(
                               width: 2,
@@ -89,27 +89,20 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                             )
                           ],
                         ),
-                        Container(
-                          width: 154,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: Color(0xFF515BDE), width: 1.5),
-                          ),
-                          child: GestureDetector(
-                            onTap: (){
-                              Get.to(()=> const CreateTestimonyScreen());
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(
-                                  Icons.mail_outline_outlined,
-                                  color: Color(0xFF515BDE),
-                                ),
-                                Text("Testify")
-                              ],
-                            ),
+                        GestureDetector(
+                          onTap: (){
+                            Get.to(()=> const CreateTestimonyScreen());
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text("Testify", style: TextStyle(color: Color(0xFF515BDE)),),
+                              SizedBox(width: 5,),
+                              Icon(
+                                Icons.arrow_forward_sharp,
+                                color: Color(0xFF515BDE),
+                              ),
+                            ],
                           ),
                         )
                       ],
@@ -120,7 +113,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            height:500,
+                            height:550,
                             width: 340,
                             margin: EdgeInsets.only(right: 16),
                             child: ListView.separated(
