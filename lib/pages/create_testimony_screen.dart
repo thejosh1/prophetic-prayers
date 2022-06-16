@@ -27,85 +27,64 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 22),
-        child: Column(
-          children: [
-            SizedBox(height: 100),
-            TextField(
-              controller: _titleController,
-              style: TextStyle(),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffBEC2CE),
-                  ),
-                ),
-                hintText: 'Title(optional)',
-                hintStyle: TextStyle(
-                  color: Color(0xffBEC2CE),
-                  fontSize: 16,
-                ),
-                prefixIcon: Icon(
-                  Icons.title_outlined,
-                  color: Color(0xffBEC2CE),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 22),
+          child: Column(
+            children: [
+              SizedBox(height: 20),
+              Form(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration.collapsed(
+                          hintText: "Title(optional)",
+                      ),
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Divider(),
+                    SizedBox(height: 23),
+                    TextFormField(
+                      decoration: InputDecoration.collapsed(
+                        hintText: "Testimony",
+                      ),
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ],
                 ),
               ),
-            ),
-            SizedBox(height: 40),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Color(0xFFBEC2CE))
-                  ),
+              SizedBox(height: 300),
+              GestureDetector(
+                onTap: () {},
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
                   child: Container(
-                    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-                    child: TextField(
-                      expands: true,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      style: TextStyle(),
-                      controller: _noteController,
-                      decoration: const InputDecoration.collapsed(
-                        hintText: 'Write your Testimony here',
-                        hintStyle: TextStyle(
-                          color: Color(0xffBEC2CE),
-                          fontSize: 16,
-                        ),
+                    width: double.infinity,
+                    height: 50,
+                    color: const Color(0xff515BDE),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Submit',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
-                );
-              }
-            ),
-            SizedBox(height: 43),
-            GestureDetector(
-              onTap: () {},
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  color: const Color(0xff515BDE),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 30),
-          ],
+              SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );
@@ -141,7 +120,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           const SizedBox(height: 21),
           const Text(
-            'Thanks For Sharing',
+            'Testimony',
             style: TextStyle(
               fontSize: 34,
               fontWeight: FontWeight.w800,
