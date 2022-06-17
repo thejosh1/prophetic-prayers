@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:prophetic_prayers/utils/user_preference.dart';
 import '../models/users.dart';
+import '../widgets/other_details_widgets.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -29,6 +30,21 @@ class ProfilePage extends StatelessWidget {
             buildName(user),
             SizedBox(height: 24,),
             OtherDetails(),
+            SizedBox(height: 48,),
+            Center(
+              child: GestureDetector(
+                onTap: (){},
+                child: SizedBox(
+                  width: 60,
+                  child: Column(
+                    children: [
+                      Text("Logout?", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w200, color: Colors.black),),
+                      Divider(color: Colors.black,)
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -39,15 +55,14 @@ class ProfilePage extends StatelessWidget {
     children: [
       Text(user.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
       SizedBox(height: 4,),
-      Text(user.phonenumber, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey),),
+      Text(user.phonenumber, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFD1D1D6)),),
       SizedBox(height: 4,),
-      Text(user.email, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey),)
+      Text(user.email, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFD1D1D6)),)
     ],
   );
 }
 
-class OtherDetails {
-}
+
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
@@ -128,7 +143,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               GestureDetector(onTap: (){
                 Get.back();
               },child: const Icon(Icons.arrow_back_outlined)),
-              const Icon(Icons.more_vert),
+             // const Icon(Icons.more_vert),
             ],
           ),
           const SizedBox(height: 21),

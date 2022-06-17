@@ -19,7 +19,12 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
   String _endTime = "10:30 am";
   @override
   Widget build(BuildContext context) {
-
+    Future<void> _openTimePicker(BuildContext context) async {
+      final TimeOfDay? time = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+      if(time !=null) {
+        //set a scheduled notification based on the time
+      }
+    }
     var data = Get.arguments;
     final int _checkedStars = 4;
     return Scaffold(
@@ -56,15 +61,15 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      Icon(
-                        Icons.more_vert,
-                        color: Colors.white,
-                      )
+                      // Icon(
+                      //   Icons.more_vert,
+                      //   color: Colors.white,
+                      // )
                     ],
                   ),
                 )),
             Positioned(
-                top: 270,
+                top: 250,
                 child: Container(
                   padding: EdgeInsets.only(left: 22, right: 20, top: 20),
                   width: MediaQuery.of(context).size.width,
@@ -117,7 +122,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                               fontWeight: FontWeight.w900),
                           textAlign: TextAlign.start,
                         ),
-                        SizedBox(height: 12),
+                        SizedBox(height: 10),
                         Row(
                           children: [
                             Icon(Icons.bolt, color: Colors.amberAccent, size: 18,),
@@ -140,7 +145,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                               children: [
                                 InkWell(
                                   onTap: (){
-                                    showModalBottomSheet(context: context, builder: (context) => _buildSheet());
+                                    _openTimePicker(context);
                                   },
                                   child: Column(
                                     children: [
@@ -178,7 +183,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                     children: [
                                       Stack(
                                         children: <Widget>[
-                                          Icon(Icons.church, size: 29.89, color: Color(0xFFD1D1D6),),
+                                          Icon(Icons.edit, size: 29.89, color: Color(0xFFD1D1D6),),
                                           Positioned(
                                             right: 0,
                                             child: Container(
@@ -246,7 +251,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,94 +281,15 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           ],
                         ),
                         SizedBox(height: 10,),
-                        // GestureDetector(
-                        //   onTap: () {},
-                        //   child: ClipRRect(
-                        //     borderRadius: BorderRadius.circular(12),
-                        //     child: Container(
-                        //       width: double.infinity,
-                        //       height: 50,
-                        //       color: const Color(0xff515BDE),
-                        //       alignment: Alignment.center,
-                        //       child: const Text(
-                        //         'BOOKS FROM \$845.00',
-                        //         style: TextStyle(
-                        //           color: Colors.white,
-                        //           fontSize: 18,
-                        //           fontWeight: FontWeight.w700,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
-                ))
+                )
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSheet() {
-    return Container(
-      margin: EdgeInsets.only(left: 20, right: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Set Timer", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-          SizedBox(height: 30,),
-          Row(
-            children: [
-              Expanded(child: MyInputField(
-                title: "Start Time",
-                hint: _startTime,
-                widget: IconButton(
-                  onPressed: (){
-                    _getUserTime(isStartTime: true);
-                  },
-                  icon: Icon(Icons.access_time_filled_outlined, color: Colors.grey,),
-                ),
-              )),
-              SizedBox(width: 12,),
-              Expanded(child: MyInputField(
-                title: "end Time",
-                hint: _endTime,
-                widget: IconButton(
-                  onPressed: (){
-                    _getUserTime(isStartTime: false);
-                  },
-                  icon: Icon(Icons.access_time_filled_outlined, color: Colors.grey,),
-                ),
-              ))
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  _getUserTime({required bool isStartTime}) async {
-    var pickedTime = await _showTimePicker();
-    String formattedTime = pickedTime.format(context);
-    if(pickedTime == null) {
-
-    } else if(isStartTime == true) {
-      _startTime = formattedTime;
-    } else if(isStartTime == false) {
-      _endTime = formattedTime;
-    }
-  }
-
-  _showTimePicker(){
-    return showTimePicker(
-      initialEntryMode: TimePickerEntryMode.input,
-        context: context,
-        initialTime: TimeOfDay(
-            hour: int.parse(_startTime.split(":")[0]),
-            minute: int.parse(_startTime.split(":")[1].split(" ")[0])
-        )
-    );
-  }
 }

@@ -33,13 +33,13 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                           size: 18,
                           color: Color(0xFF000000),
                         )),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.more_vert,
-                          size: 20,
-                          color: Color(0xFF000000),
-                        ))
+                    // IconButton(
+                    //     onPressed: () {},
+                    //     icon: Icon(
+                    //       Icons.more_vert,
+                    //       size: 20,
+                    //       color: Color(0xFF000000),
+                    //     ))
                   ],
                 ),
               ),

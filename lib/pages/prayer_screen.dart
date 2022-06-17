@@ -36,9 +36,9 @@ class _PrayerScreenState extends State<PrayerScreen> {
                               color: Color(0xFFEDEEF0),
                             ),
                             padding: const EdgeInsets.only(
-                                left: 20, right: 12, top: 20),
+                                left: 20, right: 12, top: 10),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 Expanded(
