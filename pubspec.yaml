@@ -39,6 +39,7 @@ dependencies:
   flutter_datetime_picker: ^1.5.1
   intl: ^0.17.0
   flutter_native_timezone: ^2.0.0
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +82,25 @@ flutter:
     - images/patrick-fore.jpg
     - images/jon-tyson.jpg
     - images/adrianna-geo.jpg
+    - images/child(44).jpg
+    - images/child(43).jpg
+    - images/child(42).jpg
+    - images/child(41).jpg
+    - images/child(40).jpg
+    - images/child(39).jpg
+    - images/child(38).jpg
+    - images/child(37).jpg
+    - images/child(36).jpg
+    - images/child(35).jpg
+    - images/child(34).jpg
+    - images/child(33).jpg
+    - images/child(32).jpg
+    - images/child(31).jpg
+    - images/child(30).jpg
+    - images/child(29).jpg
+    - images/child(28).jpg
+    - images/child(27).jpg
+    - images/child(26).jpg
 
   fonts:
     - family: Poppins

@@ -1,11 +1,16 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 
 import 'package:prophetic_prayers/models/prayers.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/utils/image_utils.dart';
+import 'package:prophetic_prayers/utils/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class PrayerList extends StatefulWidget {
@@ -16,31 +21,16 @@ class PrayerList extends StatefulWidget {
 }
 
 class _PrayerListState extends State<PrayerList> {
-  final PageController _pageController = PageController(viewportFraction: 0.95);
   Color _iconColor = Color(0xFFE5E5EA);
   bool isTapped = false;
 
-  double _currPageValue = 0.0;
-  final double _scaleFactor = 0.8;
-  final int _height = 500;
   List<Scripture> scriptureList = [];
-
-  final int _checkedStars = 4;
 
   @override
   void initState() {
     super.initState();
-    _pageController.addListener(() {
-      setState(() {
-        _currPageValue = _pageController.page!;
-      });
-    });
     readJson();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
+    getStreak();
   }
 
   Future<void> readJson() async {
@@ -55,12 +45,30 @@ class _PrayerListState extends State<PrayerList> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    List images = [
+      "images/child(26).jpg",
+      "images/child(27).jpg",
+      "images/child(28).jpg",
+      "images/child(29).jpg",
+      "images/child(30).jpg",
+      "images/child(31).jpg",
+      "images/child(32).jpg",
+      "images/child(33).jpg",
+      "images/child(34).jpg",
+      "images/child(35).jpg",
+      "images/child(36).jpg",
+      "images/child(37).jpg",
+      "images/child(38).jpg",
+      "images/child(39).jpg",
+      "images/child(40).jpg",
+      "images/child(41).jpg",
+      "images/child(42).jpg",
+      "images/child(43).jpg",
+      "images/child(44).jpg",
+    ];
+    Size size = MediaQuery.of(context).size;
     return scriptureList.length > 0 ? Column(
       children: [
         Container(
@@ -69,10 +77,11 @@ class _PrayerListState extends State<PrayerList> {
           child: GestureDetector(
             onTap: () {
               Get.to(()=> const PrayerDetailScreen(), arguments: [
-                scriptureList[getTodaysDay()].title,
-                scriptureList[getTodaysDay()].prayerPoint,
-                scriptureList[getTodaysDay()].id,
-                scriptureList[getTodaysDay()].verse]);
+                scriptureList[getTodaysDay()-1].title,
+                scriptureList[getTodaysDay()-1].prayerPoint,
+                scriptureList[getTodaysDay()-1].id,
+                scriptureList[getTodaysDay()-1].verse],
+              );
             },
             child: Stack(
               children: [
@@ -88,7 +97,7 @@ class _PrayerListState extends State<PrayerList> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       image: DecorationImage(
-                        image: AssetImage("images/diana-simum.jpg"),
+                        image: AssetImage("images/" + images[Random().nextInt(images.length)]),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -112,7 +121,7 @@ class _PrayerListState extends State<PrayerList> {
                             ),
                             Expanded(child: Container(),),
                             Text(scriptureList.length > 0
-                                ? scriptureList[getTodaysDay()].title.toString()
+                                ? scriptureList[getTodaysDay()-1].title.toString()
                                 : "", style: TextStyle(color: Colors.white,
                                 fontSize: 28,
                                 fontWeight: FontWeight.w900),
@@ -123,15 +132,24 @@ class _PrayerListState extends State<PrayerList> {
                                 Icon(Icons.bolt, color: Colors.amberAccent,
                                   size: 18,),
                                 SizedBox(width: 3,),
-                                Text(scriptureList.length > 0 ? "streak 2" : "",
-                                  style: TextStyle(color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),),
+                                FutureBuilder(
+                                  future: getStreak(),
+                                  builder: (context, snapshot) {
+                                    if(snapshot.hasData) {
+                                    return Text(scriptureList.length > 0 ? "streak ${snapshot.data}" : "",
+                                      style: TextStyle(color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),);
+                                  } else {
+                                      return Text("");
+                                    }
+    }
+                                ),
                                 SizedBox(width: 6,),
                                 Icon(Icons.sunny, size: 18,
                                   color: Colors.amberAccent,),
                                 SizedBox(width: 3,),
-                                Text(scriptureList.length > 0 ? "weeks 32" : "",
+                                Text(scriptureList.length > 0 ? "week ${weekNumber(DateTime.now())}" : "",
                                   style: TextStyle(color: Colors.white,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),)
@@ -186,5 +204,22 @@ class _PrayerListState extends State<PrayerList> {
     final diffInDays = diff.inDays;
     print(diffInDays);
     return diffInDays;
+  }
+  int numOfWeeks(int year) {
+    DateTime dec28 = DateTime(year, 12, 28);
+    int dayOfDec28 = int.parse(DateFormat("D").format(dec28));
+    return ((dayOfDec28 - dec28.weekday + 10) / 7).floor();
+  }
+  /// Calculates week number from a date as per https://en.wikipedia.org/wiki/ISO_week_date#Calculation
+  int weekNumber(DateTime date) {
+    int dayOfYear = int.parse(DateFormat("D").format(date));
+    int woy =  ((dayOfYear - date.weekday + 10) / 7).floor();
+    if (woy < 1) {
+      woy = numOfWeeks(date.year - 1);
+    } else if (woy > numOfWeeks(date.year)) {
+      woy = 1;
+    }
+    print(woy);
+    return woy;
   }
 }

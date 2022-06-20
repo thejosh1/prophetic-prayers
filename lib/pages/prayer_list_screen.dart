@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,6 +78,27 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
     );
 
   }
+  List images = [
+    "images/child(26).jpg",
+    "images/child(27).jpg",
+    "images/child(28).jpg",
+    "images/child(29).jpg",
+    "images/child(30).jpg",
+    "images/child(31).jpg",
+    "images/child(32).jpg",
+    "images/child(33).jpg",
+    "images/child(34).jpg",
+    "images/child(35).jpg",
+    "images/child(36).jpg",
+    "images/child(37).jpg",
+    "images/child(38).jpg",
+    "images/child(39).jpg",
+    "images/child(40).jpg",
+    "images/child(41).jpg",
+    "images/child(42).jpg",
+    "images/child(43).jpg",
+    "images/child(44).jpg",
+  ];
 
   Widget buildScriptures(List<Scripture> scriptures) => ListView.builder(
       itemCount: scriptures == null? 0: scriptures.length ,
@@ -101,7 +123,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                          image: AssetImage("images/ismael-paramo.jpg"),
+                          image: AssetImage("images/" + images[Random().nextInt(images.length)]),
                           fit: BoxFit.cover
                       ),
                     ),
@@ -132,14 +154,6 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Row(
-                            //   crossAxisAlignment: CrossAxisAlignment.end,
-                            //   children: [
-                            //     Text("from", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xFFBEC2CE)),),
-                            //     SizedBox(width: 4,),
-                            //     Text("\$29", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color(0xFF1F2533)),),
-                            //   ],
-                            // ),
                             Expanded(child: Container()),
                             Icon(Icons.bookmark_border_outlined, size: 19.26, color: Color(0xFFBEC2CE),)
                           ],

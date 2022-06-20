@@ -69,7 +69,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                   ),
                 )),
             Positioned(
-                top: 250,
+                top: 270,
                 child: Container(
                   padding: EdgeInsets.only(left: 22, right: 20, top: 20),
                   width: MediaQuery.of(context).size.width,
@@ -80,8 +80,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           topRight: Radius.circular(20)),
                       color: Colors.white),
                   child: Container(
-                    width: 320,
-                    // margin: EdgeInsets.only(left: 10),
+                    width: MediaQuery.of(context).size.width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -122,7 +121,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                               fontWeight: FontWeight.w900),
                           textAlign: TextAlign.start,
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 20),
                         Row(
                           children: [
                             Icon(Icons.bolt, color: Colors.amberAccent, size: 18,),
@@ -138,7 +137,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           height: 18.3,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -172,60 +171,60 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                             SizedBox(
                               width: 8,
                             ),
-                            GestureDetector(
-                              onTap: (){
-                                Get.to(()=>const TestimonyScreen());
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Stack(
-                                        children: <Widget>[
-                                          Icon(Icons.edit, size: 29.89, color: Color(0xFFD1D1D6),),
-                                          Positioned(
-                                            right: 0,
-                                            child: Container(
-                                              padding: EdgeInsets.all(1),
-                                              decoration: BoxDecoration(
-                                                color: Color(0xFF1E2432),
-                                                borderRadius: BorderRadius.circular(6),
-                                              ),
-                                              constraints: BoxConstraints(
-                                                minWidth: 12,
-                                                minHeight: 12,
-                                              ),
-                                              child: Text(
-                                                '5',
-                                                style: new TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 8,
-                                                ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 8.6,
-                                      ),
-                                      Text(
-                                        "Testimonies",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w200,
-                                            color: Color(0xFF1E2432)),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
+                            // GestureDetector(
+                            //   onTap: (){
+                            //     Get.to(()=>const TestimonyScreen());
+                            //   },
+                            //   child: Column(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     children: [
+                            //       Column(
+                            //         children: [
+                            //           Stack(
+                            //             children: <Widget>[
+                            //               Icon(Icons.edit, size: 29.89, color: Color(0xFFD1D1D6),),
+                            //               Positioned(
+                            //                 right: 0,
+                            //                 child: Container(
+                            //                   padding: EdgeInsets.all(1),
+                            //                   decoration: BoxDecoration(
+                            //                     color: Color(0xFF1E2432),
+                            //                     borderRadius: BorderRadius.circular(6),
+                            //                   ),
+                            //                   constraints: BoxConstraints(
+                            //                     minWidth: 12,
+                            //                     minHeight: 12,
+                            //                   ),
+                            //                   child: Text(
+                            //                     '5',
+                            //                     style: new TextStyle(
+                            //                       color: Colors.white,
+                            //                       fontSize: 8,
+                            //                     ),
+                            //                     textAlign: TextAlign.center,
+                            //                   ),
+                            //                 ),
+                            //               )
+                            //             ],
+                            //           ),
+                            //           SizedBox(
+                            //             width: 8.6,
+                            //           ),
+                            //           Text(
+                            //             "Testimonies",
+                            //             style: TextStyle(
+                            //                 fontSize: 14,
+                            //                 fontWeight: FontWeight.w200,
+                            //                 color: Color(0xFF1E2432)),
+                            //           ),
+                            //         ],
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   width: 8,
+                            // ),
                             Column(
                               children: [
                                 Icon(
@@ -251,34 +250,38 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Verse", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
-                            Text(
-                              data[3],
-                              style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w200,
-                                  color: Color(0xFF1E2432)
-                              ),
-                            ),
-                            SizedBox(height: 20,),
-                            Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
-                            Text(
-                              data[1],
-                              style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w200,
-                                  color: Color(0xFF1E2432)
-                              ),
-                            ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Verse", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
+                                Text(
+                                  data[3],
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w200,
+                                      color: Color(0xFF1E2432)
+                                  ),
+                                ),
+                                SizedBox(height: 20,),
+                                Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
+                                Text(
+                                  data[1],
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w200,
+                                      color: Color(0xFF1E2432)
+                                  ),
+                                ),
 
-                          ],
+                              ],
+                            ),
+                          ),
                         ),
                         SizedBox(height: 10,),
                       ],

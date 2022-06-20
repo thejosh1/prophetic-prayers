@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prophetic_prayers/pages/prayer_category_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_screen.dart';
-import 'package:prophetic_prayers/pages/profile_page.dart';
-import 'package:prophetic_prayers/pages/testimony_screen.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -32,8 +30,6 @@ class _MainPageState extends State<MainPage> {
           children: const [
             PrayerScreen(),
             PrayerListScreen(),
-            TestimonyScreen(),
-            ProfilePage()
           ],
         ),
       )

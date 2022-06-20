@@ -65,7 +65,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                       ],
                     ),
                     SizedBox(height: 12),
-                    BigText(text: "Good Morning Josh"),
+                    BigText(text: "Welcome"),
                     SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
