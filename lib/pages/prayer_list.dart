@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 
 import 'package:prophetic_prayers/models/prayers.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
-import 'package:prophetic_prayers/utils/image_utils.dart';
 import 'package:prophetic_prayers/utils/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -68,6 +67,7 @@ class _PrayerListState extends State<PrayerList> {
       "images/child(43).jpg",
       "images/child(44).jpg",
     ];
+    var _selectedImage = images[Random().nextInt(images.length)];
     Size size = MediaQuery.of(context).size;
     return scriptureList.length > 0 ? Column(
       children: [
@@ -77,6 +77,7 @@ class _PrayerListState extends State<PrayerList> {
           child: GestureDetector(
             onTap: () {
               Get.to(()=> const PrayerDetailScreen(), arguments: [
+                _selectedImage,
                 scriptureList[getTodaysDay()-1].title,
                 scriptureList[getTodaysDay()-1].prayerPoint,
                 scriptureList[getTodaysDay()-1].id,
@@ -97,7 +98,7 @@ class _PrayerListState extends State<PrayerList> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       image: DecorationImage(
-                        image: AssetImage("images/" + images[Random().nextInt(images.length)]),
+                        image: AssetImage("images/" + _selectedImage),
                         fit: BoxFit.cover,
                       ),
                     ),

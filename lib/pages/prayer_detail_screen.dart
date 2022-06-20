@@ -1,10 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:intl/intl.dart';
-import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
-import 'package:prophetic_prayers/pages/testimony_screen.dart';
-import 'package:prophetic_prayers/widgets/my_input_field.dart';
 
 class PrayerDetailScreen extends StatefulWidget {
   const PrayerDetailScreen({Key? key}) : super(key: key);
@@ -14,9 +10,6 @@ class PrayerDetailScreen extends StatefulWidget {
 }
 
 class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
-  DateTime _selectedDate = DateTime.now();
-  String _startTime = DateFormat("hh:mm, a").format(DateTime.now()).toString();
-  String _endTime = "10:30 am";
   @override
   Widget build(BuildContext context) {
     Future<void> _openTimePicker(BuildContext context) async {
@@ -26,7 +19,6 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
       }
     }
     var data = Get.arguments;
-    final int _checkedStars = 4;
     return Scaffold(
       body: Container(
         height: double.maxFinite,
@@ -41,7 +33,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("images/diana-simum.jpg"),
+                          image: AssetImage("images/" + data[0]),
                           fit: BoxFit.cover)),
                 )),
             Positioned(
@@ -95,7 +87,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                   size: 15,
                                 ),
                                 Text(
-                                  data[2],
+                                  data[3],
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -114,7 +106,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           height: 7,
                         ),
                         Text(
-                          data[0],
+                          data[1],
                           style: TextStyle(
                               color: Color(0xFF1E2432),
                               fontSize: 28,
@@ -259,7 +251,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                               children: [
                                 Text("Verse", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
                                 Text(
-                                  data[3],
+                                  data[4],
                                   style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontSize: 16,
@@ -270,7 +262,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                 SizedBox(height: 20,),
                                 Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
                                 Text(
-                                  data[1],
+                                  data[2],
                                   style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontSize: 16,

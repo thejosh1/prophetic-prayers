@@ -99,18 +99,19 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
     "images/child(43).jpg",
     "images/child(44).jpg",
   ];
-
   Widget buildScriptures(List<Scripture> scriptures) => ListView.builder(
       itemCount: scriptures == null? 0: scriptures.length ,
       itemBuilder: (_, index) {
         final scriptureList = scriptures[index];
+        var _selectedImage = images[Random().nextInt(images.length)];
         return GestureDetector(
           onTap: (){
             Get.to(()=> const PrayerDetailScreen(), arguments: [
-                scriptureList.title,
-            scriptureList.prayerPoint,
-            scriptureList.id,
-            scriptureList.verse]);
+              _selectedImage,
+              scriptureList.title,
+              scriptureList.prayerPoint,
+              scriptureList.id,
+              scriptureList.verse]);
           },
           child: Column(
             children: [
