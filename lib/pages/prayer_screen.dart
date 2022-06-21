@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/pages/prayer_list.dart';
+import 'package:prophetic_prayers/utils/dimensions.dart';
 
 import '../widgets/big_text.dart';
 
@@ -13,15 +14,14 @@ class PrayerScreen extends StatefulWidget {
 class _PrayerScreenState extends State<PrayerScreen> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.only(left: 13, right: 13, top: 46),
+                padding: EdgeInsets.only(left: Dimensions.pageScreenMainContainerWidth13, right: Dimensions.pageScreenMainContainerWidth13, top: Dimensions.pageScreenMainContainerHeight46),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -30,13 +30,13 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         Expanded(
                           child: Container(
                             width: double.infinity,
-                            height: 40,
+                            height: Dimensions.pageScreenExpandedContainerHeight40,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Color(0xFFEDEEF0),
+                              borderRadius: BorderRadius.circular(Dimensions.pageScreenExpandedRadiusHeight10),
+                              color: const Color(0xFFEDEEF0),
                             ),
-                            padding: const EdgeInsets.only(
-                                left: 20, right: 12, top: 10),
+                            padding: EdgeInsets.only(
+                                left: Dimensions.pageScreenExpandedPaddingWidth20, right: Dimensions.pageScreenExpandedPaddingWidth12, top: Dimensions.pageScreenExpandedPaddingHeight10),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,23 +59,24 @@ class _PrayerScreenState extends State<PrayerScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 17),
-                        CircleAvatar(
+                        SizedBox(width: Dimensions.pageScreenSizedBoxWidth17),
+                        const CircleAvatar(
+                            //Logo should be here
                             backgroundImage: AssetImage("images/gracious-adebayo.jpg")),
                       ],
                     ),
-                    SizedBox(height: 12),
-                    BigText(text: "Welcome"),
-                    SizedBox(height: 16),
+                    SizedBox(height: Dimensions.pageScreenSizedBoxHeight12),
+                    const BigText(text: "Welcome"),
+                    SizedBox(height: Dimensions.pageScreenSizedBoxHeight16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: const [Icon(Icons.bookmark)],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: Dimensions.pageScreenExpandedRadiusHeight10),
                   ],
                 ),
               ),
-              PrayerList(),
+              const PrayerList(),
             ],
           ),
         ),

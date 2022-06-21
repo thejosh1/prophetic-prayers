@@ -3,13 +3,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import 'package:prophetic_prayers/models/prayers.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
-import 'package:prophetic_prayers/utils/shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:prophetic_prayers/utils/dimensions.dart';
+
+import '../models/streak.dart';
+import '../utils/shared_preferences.dart';
 
 
 class PrayerList extends StatefulWidget {
@@ -20,7 +21,7 @@ class PrayerList extends StatefulWidget {
 }
 
 class _PrayerListState extends State<PrayerList> {
-  Color _iconColor = Color(0xFFE5E5EA);
+  final Color _iconColor = const Color(0xFFE5E5EA);
   bool isTapped = false;
 
   List<Scripture> scriptureList = [];
@@ -46,6 +47,7 @@ class _PrayerListState extends State<PrayerList> {
 
   @override
   Widget build(BuildContext context) {
+    //String _streakController = widget.streak.streak.toString();
     List images = [
       "images/child(26).jpg",
       "images/child(27).jpg",
@@ -67,17 +69,17 @@ class _PrayerListState extends State<PrayerList> {
       "images/child(43).jpg",
       "images/child(44).jpg",
     ];
-    var _selectedImage = images[Random().nextInt(images.length)];
+    var selectedImage = images[Random().nextInt(images.length)];
     Size size = MediaQuery.of(context).size;
-    return scriptureList.length > 0 ? Column(
+    return scriptureList.isNotEmpty ? Column(
       children: [
         Container(
-          height: 500,
+          height: Dimensions.prayerListColumnContainerHeight500,
           width: size.width,
           child: GestureDetector(
             onTap: () {
               Get.to(()=> const PrayerDetailScreen(), arguments: [
-                _selectedImage,
+                selectedImage,
                 scriptureList[getTodaysDay()-1].title,
                 scriptureList[getTodaysDay()-1].prayerPoint,
                 scriptureList[getTodaysDay()-1].id,
@@ -92,13 +94,13 @@ class _PrayerListState extends State<PrayerList> {
                   left: 0,
                   right: 0,
                   child: Container(
-                    margin: EdgeInsets.only(left: 6, right: 6),
-                    height: 100,
-                    width: 100,
+                    margin: EdgeInsets.only(left: Dimensions.prayerListStackPositionedContainerWidth6, right: Dimensions.prayerListStackPositionedContainerWidth6),
+                    height: Dimensions.prayerListStackPositionedContainerHeight100,
+                    width: Dimensions.prayerListStackPositionedContainerWidth100,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(Dimensions.prayerListStackPositionedContainerHeightRadius30),
                       image: DecorationImage(
-                        image: AssetImage("images/" + _selectedImage),
+                        image: AssetImage(selectedImage),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -106,57 +108,48 @@ class _PrayerListState extends State<PrayerList> {
                 ),
                 Positioned(
                     child: Container(
-                        width: 296,
-                        margin: EdgeInsets.only(left: 20, bottom: 13),
+                        width: Dimensions.prayerListStackPositionedContainerHeight296,
+                        margin: EdgeInsets.only(left: Dimensions.prayerListStackPositionedContainerWidth20, bottom: Dimensions.prayerListStackPositionedContainerHeight13),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          //mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(top: 10.0),
+                              padding: EdgeInsets.only(top: Dimensions.prayerListStackPositionedContainerHeight10),
                               child: Text("Verse Of The Day", style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 28,
+                                  fontSize: Dimensions.prayerListStackPositionedContainerTextWidth28,
                                   fontWeight: FontWeight.w900),
                                 textAlign: TextAlign.start,),
                             ),
                             Expanded(child: Container(),),
-                            Text(scriptureList.length > 0
+                            Text(scriptureList.isNotEmpty
                                 ? scriptureList[getTodaysDay()-1].title.toString()
                                 : "", style: TextStyle(color: Colors.white,
-                                fontSize: 28,
+                                fontSize: Dimensions.prayerListStackPositionedContainerTextWidth28,
                                 fontWeight: FontWeight.w900),
                               textAlign: TextAlign.start,),
-                            SizedBox(height: 20,),
-                            Row(
+                            SizedBox(height: Dimensions.prayerListStackPositionedContainerHeight20,),
+                            scriptureList.isNotEmpty ? Row(
                               children: [
                                 Icon(Icons.bolt, color: Colors.amberAccent,
-                                  size: 18,),
-                                SizedBox(width: 3,),
-                                FutureBuilder(
-                                  future: getStreak(),
-                                  builder: (context, snapshot) {
-                                    if(snapshot.hasData) {
-                                    return Text(scriptureList.length > 0 ? "streak ${snapshot.data}" : "",
+                                  size: Dimensions.prayerListStackPositionedContainerIconWidth18,),
+                                SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
+                                Text("streak 2",
                                       style: TextStyle(color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),);
-                                  } else {
-                                      return Text("");
-                                    }
-    }
+                                          fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
+                                          fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(width: 6,),
-                                Icon(Icons.sunny, size: 18,
+                                SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth6,),
+                                Icon(Icons.sunny, size: Dimensions.prayerListStackPositionedContainerIconWidth18,
                                   color: Colors.amberAccent,),
-                                SizedBox(width: 3,),
-                                Text(scriptureList.length > 0 ? "week ${weekNumber(DateTime.now())}" : "",
+                                SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
+                                Text(scriptureList.isNotEmpty ? "week ${weekNumber(DateTime.now())}" : "",
                                   style: TextStyle(color: Colors.white,
-                                      fontSize: 18,
+                                      fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
                                       fontWeight: FontWeight.bold),)
                               ],
-                            ),
-                            SizedBox(height: 14.3,),
+                            ): Container(),
+                            SizedBox(height: Dimensions.prayerListStackPositionedContainerHeight14,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -178,7 +171,7 @@ class _PrayerListState extends State<PrayerList> {
                                         icon: Icon(Icons.favorite,
                                           color: isTapped == false
                                               ? _iconColor
-                                              : Colors.red, size: 30,))
+                                              : Colors.red, size: Dimensions.prayerListStackPositionedContainerIconWidth30,))
                                   ],
                                 )
                               ],
@@ -192,7 +185,7 @@ class _PrayerListState extends State<PrayerList> {
           ),
         ),
         SizedBox(
-          height: 10,
+          height: Dimensions.prayerListStackPositionedContainerHeight10,
         ),
 
       ],
@@ -201,9 +194,8 @@ class _PrayerListState extends State<PrayerList> {
 
   int getTodaysDay() {
     final date = DateTime.now();
-    final diff = date.difference(new DateTime(date.year, 1, 1, 0, 0));
+    final diff = date.difference(DateTime(date.year, 1, 1, 0, 0));
     final diffInDays = diff.inDays;
-    print(diffInDays);
     return diffInDays;
   }
   int numOfWeeks(int year) {
@@ -220,7 +212,6 @@ class _PrayerListState extends State<PrayerList> {
     } else if (woy > numOfWeeks(date.year)) {
       woy = 1;
     }
-    print(woy);
     return woy;
   }
 }

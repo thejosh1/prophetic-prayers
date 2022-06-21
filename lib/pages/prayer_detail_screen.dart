@@ -33,7 +33,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("images/" + data[0]),
+                          image: AssetImage(data[0]),
                           fit: BoxFit.cover)),
                 )),
             Positioned(
@@ -82,10 +82,11 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                             Row(
                               children: [
                                 Icon(
-                                  Icons.hourglass_bottom_outlined,
+                                  Icons.calendar_today,
                                   color: Color(0xFFBEC2CE),
                                   size: 15,
                                 ),
+                                SizedBox(width: 5,),
                                 Text(
                                   data[3],
                                   style: TextStyle(
@@ -106,6 +107,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           height: 7,
                         ),
                         Text(
+                          //title
                           data[1],
                           style: TextStyle(
                               color: Color(0xFF1E2432),
@@ -251,6 +253,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                               children: [
                                 Text("Verse", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
                                 Text(
+                                  //scripture verse
                                   data[4],
                                   style: TextStyle(
                                       fontFamily: 'Poppins',
@@ -262,6 +265,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                 SizedBox(height: 20,),
                                 Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: 18, fontWeight: FontWeight.bold),),
                                 Text(
+                                  //prayer point
                                   data[2],
                                   style: TextStyle(
                                       fontFamily: 'Poppins',
