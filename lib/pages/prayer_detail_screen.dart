@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:prophetic_prayers/services/notify_services.dart';
+
 
 class PrayerDetailScreen extends StatefulWidget {
   const PrayerDetailScreen({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class PrayerDetailScreen extends StatefulWidget {
   State<PrayerDetailScreen> createState() => _PrayerDetailScreenState();
 }
 
-class _PrayerDetailScreenState extends State<PrayerDetailScreen> {\
+class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
   @override
   Widget build(BuildContext context) {
     Future<void> _openTimePicker(BuildContext context) async {
