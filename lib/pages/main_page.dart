@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_screen.dart';
 
+import '../services/notify_services.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -11,6 +13,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  var notifyHelper;
+
+  @override
+  void initState() {
+    super.initState();
+    notifyHelper = NotifyHelper();
+    notifyHelper.initializeNotification();
+    notifyHelper.requestIOSPermissions();
+  }
   final controller = PageController(initialPage: 0);
 
   int currentIndex = 0;

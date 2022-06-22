@@ -1,6 +1,8 @@
 import "dart:async";
+import 'dart:io';
 import "package:path/path.dart";
-import 'package:prophetic_prayers/utils/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:sqflite/sqflite.dart';
 
 import '../models/streak.dart';
@@ -9,33 +11,33 @@ final _streak = "streak";
 
 class DatabaseHelper {
   //singleton
-  static DatabaseHelper _databaseHelper = DatabaseHelper._createInstance();
-  static Database? _database;
+  DatabaseHelper._privateContructor();
+  static final DatabaseHelper instance = DatabaseHelper._privateContructor();
 
-  DatabaseHelper._createInstance();
-  factory DatabaseHelper() {
-      return _databaseHelper;
-  }
+
+  static Database? _database;
+  Future<Database> get database async => _database ??= await initDatabase();
+
 
   Future<Database> initDatabase() async {
-    var database = await openDatabase(
-      join(await getDatabasesPath(), "streak.db"),
-      //when the database is first created add data to the database
-      onCreate: (db, version) {
-        db.execute(
-          """CREATE TABLE $_streak(
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "streak.db");
+    return await openDatabase(
+        path,
+      version: 1,
+      onCreate: _onCreate
+    );
+  }
+  Future _onCreate (Database db, int version) async {
+    await db.execute(
+      """CREATE TABLE $_streak(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           streak INTEGER,
           lastRecordedDate INTEGER)
-          """,
-        );
-      },
-      version: 1,
-    );
-    return database;
+      """,);
   }
 
-  Future<Streak> _getStreak(int id) async {
+  Future<Streak> getStreak(int id) async {
     final Database? _db = await _database;
 
     final List<Map<String, dynamic>> map = await _db!.query(_streak, where: "id = ?", whereArgs: [id], limit: 1);
@@ -64,7 +66,7 @@ class DatabaseHelper {
         _resetStreakCount(id);
       } else {
         int id = map['id'];
-        _getStreak(id);
+        getStreak(id);
       }
     }
   }
@@ -72,7 +74,7 @@ class DatabaseHelper {
   void _resetStreakCount(int StreakId) async {
     final Database? _db = await _database;
 
-    Streak existingStreak = await _getStreak(StreakId);
+    Streak existingStreak = await getStreak(StreakId);
     existingStreak.streak = 0;
 
     //can return the number of rows updated
@@ -80,7 +82,7 @@ class DatabaseHelper {
       where: "id = ?", whereArgs: [StreakId]
     );
 
-    Streak _existingStreak = await _getStreak(StreakId);
+    Streak _existingStreak = await getStreak(StreakId);
     existingStreak.streak = 0;
 
     _db.update(_streak, existingStreak.toMap(),

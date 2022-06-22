@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/pages/prayer_list.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
+import '../services/notify_services.dart';
 import '../widgets/big_text.dart';
 
 class PrayerScreen extends StatefulWidget {
