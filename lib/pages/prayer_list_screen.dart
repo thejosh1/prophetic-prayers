@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:prophetic_prayers/controller/scripture_controller.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';

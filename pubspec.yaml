@@ -43,6 +43,7 @@ dependencies:
   share_plus: ^0.0.1
   sqflite:
   path_provider: ^2.0.11
+  timezone: ^0.8.0
 
 dev_dependencies:
   flutter_test:

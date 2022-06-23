@@ -1,7 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:prophetic_prayers/pages/prayer_list.dart';
-import 'package:prophetic_prayers/utils/dimensions.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:prophetic_prayers/controller/scripture_controller.dart';
+import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/pages/prayer_list.dart';
+import 'package:prophetic_prayers/services/search_services.dart';
+import 'package:prophetic_prayers/utils/dimensions.dart';
+import 'package:get/get.dart';
+import '../models/prayers.dart';
 import '../services/notify_services.dart';
 import '../widgets/big_text.dart';
 
@@ -13,6 +19,28 @@ class PrayerScreen extends StatefulWidget {
 }
 
 class _PrayerScreenState extends State<PrayerScreen> {
+  Scripture scripture = Scripture();
+  TextEditingController _searchController = TextEditingController();
+  String selectedScriptures = '';
+
+  @override
+  void initState() {
+    super.initState();
+    readJson();
+  }
+
+  // Future<void> readJson() async {
+  //   //read the json file
+  //   await DefaultAssetBundle.of(context)
+  //       .loadString("json/scriptures.json")
+  //       .then((jsonData) {
+  //     setState(() {
+  //       final list = json.decode(jsonData) as List<dynamic>;
+  //       scriptureList = list.map((e) => Scripture.fromJson(e)).toList();
+  //     });
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,26 +66,29 @@ class _PrayerScreenState extends State<PrayerScreen> {
                             ),
                             padding: EdgeInsets.only(
                                 left: Dimensions.pageScreenExpandedPaddingWidth20, right: Dimensions.pageScreenExpandedPaddingWidth12, top: Dimensions.pageScreenExpandedPaddingHeight10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                Expanded(
-                                  child: TextField(
-                                    decoration: InputDecoration.collapsed(
-                                      hintText: "Search",
-                                      hintStyle: TextStyle(
-                                        color: Color(0xffBEC2CE),
-                                      ),
+                            child: InkWell(
+                                onTap: () async{
+                                  await showSearch(context: context, delegate: SearchServices(scripture));
+                                },
+                                child:  Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                        child: Text("search", style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: Dimensions.prayerListScreenContainerWidth14,
+                                            color: Color(0xFFBEC2CE)
+                                        ))
                                     ),
-                                  ),
+                                    Icon(
+                                      Icons.search_outlined,
+                                      color: Colors.grey,
+                                    ),
+                                  ],
                                 ),
-                                Icon(
-                                  Icons.search_outlined,
-                                  color: Colors.grey,
-                                )
-                              ],
-                            ),
+                            )
+
                           ),
                         ),
                         SizedBox(width: Dimensions.pageScreenSizedBoxWidth17),
