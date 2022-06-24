@@ -2,24 +2,57 @@ import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../services/notify_services.dart';
+
 
 class PrayerDetailScreen extends StatefulWidget {
-  const PrayerDetailScreen({Key? key}) : super(key: key);
+  final String? payload;
+  const PrayerDetailScreen({Key? key, this.payload}) : super(key: key);
 
   @override
   State<PrayerDetailScreen> createState() => _PrayerDetailScreenState();
 }
 
 class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    NotifyServices.init();
+    listenNotifications();
+  }
+
+  void listenNotifications() =>
+      NotifyServices.onNotifications.stream.listen(onClickedNotification);
+
+  void onClickedNotification(String? payload) => Get.to(() => PrayerDetailScreen(), arguments: [payload]);
+
   @override
   Widget build(BuildContext context) {
+    final localizations = MaterialLocalizations.of(context);
+    var data = Get.arguments;
     Future<void> _openTimePicker(BuildContext context) async {
       final TimeOfDay? time = await showTimePicker(context: context, initialTime: TimeOfDay.now());
       if(time !=null) {
         //set a scheduled notification based on the time
+        final _time = localizations.formatTimeOfDay(time).split("p")[0];
+        final formattedtime = int.parse(_time);
+        setState(() {
+          NotifyServices.showNotification(
+            title: "set a prayer reminder",
+            body: "Your reminder has been set to ${localizations.formatTimeOfDay(time)}",
+            payload: data[3]
+          );
+          NotifyServices.showScheduledNotification(
+              title: "It's time to pray",
+              body: data[1],
+              payload: data[3],
+              scheduledDate: DateTime.now().add(Duration(hours: formattedtime),
+              )
+          );
+        });
       }
     }
-    var data = Get.arguments;
     return Scaffold(
       body: Container(
         height: double.maxFinite,
@@ -166,60 +199,6 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                             SizedBox(
                               width: 8,
                             ),
-                            // GestureDetector(
-                            //   onTap: (){
-                            //     Get.to(()=>const TestimonyScreen());
-                            //   },
-                            //   child: Column(
-                            //     mainAxisAlignment: MainAxisAlignment.start,
-                            //     children: [
-                            //       Column(
-                            //         children: [
-                            //           Stack(
-                            //             children: <Widget>[
-                            //               Icon(Icons.edit, size: 29.89, color: Color(0xFFD1D1D6),),
-                            //               Positioned(
-                            //                 right: 0,
-                            //                 child: Container(
-                            //                   padding: EdgeInsets.all(1),
-                            //                   decoration: BoxDecoration(
-                            //                     color: Color(0xFF1E2432),
-                            //                     borderRadius: BorderRadius.circular(6),
-                            //                   ),
-                            //                   constraints: BoxConstraints(
-                            //                     minWidth: 12,
-                            //                     minHeight: 12,
-                            //                   ),
-                            //                   child: Text(
-                            //                     '5',
-                            //                     style: new TextStyle(
-                            //                       color: Colors.white,
-                            //                       fontSize: 8,
-                            //                     ),
-                            //                     textAlign: TextAlign.center,
-                            //                   ),
-                            //                 ),
-                            //               )
-                            //             ],
-                            //           ),
-                            //           SizedBox(
-                            //             width: 8.6,
-                            //           ),
-                            //           Text(
-                            //             "Testimonies",
-                            //             style: TextStyle(
-                            //                 fontSize: 14,
-                            //                 fontWeight: FontWeight.w200,
-                            //                 color: Color(0xFF1E2432)),
-                            //           ),
-                            //         ],
-                            //       )
-                            //     ],
-                            //   ),
-                            // ),
-                            // SizedBox(
-                            //   width: 8,
-                            // ),
                             Column(
                               children: [
                                 Icon(

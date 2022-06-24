@@ -38,11 +38,11 @@ class SearchServices extends SearchDelegate<Scripture>{
             return Center(child: Text("no data"),);
           }
           final result = snapshot.data as List<Scripture>;
-          final results = result.where((element) => element.title.toString().toLowerCase().contains(query.toLowerCase()));
+          final results = result.where((element) => element.date.toString().toLowerCase().contains(query.toLowerCase()));
           return ListView(
             children: results.map<ListTile>((e) =>
                 ListTile(
-                  title: Text(e?.title ?? "",
+                  title: Text(e?.date ?? "",
                       style: TextStyle(
                           color: Color(0xFF000000),
                           fontSize: Dimensions.prayerListScreenContainerWidth16,
@@ -74,11 +74,11 @@ class SearchServices extends SearchDelegate<Scripture>{
             return Center(child: Text("Search could not find what you were looking for sorry!"),);
           }
           final result = snapshot.data as List<Scripture>;
-          final results = result.where((element) => element.title.toString().toLowerCase().contains(query.toLowerCase()));
+          final results = result.where((element) => element.date.toString().toLowerCase().contains(query.toLowerCase()));
           return ListView(
             children: results.map<ListTile>((e) =>
                 ListTile(
-                  title: Text(e?.title ?? "",
+                  title: Text(e?.date ?? "",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: Dimensions.prayerListScreenContainerWidth14,
@@ -87,7 +87,7 @@ class SearchServices extends SearchDelegate<Scripture>{
                   ),
                   leading: Icon(Icons.bookmark_border_outlined),
                   onTap: () {
-                    query = e.title!;
+                    query = e.date!;
                     showResults(context);
                   },
                 ),

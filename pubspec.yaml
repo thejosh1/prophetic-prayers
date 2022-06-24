@@ -44,6 +44,8 @@ dependencies:
   sqflite:
   path_provider: ^2.0.11
   timezone: ^0.8.0
+  workmanager:
+  rxdart: ^0.27.4
 
 dev_dependencies:
   flutter_test:

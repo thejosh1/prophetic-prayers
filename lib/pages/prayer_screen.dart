@@ -29,17 +29,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
     readJson();
   }
 
-  // Future<void> readJson() async {
-  //   //read the json file
-  //   await DefaultAssetBundle.of(context)
-  //       .loadString("json/scriptures.json")
-  //       .then((jsonData) {
-  //     setState(() {
-  //       final list = json.decode(jsonData) as List<dynamic>;
-  //       scriptureList = list.map((e) => Scripture.fromJson(e)).toList();
-  //     });
-  //   });
-  // }
+
 
   @override
   Widget build(BuildContext context) {
