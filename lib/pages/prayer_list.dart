@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:prophetic_prayers/data/database_helper.dart';
 
 import 'package:prophetic_prayers/models/prayers.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
@@ -23,7 +22,7 @@ class PrayerList extends StatefulWidget {
 
 class _PrayerListState extends State<PrayerList> {
   final Color _iconColor = const Color(0xFFE5E5EA);
-  bool isTapped = false;
+  //bool isTapped = false;
 
   List<Scripture> scriptureList = [];
 
@@ -31,7 +30,6 @@ class _PrayerListState extends State<PrayerList> {
   void initState() {
     super.initState();
     readJson();
-    getStreak();
   }
 
   Future<void> readJson() async {
@@ -132,25 +130,25 @@ class _PrayerListState extends State<PrayerList> {
                             SizedBox(height: Dimensions.prayerListStackPositionedContainerHeight20,),
                             scriptureList.isNotEmpty ? Row(
                               children: [
-                                Icon(Icons.bolt, color: Colors.amberAccent,
-                                  size: Dimensions.prayerListStackPositionedContainerIconWidth18,),
-                                SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
-                                FutureBuilder(
-                                    future: DatabaseHelper.instance.checkStreak(),
-                                    builder: (context, snapshot) {
-                                      if(!snapshot.hasData) {
-                                        return Text("streak 0", style: TextStyle(color: Colors.white,
-                                            fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
-                                            fontWeight: FontWeight.bold));
-                                      }
-                                      return Text(snapshot.data.toString(),
-                                        style: TextStyle(color: Colors.white,
-                                            fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
-                                            fontWeight: FontWeight.bold),
-                                      );
-                                    }
-                                ),
-                                SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth6,),
+                                // Icon(Icons.bolt, color: Colors.amberAccent,
+                                //   size: Dimensions.prayerListStackPositionedContainerIconWidth18,),
+                               // SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
+                                // FutureBuilder(
+                                //     future: DatabaseHelper.instance.checkStreak(),
+                                //     builder: (context, snapshot) {
+                                //       if(!snapshot.hasData) {
+                                //         return Text("streak 0", style: TextStyle(color: Colors.white,
+                                //             fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
+                                //             fontWeight: FontWeight.bold));
+                                //       }
+                                //       return Text(snapshot.data.toString(),
+                                //         style: TextStyle(color: Colors.white,
+                                //             fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
+                                //             fontWeight: FontWeight.bold),
+                                //       );
+                                //     }
+                                // ),
+                               // SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth6,),
                                 Icon(Icons.sunny, size: Dimensions.prayerListStackPositionedContainerIconWidth18,
                                   color: Colors.amberAccent,),
                                 SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
@@ -171,20 +169,20 @@ class _PrayerListState extends State<PrayerList> {
                                     // Text("send me this daily", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    // Icon(Icons.favorite, color: Color(0xFFE5E5EA), size: 30,),
-                                    IconButton(onPressed: () {
-                                      setState(() {
-                                        isTapped = !isTapped;
-                                      });
-                                    },
-                                        icon: Icon(Icons.favorite,
-                                          color: isTapped == false
-                                              ? _iconColor
-                                              : Colors.red, size: Dimensions.prayerListStackPositionedContainerIconWidth30,))
-                                  ],
-                                )
+                                // Row(
+                                //   children: [
+                                //     // Icon(Icons.favorite, color: Color(0xFFE5E5EA), size: 30,),
+                                //     IconButton(onPressed: () {
+                                //       setState(() {
+                                //         isTapped = !isTapped;
+                                //       });
+                                //     },
+                                //         icon: Icon(Icons.favorite,
+                                //           color: isTapped == false
+                                //               ? _iconColor
+                                //               : Colors.red, size: Dimensions.prayerListStackPositionedContainerIconWidth30,))
+                                //   ],
+                                // )
                               ],
                             )
                           ],

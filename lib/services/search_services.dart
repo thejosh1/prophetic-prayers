@@ -44,11 +44,11 @@ class SearchServices extends SearchDelegate<Scripture>{
                 ListTile(
                   title: Text(e?.date ?? "",
                       style: TextStyle(
-                          color: Color(0xFF000000),
+                          color: const Color(0xFF000000),
                           fontSize: Dimensions.prayerListScreenContainerWidth16,
-                          fontWeight: FontWeight.bold)
+                          fontWeight: FontWeight.w200)
                   ),
-                  leading: Icon(Icons.book_online),
+                  leading: const Icon(Icons.bookmark_border_outlined),
                   onTap: () {
                     close(context, e);
                     Get.to(()=> const PrayerDetailScreen(), arguments: [
@@ -80,7 +80,7 @@ class SearchServices extends SearchDelegate<Scripture>{
                 ListTile(
                   title: Text(e?.date ?? "",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w200,
                         fontSize: Dimensions.prayerListScreenContainerWidth14,
                         color: Color(0xFFBEC2CE)
                     ),
@@ -95,20 +95,6 @@ class SearchServices extends SearchDelegate<Scripture>{
           );
         }
     );
-   // return StreamBuilder(
-   //     stream: scripture,
-   //     builder: (context, AsyncSnapshot<Scripture> snapshot){
-   //       if(!snapshot.hasData) {
-   //         return Center(
-   //           child: Text("search couldn't find anything", textAlign: TextAlign.center,),
-   //         );
-   //       }
-   //       final result = snapshot.data;
-   //       return ListView(
-   //         children: result?.map<Widget>((e) => Text(e.title)).toList()
-   //       );
-   //     }
-   // );
   }
 
   List images = [

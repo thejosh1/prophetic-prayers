@@ -58,4 +58,13 @@ class Dimensions {
   static double prayerListScreenContainerWidth19 = screenWidth/18.69;
   static double prayerListScreenContainerHeight18 = screenHeight/39.62;
   static double prayerListScreenContainerWidth14 = screenWidth/25.71;
+
+
+  static double prayerDetailScreenHeight7 = screenHeight/104.7;
+  static double prayerDetailScreenHeight18 = screenHeight/40.05;
+  static double prayerDetailScreenHeight29 = screenWidth/12.04;
+  static double prayerDetailScreenHeight8 = screenWidth/82.35;
+  static double prayerDetailsScreenHeight60 = screenHeight/12.21;
+  static double prayerDetailsScreenHeight500 = screenHeight/1.4;
+  static double prayerDetailsScreenHeight270 = screenHeight/2.7;
 }

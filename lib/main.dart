@@ -3,11 +3,19 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/data/database_helper.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
+import 'package:prophetic_prayers/services/notify_services.dart';
 
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseHelper;
+  await NotifyServices.init(initScheduled: true);
+  NotifyServices.showScheduledDailyNotification(
+      title: "a reminder",
+      body: "my reminder",
+      payload: "",
+      scheduledDate: DateTime.now());
+  NotifyServices.showScheduledWeeklyNotification(scheduledDate: DateTime.now());
+
 
   runApp(const MyApp());
 }
