@@ -1,130 +1,120 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:prophetic_prayers/utils/user_preference.dart';
-import '../models/users.dart';
-import '../widgets/other_details_widgets.dart';
+import 'package:prophetic_prayers/utils/dimensions.dart';
 
-class ProfilePage extends StatelessWidget {
+import '../controller/auth_controller.dart';
+import '../widgets/profile_widget.dart';
+
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final user = UserPreferences.myUser;
-
-    return Scaffold(
-      appBar: MyAppBar(),
-      backgroundColor: Colors.white,
-      body: Container(
-        margin: EdgeInsets.only(top: 30),
-        child: ListView(
-          physics: BouncingScrollPhysics(),
-          children: [
-            ProfileWidget (
-              imagePath: user.imagePath,
-              onClicked: () async {
-
-              }
-            ),
-            SizedBox(height: 24,),
-            buildName(user),
-            SizedBox(height: 24,),
-            OtherDetails(),
-            SizedBox(height: 48,),
-            Center(
-              child: GestureDetector(
-                onTap: (){},
-                child: SizedBox(
-                  width: 60,
-                  child: Column(
-                    children: [
-                      Text("Logout?", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w200, color: Colors.black),),
-                      Divider(color: Colors.black,)
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  buildName(User user) => Column(
-    children: [
-      Text(user.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
-      SizedBox(height: 4,),
-      Text(user.phonenumber, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFD1D1D6)),),
-      SizedBox(height: 4,),
-      Text(user.email, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFFD1D1D6)),)
-    ],
-  );
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-
-
-class ProfileWidget extends StatelessWidget {
-  final String imagePath;
-  final VoidCallback onClicked;
-
-  const ProfileWidget({Key? key, required this.imagePath, required this.onClicked}) : super(key: key);
-
+class _ProfilePageState extends State<ProfilePage> {
+  final user = AuthController.instance.auth.currentUser;
+  final CollectionReference ref = FirebaseFirestore.instance.collection("users");
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const MyAppBar(),
+      backgroundColor: Colors.white,
+      body: FutureBuilder(
+        future: ref.doc(user!.uid).get(),
+        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black),),);
+          }
+          if(snapshot.hasData && snapshot.data!.exists) {
+            Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+            return Container(
+              margin: EdgeInsets.only(top: Dimensions.prayerListScreenContainerheight22),
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  SizedBox(height: 10,),
+                  ProfileWidget(
+                    imagePath: data["imagePath"],
+                    onClicked: () async {},
+                  ),
+                  SizedBox(height: 24,),
+                  buildName(data["name"]),
+                  SizedBox(height: 4,),
+                  buildEmail(data["email"]),
+                  SizedBox(height: 4,),
+                  buildNumber(data["phonenumber"]),
+                  SizedBox(height: 100,),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 80),
+                    child: Row(
+                    children: [
+                      Text("do you want to SignOut?", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w200)),
+                      SizedBox(width: 5,),
+
+                      GestureDetector(
+                        onTap: () {
+                          AuthController.instance.Logout();
+                        },
+                        child: const Text("SignOut", style: TextStyle(color: Color(0xff515BDE), fontSize: 14, fontWeight: FontWeight.w200),),
+                      )
+                    ],
+                  ),)
+                ],
+              ),
+            );
+            //   Column(
+            //   children: [
+            //     Text("${data["name"]}"),
+            //     Text("${data["email"]}"),
+            //     Text("${data["phonenumber"]}"),
+            //     Container(
+            //       height: 100,
+            //       width: 100,
+            //       decoration: BoxDecoration(
+            //           image: DecorationImage(
+            //               image: NetworkImage("${data["imagePath"]}"),
+            //               fit: BoxFit.cover
+            //           )
+            //       ),
+            //     )
+            //   ],
+            // );
+          }
+          return const Center(child: Text("no data"),);
+        },
+      )
+    );
+  }
+
+  Widget buildName(String username) {
     return Center(
-      child: Stack(
-        children: [
-          buildImage(),
-          Positioned(
-              bottom: 0,
-              right: 4,
-              child: buildEditIcon(Colors.black)
-          ),
-        ],
+      child: Text(
+        username,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
       ),
     );
   }
 
-  Widget buildImage() {
-    final image = NetworkImage(imagePath);
-    
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Ink.image(
-          image: image,
-          fit: BoxFit.cover,
-          width: 120,
-          height: 120,
-          child: InkWell(onTap: onClicked,),
-        ),
+  Widget buildEmail(String email) {
+    return Center(
+      child: Text(
+          email,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
       ),
     );
   }
 
-  Widget buildEditIcon(Color color) => buildCircle(
-    all: 3,
-    color: Colors.white,
-    child: buildCircle(
-      color: color,
-      all: 8,
-      child: Icon(
-        Icons.edit,
-        color: Colors.white,
-        size: 20,
+  Widget buildNumber(String phonenumber) {
+    return Center(
+      child: Text(
+        phonenumber,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
       ),
-    ),
-  );
-
-  Widget buildCircle({required Widget child, required double all, required Color color}) => ClipOval(
-    child: Container(
-      child: child,
-      color: color,
-      padding: EdgeInsets.all(all),
-    ),
-  );
-
+    );
+  }
 }
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);

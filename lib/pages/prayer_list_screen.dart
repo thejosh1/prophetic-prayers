@@ -25,55 +25,57 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         body: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: [
-             Container(
-               margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth10, right: Dimensions.prayerListScreenContainerWidth16, top: Dimensions.prayerListScreenContainerHeight44),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   IconButton(onPressed: (){Get.to(()=> const PrayerScreen());}, icon: Icon(Icons.arrow_back, size: Dimensions.prayerListScreenContainerWidth18, color: Color(0xFF000000),)),
-                //   IconButton(onPressed: (){}, icon: Icon(Icons.more_vert, size: 20, color: Color(0xFF000000),))
-                 ],
-               ),
-             ),
-             Divider(
-               height: Dimensions.prayerListScreenContainerHeight2,
-               color: Color(0xFFEAECEF),
-               thickness: Dimensions.prayerListScreenContainerWidth2,
-             ),
-             SizedBox(height: Dimensions.prayerListScreenContainerheight22,),
-             Container(
-                 margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth20),
-                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
+         body: SingleChildScrollView(
+           child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+               Container(
+                 margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth10, right: Dimensions.prayerListScreenContainerWidth16, top: Dimensions.prayerListScreenContainerHeight44),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
-                     Text("Prayers For the Year", style: TextStyle(fontSize: Dimensions.prayerListScreenContainerWidth16, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
-                     SizedBox(height: Dimensions.prayerListScreenContainerHeight27,),
-                     Container(
-                       height: Dimensions.prayerListScreenContainerHeight532,
-                       width: Dimensions.prayerListScreenContainerWidth335,
-                       child: FutureBuilder(
-                         future: readJson(),
-                         builder: (context, snapshot) {
-                           if(snapshot.hasError) {
-                             return Center(child: Text("${snapshot.error}"));
-                           } else if(snapshot.hasData){
-
-                             var _scriptures = snapshot.data as List<Scripture>;
-
-                             return buildScriptures(_scriptures);
-                           } else {
-                             return Center(child: Text("Loading"),);
-                           }
-                         }
-                       )
-                     )
+                     IconButton(onPressed: (){Get.to(()=> const PrayerScreen());}, icon: Icon(Icons.arrow_back, size: Dimensions.prayerListScreenContainerWidth18, color: Color(0xFF000000),)),
+                  //   IconButton(onPressed: (){}, icon: Icon(Icons.more_vert, size: 20, color: Color(0xFF000000),))
                    ],
-                 )
-             )
-           ],
+                 ),
+               ),
+               Divider(
+                 height: Dimensions.prayerListScreenContainerHeight2,
+                 color: Color(0xFFEAECEF),
+                 thickness: Dimensions.prayerListScreenContainerWidth2,
+               ),
+               SizedBox(height: Dimensions.prayerListScreenContainerheight22,),
+               Container(
+                   margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth20),
+                   child: Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       Text("Prayers For the Year", style: TextStyle(fontSize: Dimensions.prayerListScreenContainerWidth16, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
+                       SizedBox(height: Dimensions.prayerListScreenContainerHeight27,),
+                       Container(
+                         height: Dimensions.prayerListScreenContainerHeight532,
+                         width: Dimensions.prayerListScreenContainerWidth335,
+                         child: FutureBuilder(
+                           future: readJson(),
+                           builder: (context, snapshot) {
+                             if(snapshot.hasError) {
+                               return Center(child: Text("${snapshot.error}"));
+                             } else if(snapshot.hasData){
+
+                               var _scriptures = snapshot.data as List<Scripture>;
+
+                               return buildScriptures(_scriptures);
+                             } else {
+                               return Center(child: Text("Loading"),);
+                             }
+                           }
+                         )
+                       )
+                     ],
+                   )
+               )
+             ],
+           ),
          ),
     );
 
@@ -100,7 +102,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
     "images/child(44).jpg",
   ];
   Widget buildScriptures(List<Scripture> scriptures) => ListView.builder(
-      itemCount: scriptures == null? 0: scriptures.length ,
+      itemCount: scriptures.length ,
       itemBuilder: (_, index) {
         final scriptureList = scriptures[index];
         var _selectedImage = images[Random().nextInt(images.length)];

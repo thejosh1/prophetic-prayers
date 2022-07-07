@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "939707795355",
+    "project_id": "prophetic-prayers-for-ch-5516a",
+    "storage_bucket": "prophetic-prayers-for-ch-5516a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939707795355:android:b1260a87521c0cf36f433e",
+        "android_client_info": {
+          "package_name": "com.example.prophetic_prayers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "939707795355-pc6iu1s1ceskdq9nhbctr2tchc6aov7j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdne0DIVGD6WnDO7sChKTsaErXhc09kvY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "939707795355-pc6iu1s1ceskdq9nhbctr2tchc6aov7j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

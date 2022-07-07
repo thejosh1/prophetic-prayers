@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
+import 'package:prophetic_prayers/services/testimony_services.dart';
 
 class TestimonyScreen extends StatefulWidget {
   const TestimonyScreen({Key? key}) : super(key: key);
@@ -28,7 +30,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                         onPressed: () {
                           Get.back();
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_back,
                           size: 18,
                           color: Color(0xFF000000),
@@ -43,7 +45,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                   ],
                 ),
               ),
-              Divider(
+              const Divider(
                 height: 2,
                 color: Color(0xFFEAECEF),
                 thickness: 2,
@@ -61,7 +63,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                       children: [
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               "TESTIMONIES",
                               style: TextStyle(
                                   fontSize: 14,
@@ -76,8 +78,8 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                               width: 27,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  color: Color(0xFFE2952A)),
-                              child: Center(
+                                  color: const Color(0xFFE2952A)),
+                              child: const Center(
                                 child: Text(
                                     "4",
                                     style: TextStyle(
@@ -95,7 +97,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
+                            children: const [
                               Text("Testify", style: TextStyle(color: Color(0xFF515BDE)),),
                               SizedBox(width: 5,),
                               Icon(
@@ -116,12 +118,24 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                             height:550,
                             width: 340,
                             margin: EdgeInsets.only(right: 16),
-                            child: ListView.separated(
-                              itemCount: 4,
-                              itemBuilder: (_, index){
-                                return _buildList(index);
-                              }, separatorBuilder: (BuildContext context, int index) { return Divider(); },
-                            ),
+                            child: StreamBuilder(
+                              stream: TestimonyServices.showTestimony(),
+                              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if(snapshot.connectionState == ConnectionState.waiting) {
+                                  return Center(child: CircularProgressIndicator(),);
+                                } else if(snapshot.connectionState == ConnectionState.done && !snapshot.hasData) {
+                                  //a snackbar would be here also
+                                  return Center(child: Text("No testimonies yet"),);
+                                }
+                                return ListView.separated(
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (_, index){
+                                    DocumentSnapshot documentsnapshot = snapshot.data!.docs[index];
+                                    return _buildList(documentsnapshot);
+                                  }, separatorBuilder: (BuildContext context, int index) { return Divider(); },
+                                );
+                              },
+                            )
                           ),
                         ],
                       ),
@@ -155,7 +169,8 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
     );
   }
 
-  Widget _buildList(int index) {
+  Widget _buildList(DocumentSnapshot documentSnapshot) {
+    final doc = documentSnapshot;
     return GestureDetector(
       onTap: (){
         Get.to(()=> const TestimonyDetailPage());
@@ -190,7 +205,7 @@ class _TestimonyScreenState extends State<TestimonyScreen> {
                     Container(
                       height: 81,
                       width: 250,
-                      child: Text("There are many variations of messages of lorem ipsum available, but the majority have suffered",
+                      child: Text(doc["testimony"],
                       style: TextStyle(fontWeight: FontWeight.w200, fontSize: 16, color: Colors.black),),
                     ),
                   ]

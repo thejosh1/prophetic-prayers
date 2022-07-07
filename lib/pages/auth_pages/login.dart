@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:prophetic_prayers/controller/auth_controller.dart';
+import 'package:prophetic_prayers/pages/auth_pages/sign_up.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -22,13 +25,16 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 22),
         child: Column(
           children: [
             SizedBox(height: 100),
-            const TextField(
+            TextField(
+              controller: _emailController,
               style: TextStyle(),
               decoration: InputDecoration(
                 border: UnderlineInputBorder(
@@ -37,7 +43,7 @@ class _LoginFormState extends State<LoginForm> {
                     color: Color(0xffBEC2CE),
                   ),
                 ),
-                hintText: 'Name',
+                hintText: 'Email',
                 hintStyle: TextStyle(
                   color: Color(0xffBEC2CE),
                   fontSize: 16,
@@ -48,8 +54,9 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
             ),
-            const SizedBox(height: 40),
-            const TextField(
+            SizedBox(height: 40),
+            TextField(
+              controller: _passwordController,
               style: TextStyle(),
               obscureText: true,
               decoration: InputDecoration(
@@ -72,7 +79,9 @@ class _LoginFormState extends State<LoginForm> {
             ),
             const SizedBox(height: 43),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                AuthController.instance.Login(_emailController.text.trim(), _passwordController.text.trim());
+              },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
@@ -92,7 +101,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             const SizedBox(height: 30),
-            const Text(
+            Text(
               'Forgot password?',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -100,10 +109,15 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             const SizedBox(height: 30),
-            const Text(
-              'Here for the first time? Sign up',
-              style: TextStyle(
-                color: Color(0xffBEC2CE),
+            GestureDetector(
+              onTap: (() {
+                Get.offAll(()=> const SignUpScreen());
+              }),
+              child: Text(
+                'Here for the first time? Sign up',
+                style: TextStyle(
+                  color: Color(0xffBEC2CE),
+                ),
               ),
             )
           ],

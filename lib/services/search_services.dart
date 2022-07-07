@@ -17,7 +17,7 @@ class SearchServices extends SearchDelegate<Scripture>{
     return [
       IconButton(onPressed: (){
         query = '';
-      }, icon: Icon(Icons.clear))
+      }, icon: const Icon(Icons.clear))
     ];
   }
 
@@ -25,7 +25,7 @@ class SearchServices extends SearchDelegate<Scripture>{
   Widget? buildLeading(BuildContext context) {
     return IconButton(onPressed: (){
       close(context, scripture);
-    }, icon: Icon(Icons.arrow_back));
+    }, icon: const Icon(Icons.arrow_back));
   }
 
   @override
@@ -35,14 +35,14 @@ class SearchServices extends SearchDelegate<Scripture>{
         future: readJson(),
         builder: (context, snapshot) {
           if(!snapshot.hasData) {
-            return Center(child: Text("no data"),);
+            return const Center(child: Text("no data"),);
           }
           final result = snapshot.data as List<Scripture>;
           final results = result.where((element) => element.date.toString().toLowerCase().contains(query.toLowerCase()));
           return ListView(
             children: results.map<ListTile>((e) =>
                 ListTile(
-                  title: Text(e?.date ?? "",
+                  title: Text(e.date ?? "",
                       style: TextStyle(
                           color: const Color(0xFF000000),
                           fontSize: Dimensions.prayerListScreenContainerWidth16,
@@ -71,21 +71,21 @@ class SearchServices extends SearchDelegate<Scripture>{
         future: readJson(),
         builder: (context, snapshot) {
           if(!snapshot.hasData) {
-            return Center(child: Text("Search could not find what you were looking for sorry!"),);
+            return const Center(child: Text("Search could not find what you were looking for sorry!"),);
           }
           final result = snapshot.data as List<Scripture>;
           final results = result.where((element) => element.date.toString().toLowerCase().contains(query.toLowerCase()));
           return ListView(
             children: results.map<ListTile>((e) =>
                 ListTile(
-                  title: Text(e?.date ?? "",
+                  title: Text(e.date ?? "",
                     style: TextStyle(
                         fontWeight: FontWeight.w200,
                         fontSize: Dimensions.prayerListScreenContainerWidth14,
-                        color: Color(0xFFBEC2CE)
+                        color: const Color(0xFFBEC2CE)
                     ),
                   ),
-                  leading: Icon(Icons.bookmark_border_outlined),
+                  leading: const Icon(Icons.bookmark_border_outlined),
                   onTap: () {
                     query = e.date!;
                     showResults(context);

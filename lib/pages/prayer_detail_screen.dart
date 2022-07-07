@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
+import 'package:prophetic_prayers/pages/testimony_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
 
@@ -18,12 +20,13 @@ class PrayerDetailScreen extends StatefulWidget {
 }
 
 class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
-
+  var data = Get.arguments;
   @override
   void initState() {
     super.initState();
     NotifyServices.init(initScheduled: true);
     listenNotifications();
+    data;
   }
 
   void listenNotifications() =>
@@ -33,7 +36,6 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = MaterialLocalizations.of(context);
-    var data = Get.arguments;
     Future<void> _openTimePicker(BuildContext context) async {
       final TimeOfDay? time = await showTimePicker(
           context: context,
@@ -49,7 +51,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
           NotifyServices.showNotification(
             title: "Prayer reminder",
             body: "Your reminder has been set to ${localizations.formatTimeOfDay(time)}",
-            payload: data[3]
+            payload: data[2]
           );
         });
         int formattedtime = int.parse(_time.split(":")[0]);
@@ -57,8 +59,8 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
         setState(() {
           NotifyServices.showScheduledNotification(
             title: "It's time to pray",
-            body: data[1],
-            payload: data[3],
+            body: data[2],
+            payload: data[2],
             //to implement this subtract the time the user chooses from the current time and pass it as a duration in datetime.add
             scheduledDate: DateTime.now().add(const Duration(seconds: 12)),
           );
@@ -75,13 +77,14 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: 300,
+                  height: 440,
                   width: double.maxFinite,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(data[0]),
+                          image: AssetImage("images/child(36).jpg"),
                           fit: BoxFit.cover)),
-                )),
+                )
+            ),
             Positioned(
                 left: 0,
                 right: 0,
@@ -134,7 +137,8 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                 ),
                                 SizedBox(width: Dimensions.prayerListScreenContainerWidth6-1,),
                                 Text(
-                                  data[3],
+                                  //prayer id
+                                  data[0],
                                   style: TextStyle(
                                       fontSize: Dimensions.prayerListScreenContainerWidth14,
                                       fontWeight: FontWeight.bold,
@@ -154,7 +158,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                         ),
                         Text(
                           //title
-                          data[1],
+                          data[2],
                           style: TextStyle(
                               color: Color(0xFF1E2432),
                               fontSize: Dimensions.prayerListStackPositionedContainerTextWidth28,
@@ -211,6 +215,60 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                             SizedBox(
                               width: Dimensions.prayerListScreenContainerWidth6+2,
                             ),
+                            GestureDetector(
+                              onTap: (() {
+                                Get.to(()=> const TestimonyScreen(), arguments: []);
+                              }),
+                              child: Column(
+                                children: [
+                                  Stack(
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.note_outlined,
+                                        size: Dimensions.prayerDetailScreenHeight29,
+                                        color: Color(0xFFD1D1D6),
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                          child: Container(
+                                            padding: EdgeInsets.all(1),
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius: BorderRadius.circular(6)
+                                            ),
+                                            constraints: BoxConstraints(
+                                              minWidth: 12,
+                                              minHeight: 12
+                                            ),
+                                            //get the number of testimonies and display
+                                            child: Text(
+                                              "10",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 8,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          )
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: Dimensions.prayerDetailScreenHeight8,
+                                  ),
+                                  Text(
+                                    "Testimonies",
+                                    style:TextStyle(
+                                        fontSize: Dimensions.prayerListScreenContainerWidth14,
+                                        fontWeight: FontWeight.w200,
+                                        color: Color(0xFF1E2432)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: Dimensions.prayerListScreenContainerWidth6+2,
+                            ),
                             Column(
                               children: [
                                 Icon(
@@ -246,7 +304,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                 Text("Verse", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.prayerListScreenContainerWidth18, fontWeight: FontWeight.bold),),
                                 Text(
                                   //scripture verse
-                                  data[4],
+                                  data[3],
                                   style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontSize: Dimensions.prayerListScreenContainerWidth16,
@@ -258,7 +316,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                 Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.prayerListScreenContainerWidth18, fontWeight: FontWeight.bold),),
                                 Text(
                                   //prayer point
-                                  data[2],
+                                  data[1],
                                   style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontSize: Dimensions.prayerListScreenContainerWidth16,

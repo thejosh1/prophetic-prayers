@@ -9,10 +9,6 @@ import 'package:prophetic_prayers/models/prayers.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
-import '../models/streak.dart';
-import '../utils/shared_preferences.dart';
-
-
 class PrayerList extends StatefulWidget {
   const PrayerList({Key? key}) : super(key: key);
 
@@ -21,6 +17,11 @@ class PrayerList extends StatefulWidget {
 }
 
 class _PrayerListState extends State<PrayerList> {
+  PageController pageController = PageController(viewportFraction: 0.95,);
+
+  double _currPageValue = 0.0;
+  double _scaleFactor = 0.8;
+  final int _height = 500;
   final Color _iconColor = const Color(0xFFE5E5EA);
   //bool isTapped = false;
 
@@ -29,7 +30,18 @@ class _PrayerListState extends State<PrayerList> {
   @override
   void initState() {
     super.initState();
+    pageController.addListener(() {
+      setState(() {
+        _currPageValue = pageController.page!;
+      });
+    });
     readJson();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   Future<void> readJson() async {
@@ -44,9 +56,33 @@ class _PrayerListState extends State<PrayerList> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     //String _streakController = widget.streak.streak.toString();
+
+    Size size = MediaQuery.of(context).size;
+    return scriptureList.isNotEmpty ? Column(
+      children: [
+        Container(
+          height: 500,
+          width: size.width,
+          child: PageView.builder(
+              itemCount: 3,
+              controller: pageController,
+              itemBuilder: (_, index) {
+                return _buildPage(index);
+              }),
+        ),
+        SizedBox(
+          height: Dimensions.prayerListStackPositionedContainerHeight10,
+        ),
+
+      ],
+    ) : Container();
+  }
+
+  Widget _buildPage(int index) {
     List images = [
       "images/child(26).jpg",
       "images/child(27).jpg",
@@ -69,25 +105,44 @@ class _PrayerListState extends State<PrayerList> {
       "images/child(44).jpg",
     ];
     var selectedImage = images[Random().nextInt(images.length)];
-    Size size = MediaQuery.of(context).size;
-    return scriptureList.isNotEmpty ? Column(
-      children: [
-        Container(
-          height: Dimensions.prayerListColumnContainerHeight500,
-          width: size.width,
-          child: GestureDetector(
-            onTap: () {
-              Get.to(()=> const PrayerDetailScreen(), arguments: [
-                selectedImage,
-                scriptureList[getTodaysDay()-1].title,
-                scriptureList[getTodaysDay()-1].prayerPoint,
-                scriptureList[getTodaysDay()-1].id,
-                scriptureList[getTodaysDay()-1].verse],
-              );
-            },
-            child: Stack(
-              children: [
-                Positioned(
+    List scripturelength = [scriptureList[getTodaysDay()-1], scriptureList[getTodaysDay()], scriptureList[getTodaysDay()+1]];
+    Matrix4 matrix = new Matrix4.identity();
+    if (index == _currPageValue.floor()) {
+      var _currScale = 1.0 - (_currPageValue - index) * (1 - _scaleFactor);
+      var _currTrans = _height * (1 - _currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, _currScale, 1)
+        ..setTranslationRaw(0, _currTrans, 0);
+    } else if (index == _currPageValue.floor() + 1) {
+      var _currScale =
+          _scaleFactor + (_currPageValue - index + 1) * (1 - _scaleFactor);
+      var _currTrans = _height * (1 - _currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, _currScale, 1)
+        ..setTranslationRaw(1, _currTrans, 2);
+    } else if (index == _currPageValue.floor() - 1) {
+      var _currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
+      var _currTrans = _height * (1 - _currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, _currScale, 1)
+        ..setTranslationRaw(1, _currTrans, 1);
+    } else {
+      var _currScale = 0.8;
+      matrix = Matrix4.diagonal3Values(1, _currScale, 1)
+        ..setTranslationRaw(0, _height * (1 - _currScale), 1);
+    }
+    return Transform(
+      transform: matrix,
+      child: GestureDetector(
+        onTap: () {
+          Get.to(()=> const PrayerDetailScreen(), arguments: [
+            selectedImage,
+            scripturelength[index].title,
+            scripturelength[index].prayerPoint,
+            scripturelength[index].id,
+            scripturelength[index].verse],
+          );
+        },
+        child: Stack(
+          children: [
+        Positioned(
                   top: 0,
                   bottom: 0,
                   left: 0,
@@ -99,106 +154,100 @@ class _PrayerListState extends State<PrayerList> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(Dimensions.prayerListStackPositionedContainerHeightRadius30),
                       image: DecorationImage(
-                        image: AssetImage(selectedImage),
+                        image: AssetImage("images/child(26).jpg",),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
-                Positioned(
-                    child: Container(
-                        width: Dimensions.prayerListStackPositionedContainerHeight296,
-                        margin: EdgeInsets.only(left: Dimensions.prayerListStackPositionedContainerWidth20, bottom: Dimensions.prayerListStackPositionedContainerHeight13),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+            Positioned(
+                child: Container(
+                    width: Dimensions.prayerListStackPositionedContainerHeight296,
+                    margin: EdgeInsets.only(left: Dimensions.prayerListStackPositionedContainerWidth20, bottom: Dimensions.prayerListStackPositionedContainerHeight13),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: Dimensions.prayerListStackPositionedContainerHeight10),
+                          child: Text("Verse Of The Day", style: TextStyle(
+                              color: Colors.white,
+                              fontSize: Dimensions.prayerListStackPositionedContainerTextWidth28,
+                              fontWeight: FontWeight.w900),
+                            textAlign: TextAlign.start,),
+                        ),
+                        Expanded(child: Container(),),
+                        Text(scriptureList.isNotEmpty
+                            ? scripturelength[index].title.toString()
+                            : "", style: TextStyle(color: Colors.white,
+                            fontSize: Dimensions.prayerListStackPositionedContainerTextWidth28,
+                            fontWeight: FontWeight.w900),
+                          textAlign: TextAlign.start,),
+                        SizedBox(height: Dimensions.prayerListStackPositionedContainerHeight20,),
+                        Row(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: Dimensions.prayerListStackPositionedContainerHeight10),
-                              child: Text("Verse Of The Day", style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: Dimensions.prayerListStackPositionedContainerTextWidth28,
-                                  fontWeight: FontWeight.w900),
-                                textAlign: TextAlign.start,),
-                            ),
-                            Expanded(child: Container(),),
-                            Text(scriptureList.isNotEmpty
-                                ? scriptureList[getTodaysDay()-1].title.toString()
-                                : "", style: TextStyle(color: Colors.white,
-                                fontSize: Dimensions.prayerListStackPositionedContainerTextWidth28,
-                                fontWeight: FontWeight.w900),
-                              textAlign: TextAlign.start,),
-                            SizedBox(height: Dimensions.prayerListStackPositionedContainerHeight20,),
-                            scriptureList.isNotEmpty ? Row(
-                              children: [
-                                // Icon(Icons.bolt, color: Colors.amberAccent,
-                                //   size: Dimensions.prayerListStackPositionedContainerIconWidth18,),
-                               // SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
-                                // FutureBuilder(
-                                //     future: DatabaseHelper.instance.checkStreak(),
-                                //     builder: (context, snapshot) {
-                                //       if(!snapshot.hasData) {
-                                //         return Text("streak 0", style: TextStyle(color: Colors.white,
-                                //             fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
-                                //             fontWeight: FontWeight.bold));
-                                //       }
-                                //       return Text(snapshot.data.toString(),
-                                //         style: TextStyle(color: Colors.white,
-                                //             fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
-                                //             fontWeight: FontWeight.bold),
-                                //       );
-                                //     }
-                                // ),
-                               // SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth6,),
-                                Icon(Icons.sunny, size: Dimensions.prayerListStackPositionedContainerIconWidth18,
-                                  color: Colors.amberAccent,),
-                                SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
-                                Text(scriptureList.isNotEmpty ? "week ${weekNumber(DateTime.now())}" : "",
-                                  style: TextStyle(color: Colors.white,
-                                      fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
-                                      fontWeight: FontWeight.bold),)
-                              ],
-                            ): Container(),
-                            SizedBox(height: Dimensions.prayerListStackPositionedContainerHeight14,),
+                            // Icon(Icons.bolt, color: Colors.amberAccent,
+                            //   size: Dimensions.prayerListStackPositionedContainerIconWidth18,),
+                            // SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
+                            // FutureBuilder(
+                            //     future: DatabaseHelper.instance.checkStreak(),
+                            //     builder: (context, snapshot) {
+                            //       if(!snapshot.hasData) {
+                            //         return Text("streak 0", style: TextStyle(color: Colors.white,
+                            //             fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
+                            //             fontWeight: FontWeight.bold));
+                            //       }
+                            //       return Text(snapshot.data.toString(),
+                            //         style: TextStyle(color: Colors.white,
+                            //             fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
+                            //             fontWeight: FontWeight.bold),
+                            //       );
+                            //     }
+                            // ),
+                            // SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth6,),
+                            Icon(Icons.sunny, size: Dimensions.prayerListStackPositionedContainerIconWidth18,
+                              color: Colors.amberAccent,),
+                            SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
+                            Text(scriptureList.isNotEmpty ? "week ${weekNumber(DateTime.now())}" : "",
+                              style: TextStyle(color: Colors.white,
+                                  fontSize: Dimensions.prayerListStackPositionedContainerIconWidth18,
+                                  fontWeight: FontWeight.bold),)
+                          ],
+                        ),
+                        SizedBox(height: Dimensions.prayerListStackPositionedContainerHeight14,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    Container()
-                                    // Icon(Icons.add_alert_rounded, color: Colors.white, size: 18,),
-                                    // Text("send me this daily", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
-                                  ],
-                                ),
-                                // Row(
-                                //   children: [
-                                //     // Icon(Icons.favorite, color: Color(0xFFE5E5EA), size: 30,),
-                                //     IconButton(onPressed: () {
-                                //       setState(() {
-                                //         isTapped = !isTapped;
-                                //       });
-                                //     },
-                                //         icon: Icon(Icons.favorite,
-                                //           color: isTapped == false
-                                //               ? _iconColor
-                                //               : Colors.red, size: Dimensions.prayerListStackPositionedContainerIconWidth30,))
-                                //   ],
-                                // )
+                                Container()
+                                // Icon(Icons.add_alert_rounded, color: Colors.white, size: 18,),
+                                // Text("send me this daily", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
                               ],
-                            )
+                            ),
+                            // Row(
+                            //   children: [
+                            //     // Icon(Icons.favorite, color: Color(0xFFE5E5EA), size: 30,),
+                            //     IconButton(onPressed: () {
+                            //       setState(() {
+                            //         isTapped = !isTapped;
+                            //       });
+                            //     },
+                            //         icon: Icon(Icons.favorite,
+                            //           color: isTapped == false
+                            //               ? _iconColor
+                            //               : Colors.red, size: Dimensions.prayerListStackPositionedContainerIconWidth30,))
+                            //   ],
+                            // )
                           ],
                         )
+                      ],
                     )
                 )
-              ],
-            ),
-          ),
+            )
+          ],
         ),
-        SizedBox(
-          height: Dimensions.prayerListStackPositionedContainerHeight10,
-        ),
-
-      ],
-    ) : Container();
+      ),
+    );
   }
 
   int getTodaysDay() {

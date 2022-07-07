@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:prophetic_prayers/controller/auth_controller.dart';
+import 'package:prophetic_prayers/services/testimony_services.dart';
 
 class CreateTestimonyScreen extends StatelessWidget {
   const CreateTestimonyScreen({Key? key}) : super(key: key);
@@ -39,18 +40,18 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: InputDecoration.collapsed(
+                      decoration: const InputDecoration.collapsed(
                           hintText: "Title(optional)",
                       ),
                       style: TextStyle(
-                        fontSize: 32.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.bold
                       ),
                     ),
-                    Divider(),
+                    const Divider(),
                     SizedBox(height: 23),
                     TextFormField(
-                      decoration: InputDecoration.collapsed(
+                      decoration: const InputDecoration.collapsed(
                         hintText: "Testimony",
                       ),
                       style: TextStyle(
@@ -63,7 +64,14 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
               ),
               SizedBox(height: 300),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  TestimonyServices.addItem(
+                    title: _titleController.text.trim(),
+                    testimonies: _noteController.text.trim(),
+                    useruid: AuthController.instance.auth.currentUser!.uid.toString(),
+                  );
+                  Get.back();
+                },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
@@ -113,6 +121,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(onTap: (){
+                FocusManager.instance.primaryFocus?.unfocus();
                 Get.back();
               },child: const Icon(Icons.arrow_back_outlined)),
               const Icon(Icons.more_vert),

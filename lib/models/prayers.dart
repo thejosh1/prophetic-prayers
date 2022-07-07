@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/text.dart';
-
 class Scripture {
   String? id;
   String? title;
