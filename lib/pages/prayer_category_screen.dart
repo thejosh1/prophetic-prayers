@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/pages/auth_pages/sign_up.dart';
-import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
+import 'package:intl/intl.dart';
+import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 
 import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
@@ -23,6 +23,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
   void initState() {
     super.initState();
     readJson();
+    scriptureList;
   }
 
   Future<void> readJson() async {
@@ -40,140 +41,785 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     PageController pageController = PageController(viewportFraction: 0.8);
-    List plan_names = ["Children", "Marriage", "Business", "Work", "Finance"];
-    List plan_images = ["images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/alex-kotliarskyi.jpg", "images/ibrahim-boran.jpg"];
+    List planNames = ["Children", "Marriage", "Business", "Work", "Finance"];
+    List planImages = ["images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/alex-kotliarskyi.jpg", "images/ibrahim-boran.jpg"];
+    List monthNames1 = ["January", "February", "March", "April", "May", "June"];
+    List monthNames2 = ["July", "August", "September", "October", "November", "December"];
+    List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange];
+    List colorList2 = [Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent,];
+    final user = AuthController.instance.auth.currentUser;
+    RxString currname = "Children".obs;
+    RxBool isTapped = false.obs;
     Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: MyAppBar(),
-        body: scriptureList.isNotEmpty ? Column(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: scriptureList.isNotEmpty ? SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 220,
-              child: PageView.builder(
-                scrollDirection: Axis.horizontal,
-                controller: pageController,
-                itemCount: plan_names.length,
-                itemBuilder: (BuildContext context, index) {
-                  return Row(
-                    children: [
-                      Container(
-                        height: 200,
-                        width: 300,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.grey,
-                          image: DecorationImage(
-                            image: AssetImage(
-                              plan_images[index]
+              height: 100,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 0.5,
+                        spreadRadius: 0.5,
+                        offset: Offset(0, 3),
+                        color: Colors.transparent
+                    )
+                  ]
+              ),
+              padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FutureBuilder(
+                      future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
+                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if(snapshot.connectionState == ConnectionState.waiting) {
+                          return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                        } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
+                          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                          return Text("Welcome ${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                        }
+                        return Text("Welcome", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                      }
+                  ),
+                  FutureBuilder(
+                      future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
+                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if(snapshot.connectionState == ConnectionState.waiting) {
+                          return Container(
+                            height: 30,
+                            width: 30,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: AssetImage("images/Icon-48.png")
+                                )
                             ),
-                            fit: BoxFit.cover
-                          )
+                          );
+                        } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
+                          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                          return Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage("${data["imagePath"]}"),
+                                    fit: BoxFit.cover
+                                )
+                            ),
+                          );
+                        }
+                        return Container(
+                          height: 30,
+                          width: 30,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: AssetImage("images/Icon-48.png")
+                              )
+                          ),
+                        );
+                      }
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20,),
+            Container(
+              height: 250,
+              color: Colors.white,
+              child: PageView.builder(
+                  controller: pageController,
+                  itemCount: planNames.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                currname.value = planNames[index];
+                              },
+                              child: Container(
+                                height: 200,
+                                width: 280,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                  image: DecorationImage(
+                                    image: AssetImage(planImages[index]),
+                                    fit: BoxFit.cover
+                                  )
+                                ),
+                                child: Center(
+                                  child: Text(planNames[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white),),
+                                )
+                              ),
+                            ),
+                            SizedBox(height: 20,),
+                            Text(planNames[index])
+                          ],
                         ),
-                        child: Center(
-                          child: Text(plan_names[index], style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+
+                      ],
+                    );
+              }),
+            ),
+            // SizedBox(height: 20,),
+            // SingleChildScrollView(
+            //   child: Container(
+            //     margin: EdgeInsets.only(left: 24),
+            //     height: 60,
+            //     child: ListView.builder(
+            //       shrinkWrap: true,
+            //       scrollDirection: Axis.horizontal,
+            //         itemCount: monthNames1.length,
+            //         itemBuilder: (_, index) {
+            //           return Row(
+            //             children: [
+            //               Container(
+            //                 height: 50,
+            //                 width: 150,
+            //                 decoration: BoxDecoration(
+            //                   borderRadius: BorderRadius.circular(10),
+            //                   color: colorList[index]
+            //                 ),
+            //                 child: Center(
+            //                   child: Text(monthNames1[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+            //                 ),
+            //               ),
+            //               SizedBox(width: 5,)
+            //             ],
+            //           );
+            //         }
+            //     ),
+            //   ),
+            // ),
+            SizedBox(height: 5,),
+            SingleChildScrollView(
+              child: Container(
+                height: 120,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        SizedBox(width: 24,),
+                        Container(
+                          height: 120,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: monthNames1.length,
+                              itemBuilder: (_, index) {
+                                return Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 200,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: colorList[index]
+                                          ),
+                                          child: Center(
+                                            child: Text(monthNames1[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+                                          ),
+                                        ),
+                                        SizedBox(width: 5,)
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 200,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: colorList2[index]
+                                          ),
+                                          child: Center(
+                                            child: Text(monthNames2[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+                                          ),
+                                        ),
+                                        SizedBox(width: 5,)
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              }
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                ),
+              ),
+            ),
+            SizedBox(height: 30,),
+            Container(
+              margin: EdgeInsets.only(left: 24, right: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(DateFormat.MMMEd().format(DateTime.now()), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                  SizedBox(height: 20,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Obx(()=> Text(currname.value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)),
+                      GestureDetector(
+                        onTap: () {
+                          isTapped.value = !isTapped.value;
+                          print(isTapped.value.toString());
+                        },
+                        child: Row(
+                          children: [
+                            const Text("see all", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                            SizedBox(width: 10,),
+                            Obx(()=>  isTapped.value == false ? const Icon(Icons.arrow_forward_ios_outlined, size: 18,): const Icon(Icons.arrow_drop_down, size: 18,))
+                          ],
                         ),
                       ),
-                      SizedBox(width: 10,)
                     ],
-                  );
-                }
+                  ),
+                  SizedBox(height: 20,),
+                   Obx(()=> isTapped.value == false ? Column(
+                     children: [
+                       InkWell(
+                         splashColor: Colors.grey,
+                         onTap: () {
+                           Get.to(()=> const PrayerDetailScreen(), arguments: [
+                             scriptureList[getTodaysDay()-1].id,
+                             scriptureList[getTodaysDay()-1].prayerPoint,
+                             scriptureList[getTodaysDay()-1].title,
+                             scriptureList[getTodaysDay()-1].verse,
+                             scriptureList[getTodaysDay()-1].date
+                           ]);
+                         },
+                         child: Row(
+                           children: [
+                             Container(
+                               height: 80,
+                               width: 80,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   border: Border.all(color: Colors.grey, width: 2),
+                                   color: const Color(0xffF7F8FA)
+                               ),
+                               child: Center(
+                                   child: Text(scriptureList[getTodaysDay()-1].verse.toString()[0], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24))
+                               ),
+                             ),
+                             Expanded(
+                                 child: Container(
+                                   height: 80,
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 10),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                         Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()+1].title.toString()),
+                                         SizedBox(height: 5,),
+                                         Row(
+                                           children: [
+                                             Wrap(children:
+                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             ),
+                                           ],
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             )
+                           ],
+                         ),
+                       ),
+                       SizedBox(height: 20,),
+                       InkWell(
+                         splashColor: Colors.grey,
+                         onTap: () {
+                           Get.to(()=> const PrayerDetailScreen(), arguments: [
+                             scriptureList[getTodaysDay()].id,
+                             scriptureList[getTodaysDay()].prayerPoint,
+                             scriptureList[getTodaysDay()].title,
+                             scriptureList[getTodaysDay()].verse,
+                             scriptureList[getTodaysDay()].date
+                           ]);
+                         },
+                         child: Row(
+                           children: [
+                             Container(
+                               height: 80,
+                               width: 80,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   border: Border.all(color: Colors.grey, width: 2),
+                                   color: const Color(0xffF7F8FA)
+                               ),
+                               child: Center(
+                                   child: Text(scriptureList[getTodaysDay()].verse.toString()[0], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24))
+                               ),
+                             ),
+                             Expanded(
+                                 child: Container(
+                                   height: 80,
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 10),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                         Text(scriptureList[getTodaysDay()].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()].title.toString()),
+                                         SizedBox(height: 5,),
+                                         Row(
+                                           children: [
+                                             Wrap(children:
+                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             ),
+                                           ],
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             )
+                           ],
+                         ),
+                       ),
+                       SizedBox(height: 20,),
+                       InkWell(
+                         splashColor: Colors.grey,
+                         onTap: (){
+                           Get.to(()=> const PrayerDetailScreen(), arguments: [
+                             scriptureList[getTodaysDay()+1].id,
+                             scriptureList[getTodaysDay()+1].prayerPoint,
+                             scriptureList[getTodaysDay()+1].title,
+                             scriptureList[getTodaysDay()+1].verse,
+                             scriptureList[getTodaysDay()+1].date
+                           ]);
+                         },
+                         child: Row(
+                           children: [
+                             Container(
+                               height: 80,
+                               width: 80,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   border: Border.all(color: Colors.grey, width: 2),
+                                   color: const Color(0xffF7F8FA)
+                               ),
+                               child: Center(
+                                   child: Text(scriptureList[getTodaysDay()+1].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                               ),
+                             ),
+                             Expanded(
+                                 child: Container(
+                                   height: 80,
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 10),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                         Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()+1].title.toString()),
+                                         SizedBox(height: 5,),
+                                         Row(
+                                           children: [
+                                             Wrap(children:
+                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             ),
+                                           ],
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             )
+                           ],
+                         ),
+                       ),
+                     ],
+                   ):Column(
+                       children: [
+                         InkWell(
+                           splashColor: Colors.grey,
+                           onTap: () {
+                             Get.to(()=> const PrayerDetailScreen(), arguments: [
+                               scriptureList[getTodaysDay()-1].id,
+                               scriptureList[getTodaysDay()-1].prayerPoint,
+                               scriptureList[getTodaysDay()-1].title,
+                               scriptureList[getTodaysDay()-1].verse,
+                               scriptureList[getTodaysDay()-1].date
+                             ]);
+                           },
+                           child: Row(
+                           children: [
+                             Container(
+                               height: 80,
+                               width: 80,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   border: Border.all(color: Colors.grey, width: 2),
+                                   color: const Color(0xffF7F8FA)
+                               ),
+                               child: Center(
+                                   child: Text(scriptureList[getTodaysDay()-1].verse.toString()[0], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24))
+                               ),
+                             ),
+                             Expanded(
+                                 child: Container(
+                                   height: 80,
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 10),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                         Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()+1].title.toString()),
+                                         SizedBox(height: 5,),
+                                         Row(
+                                           children: [
+                                             Wrap(children:
+                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             ),
+                                           ],
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             )
+                           ],
+                       ),
+                         ),
+                         SizedBox(height: 20,),
+                         InkWell(
+                           splashColor: Colors.grey,
+                           onTap: () {
+                             Get.to(()=> const PrayerDetailScreen(), arguments: [
+                               scriptureList[getTodaysDay()].id,
+                               scriptureList[getTodaysDay()].prayerPoint,
+                               scriptureList[getTodaysDay()].title,
+                               scriptureList[getTodaysDay()].verse,
+                               scriptureList[getTodaysDay()].date
+                             ]);
+                           },
+                           child: Row(
+                           children: [
+                             Container(
+                               height: 80,
+                               width: 80,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   border: Border.all(color: Colors.grey, width: 2),
+                                   color: const Color(0xffF7F8FA)
+                               ),
+                               child: Center(
+                                   child: Text(scriptureList[getTodaysDay()].verse.toString()[0], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24))
+                               ),
+                             ),
+                             Expanded(
+                                 child: Container(
+                                   height: 80,
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 10),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                         Text(scriptureList[getTodaysDay()].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()].title.toString()),
+                                         SizedBox(height: 5,),
+                                         Row(
+                                           children: [
+                                             Wrap(children:
+                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             ),
+                                           ],
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             )
+                           ],
+                       ),
+                         ),
+                         SizedBox(height: 20,),
+                         InkWell(
+                           splashColor: Colors.grey,
+                           onTap: () {
+                             Get.to(()=> const PrayerDetailScreen(), arguments: [
+                               scriptureList[getTodaysDay()+1].id,
+                               scriptureList[getTodaysDay()+1].prayerPoint,
+                               scriptureList[getTodaysDay()+1].title,
+                               scriptureList[getTodaysDay()+1].verse,
+                               scriptureList[getTodaysDay()+1].date
+                             ]);
+                           },
+                           child: Row(
+                           children: [
+                             Container(
+                               height: 80,
+                               width: 80,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   border: Border.all(color: Colors.grey, width: 2),
+                                   color: const Color(0xffF7F8FA)
+                               ),
+                               child: Center(
+                                   child: Text(scriptureList[getTodaysDay()+1].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                               ),
+                             ),
+                             Expanded(
+                                 child: Container(
+                                   height: 80,
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 10),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                         Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()+1].title.toString()),
+                                         SizedBox(height: 5,),
+                                         Row(
+                                           children: [
+                                             Wrap(children:
+                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             ),
+                                           ],
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             )
+                           ],
+                       ),
+                         ),
+                         SizedBox(height: 20,),
+                         InkWell(
+                           splashColor: Colors.grey,
+                           onTap: (){
+                             Get.to(()=> const PrayerDetailScreen(), arguments: [
+                               scriptureList[getTodaysDay()+2].id,
+                               scriptureList[getTodaysDay()+2].prayerPoint,
+                               scriptureList[getTodaysDay()+2].title,
+                               scriptureList[getTodaysDay()+2].verse,
+                               scriptureList[getTodaysDay()+2].date
+                             ]);
+                           },
+                           child: Row(
+                           children: [
+                             Container(
+                               height: 80,
+                               width: 80,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   border: Border.all(color: Colors.grey, width: 2),
+                                   color: const Color(0xffF7F8FA)
+                               ),
+                               child: Center(
+                                   child: Text(scriptureList[getTodaysDay()+2].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                               ),
+                             ),
+                             Expanded(
+                                 child: Container(
+                                   height: 80,
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 10),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                         Text(scriptureList[getTodaysDay()+2].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()+2].title.toString()),
+                                         SizedBox(height: 5,),
+                                         Row(
+                                           children: [
+                                             Wrap(children:
+                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             ),
+                                           ],
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             )
+                           ],
+                       ),
+                         ),
+                         SizedBox(height: 20,),
+                         InkWell(
+                           splashColor: Colors.grey,
+                           onTap: () {
+                             Get.to(()=> const PrayerDetailScreen(), arguments: [
+                               scriptureList[getTodaysDay()+3].id,
+                               scriptureList[getTodaysDay()+3].prayerPoint,
+                               scriptureList[getTodaysDay()+3].title,
+                               scriptureList[getTodaysDay()+3].verse,
+                               scriptureList[getTodaysDay()+3].date
+                             ]);
+                           },
+                           child: Row(
+                           children: [
+                             Container(
+                               height: 80,
+                               width: 80,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   border: Border.all(color: Colors.grey, width: 2),
+                                   color: const Color(0xffF7F8FA)
+                               ),
+                               child: Center(
+                                   child: Text(scriptureList[getTodaysDay()+3].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                               ),
+                             ),
+                             Expanded(
+                                 child: Container(
+                                   height: 80,
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 10),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                         Text(scriptureList[getTodaysDay()+3].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()+3].title.toString()),
+                                         SizedBox(height: 5,),
+                                         Row(
+                                           children: [
+                                             Wrap(children:
+                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             ),
+                                           ],
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             )
+                           ],
+                       ),
+                         ),
+                         SizedBox(height: 20,),
+                         InkWell(
+                           splashColor: Colors.grey,
+                           onTap: () {
+                             Get.to(()=> const PrayerDetailScreen(), arguments: [
+                               scriptureList[getTodaysDay()+4].id,
+                               scriptureList[getTodaysDay()+4].prayerPoint,
+                               scriptureList[getTodaysDay()+4].title,
+                               scriptureList[getTodaysDay()+4].verse,
+                               scriptureList[getTodaysDay()+4].date
+                             ]);
+                           },
+                           child: Row(
+                           children: [
+                             Container(
+                               height: 80,
+                               width: 80,
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                   border: Border.all(color: Colors.grey, width: 2),
+                                   color: const Color(0xffF7F8FA)
+                               ),
+                               child: Center(
+                                   child: Text(scriptureList[getTodaysDay()+4].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                               ),
+                             ),
+                             Expanded(
+                                 child: Container(
+                                   height: 80,
+                                   child: Padding(
+                                     padding: const EdgeInsets.only(left: 10),
+                                     child: Column(
+                                       mainAxisAlignment: MainAxisAlignment.start,
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                         Text(scriptureList[getTodaysDay()+4].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()+4].title.toString()),
+                                         SizedBox(height: 5,),
+                                         Row(
+                                           children: [
+                                             Wrap(children:
+                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             ),
+                                           ],
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             )
+                           ],
+                       ),
+                         ),
+                         SizedBox(height: 20,),
+                       ])
+                   ),
+                  SizedBox(height: 20,)
+                ],
               ),
             )
           ],
-        ):SizedBox(
-          width: size.width,
-          child: const Center(
-            child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black54),),),
-        )
-      ),
+        ),
+      ):SizedBox(
+        width: size.width,
+        child: const Center(
+          child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black54),),),
+      )
     );
   }
-}
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final user = AuthController.instance.auth.currentUser;
-    // TODO: implement build
-    return Container(
-      height: 100,
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 0.5,
-                spreadRadius: 0.5,
-                offset: Offset(0, 3),
-                color: Colors.transparent
-            )
-          ]
-      ),
-      padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          FutureBuilder(
-              future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
-              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if(snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
-                } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
-                  Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                  return Text("Welcome ${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
-                }
-                return Text("Welcome", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
-              }
-          ),
-          FutureBuilder(
-              future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
-              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if(snapshot.connectionState == ConnectionState.waiting) {
-                  return Container(
-                    height: 30,
-                    width: 30,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: AssetImage("images/Icon-48.png")
-                        )
-                    ),
-                  );
-                } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
-                  Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                  return Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: NetworkImage("${data["imagePath"]}"),
-                            fit: BoxFit.cover
-                        )
-                    ),
-                  );
-                }
-                return Container(
-                  height: 30,
-                  width: 30,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage("images/Icon-48.png")
-                      )
-                  ),
-                );
-              }
-          ),
-        ],
-      ),
-    );
+  int getTodaysDay() {
+    final date = DateTime.now();
+    final diff = date.difference(DateTime(date.year, 1, 1, 0, 0));
+    final diffInDays = diff.inDays;
+    return diffInDays;
   }
-
-  @override
-  // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(126);
+  int numOfWeeks(int year) {
+    DateTime dec28 = DateTime(year, 12, 28);
+    int dayOfDec28 = int.parse(DateFormat("D").format(dec28));
+    return ((dayOfDec28 - dec28.weekday + 10) / 7).floor();
+  }
+  /// Calculates week number from a date as per https://en.wikipedia.org/wiki/ISO_week_date#Calculation
+  int weekNumber(DateTime date) {
+    int dayOfYear = int.parse(DateFormat("D").format(date));
+    int woy =  ((dayOfYear - date.weekday + 10) / 7).floor();
+    if (woy < 1) {
+      woy = numOfWeeks(date.year - 1);
+    } else if (woy > numOfWeeks(date.year)) {
+      woy = 1;
+    }
+    return woy;
+  }
 }

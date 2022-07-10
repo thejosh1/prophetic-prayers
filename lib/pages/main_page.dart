@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/pages/prayer_category_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
-import 'package:prophetic_prayers/pages/prayer_screen.dart';
 import 'package:prophetic_prayers/pages/profile_page.dart';
 import 'package:prophetic_prayers/pages/welcome.dart';
 
@@ -15,8 +14,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List pages = [
     const WelcomeScreen(),
-    const PrayerListScreen(),
     const PrayerCategoryScreen(),
+    const PrayerListScreen(),
     const ProfilePage()
   ];
 
@@ -45,9 +44,9 @@ class _MainPageState extends State<MainPage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart_sharp), label: "Prayer list"),
+              icon: Icon(Icons.bar_chart_sharp), label: "list"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.apps), label: "Categories"),
+              icon: Icon(Icons.apps), label: "Plans"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "My page")
         ],
       ),
