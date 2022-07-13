@@ -63,139 +63,136 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   borderRadius: BorderRadius.circular(30),
                   color: Colors.white
                 ),
-                child: Container(
-                  // margin: EdgeInsets.only(left: 20, ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 20,),
-                      Container(
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text("My Prayer For today", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Color(0xFF1E2432)),),
-                            Text(DateFormat.MMMEd().format(DateTime.now()), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),)
-                          ],
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20,),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text("My Prayer For today", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Color(0xFF1E2432)),),
+                          Text(DateFormat.MMMEd().format(DateTime.now()), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),)
+                        ],
                       ),
-                      SizedBox(height: 20,),
-                      InkWell(
-                        splashColor: Colors.grey,
-                        onTap: () {
-                          Get.to(()=> const PrayerDetailScreen(), arguments: [
-                            scriptureList[getTodaysDay()-1].id,
-                            scriptureList[getTodaysDay()-1].prayerPoint,
-                            scriptureList[getTodaysDay()-1].title,
-                            scriptureList[getTodaysDay()-1].verse,
-                            scriptureList[getTodaysDay()-1].date,
-                            currname
-                          ]);
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                margin: EdgeInsets.only(left: 20),
-                                width: 300,
-                                child: Text(
-                                    scriptureList[getTodaysDay()-1].prayerPoint.toString(),
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xFF1E2432))
-                                )
+                    ),
+                    SizedBox(height: 20,),
+                    InkWell(
+                      splashColor: Colors.grey,
+                      onTap: () {
+                        Get.to(()=> const PrayerDetailScreen(), arguments: [
+                          scriptureList[getTodaysDay()-1].id,
+                          scriptureList[getTodaysDay()-1].prayerPoint,
+                          scriptureList[getTodaysDay()-1].title,
+                          scriptureList[getTodaysDay()-1].verse,
+                          scriptureList[getTodaysDay()-1].date,
+                          currname
+                        ]);
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(left: 20),
+                              width: 300,
+                              child: Text(
+                                  scriptureList[getTodaysDay()-1].prayerPoint.toString(),
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xFF1E2432))
+                              )
+                          ),
+                          SizedBox(height: 20,),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text(scriptureList[getTodaysDay()-1].title.toString(),
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xFF1E2432)),
                             ),
-                            SizedBox(height: 20,),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: Text(scriptureList[getTodaysDay()-1].title.toString(),
-                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xFF1E2432)),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 20,),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.list_sharp),
-                            SizedBox(width: 10),
-                            Text("Prayers for the rest of the week", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
-                          ],
-                        ),
+                    ),
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.list_sharp),
+                          SizedBox(width: 10),
+                          Text("Prayers for the rest of the week", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
+                        ],
                       ),
-                      SizedBox(height: 20,),
-                      SingleChildScrollView(
-                        child: Container(
-                          height: 100,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 1,
-                            itemBuilder: (context, index) {
-                              return Row(
-                                children: [
-                                  SizedBox(width: 20,),
-                                  Container(
-                                    height: 100,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      itemCount: daysofWeek.length,
-                                      itemBuilder: (_, index) {
-                                         return Row(
-                                           children: [
-                                             InkWell(
-                                               onTap: () {
-                                                 Get.to(() => PrayerDetailScreen(), arguments: [
-                                                   scriptureList[daysInsWeek[index]].id,
-                                                   scriptureList[daysInsWeek[index]].prayerPoint,
-                                                   scriptureList[daysInsWeek[index]].title,
-                                                   scriptureList[daysInsWeek[index]].verse,
-                                                   scriptureList[daysInsWeek[index]].date]);
-                                               },
-                                               child: Container(
-                                                  height: 90,
-                                                  width: 150,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(20),
-                                                    color: colorList[index]
-                                                  ),
-                                                  child: Center(
+                    ),
+                    SizedBox(height: 20,),
+                    SingleChildScrollView(
+                      child: Container(
+                        height: 100,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                SizedBox(width: 20,),
+                                Container(
+                                  height: 100,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemCount: daysofWeek.length,
+                                    itemBuilder: (_, index) {
+                                       return Row(
+                                         children: [
+                                           InkWell(
+                                             onTap: () {
+                                               Get.to(() => PrayerDetailScreen(), arguments: [
+                                                 scriptureList[daysInsWeek[index]].id,
+                                                 scriptureList[daysInsWeek[index]].prayerPoint,
+                                                 scriptureList[daysInsWeek[index]].title,
+                                                 scriptureList[daysInsWeek[index]].verse,
+                                                 scriptureList[daysInsWeek[index]].date]);
+                                             },
+                                             child: Container(
+                                                height: 90,
+                                                width: 150,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  color: colorList[index]
+                                                ),
+                                                child: Center(
+                                                  child: Container(
+                                                    height: 60,
+                                                    width: 60,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.white, width: 5),
+                                                      shape: BoxShape.circle
+                                                    ),
                                                     child: Container(
-                                                      height: 60,
-                                                      width: 60,
                                                       decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.white, width: 5),
+                                                        color: colorList[index],
                                                         shape: BoxShape.circle
                                                       ),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          color: colorList[index],
-                                                          shape: BoxShape.circle
-                                                        ),
-                                                        child: Center(
-                                                          child: Text(daysofWeek[index], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),),
-                                                        ),
+                                                      child: Center(
+                                                        child: Text(daysofWeek[index], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                             ),
-                                             SizedBox(width: 10)
-                                           ],
-                                         );
-                                        }
-                                    ),
+                                              ),
+                                           ),
+                                           SizedBox(width: 10)
+                                         ],
+                                       );
+                                      }
                                   ),
-                                ],
-                              );
-                            }
-                          ),
+                                ),
+                              ],
+                            );
+                          }
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),

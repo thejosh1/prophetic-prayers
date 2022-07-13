@@ -19,10 +19,96 @@ class _ProfilePageState extends State<ProfilePage> {
   final CollectionReference ref = FirebaseFirestore.instance.collection("users");
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    final user = AuthController.instance.auth.currentUser;
     return Scaffold(
       appBar: const MyAppBar(),
-      backgroundColor: Colors.white,
-      body: Container()
+      backgroundColor: const Color(0xffF7F8FA),
+      body: Container(
+        height: 400,
+        width: size.width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.white
+        ),
+        child: FutureBuilder(
+            future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
+            builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if(snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  height: 30,
+                  width: 30,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage("images/Icon-48.png")
+                      )
+                  ),
+                );
+              } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
+                Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                return Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: NetworkImage("${data["imagePath"]}"),
+                                fit: BoxFit.cover
+                            )
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.bolt, color: Colors.amberAccent,),
+                            Text("Streak")
+                          ],
+                        ),
+
+                      ],
+                    )
+                  ],
+                );
+              }
+              return Container(
+                height: 30,
+                width: 30,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage("images/Icon-48.png")
+                    )
+                ),
+              );
+            }
+        ),
+        // Column(
+        //   children: [
+        //     Stack(
+        //       children: [
+        //         Container(
+        //           height: 60,
+        //           width: 60,
+        //           decoration: BoxDecoration(
+        //             shape: BoxShape.circle,
+        //             border: Border.all(color: Colors.black, width: 1),
+        //             image: DecorationImage(
+        //               image: NetworkImage("")
+        //             )
+        //           ),
+        //         )
+        //       ],
+        //     )
+        //   ],
+        // ),
+      )
     );
   }
 
@@ -62,7 +148,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
                 } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                  return Text("Welcome ${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                  return Text("${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
                 }
                 return Text("Welcome", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
               }
