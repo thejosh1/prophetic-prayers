@@ -2,8 +2,7 @@ import "package:flutter/material.dart";
 
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:intl/intl.dart';
-import 'package:prophetic_prayers/pages/testimony_screen.dart';
+import 'package:prophetic_prayers/pages/discover_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
 
@@ -156,6 +155,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                         SizedBox(
                           height: Dimensions.prayerDetailScreenHeight7,
                         ),
+                        Text(data[5], style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
                         Text(
                           //title
                           data[2],
@@ -217,7 +217,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                             ),
                             GestureDetector(
                               onTap: (() {
-                                Get.to(()=> const TestimonyScreen(), arguments: []);
+                                Get.to(()=> const DiscoverScreen(), arguments: []);
                               }),
                               child: Column(
                                 children: [

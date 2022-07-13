@@ -22,127 +22,90 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: const MyAppBar(),
       backgroundColor: Colors.white,
-      body: FutureBuilder(
-        future: ref.doc(user!.uid).get(),
-        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if(snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black),),);
-          }
-          if(snapshot.hasData && snapshot.data!.exists) {
-            Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-            return Container(
-              margin: EdgeInsets.only(top: Dimensions.prayerListScreenContainerheight22),
-              child: ListView(
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  SizedBox(height: 10,),
-                  ProfileWidget(
-                    imagePath: data["imagePath"],
-                    onClicked: () async {},
-                  ),
-                  SizedBox(height: 24,),
-                  buildName(data["name"]),
-                  SizedBox(height: 4,),
-                  buildEmail(data["email"]),
-                  SizedBox(height: 4,),
-                  buildNumber(data["phonenumber"]),
-                  SizedBox(height: 100,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 80),
-                    child: Row(
-                    children: [
-                      Text("do you want to SignOut?", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w200)),
-                      SizedBox(width: 5,),
-
-                      GestureDetector(
-                        onTap: () {
-                          AuthController.instance.Logout();
-                        },
-                        child: const Text("SignOut", style: TextStyle(color: Color(0xff515BDE), fontSize: 14, fontWeight: FontWeight.w200),),
-                      )
-                    ],
-                  ),)
-                ],
-              ),
-            );
-            //   Column(
-            //   children: [
-            //     Text("${data["name"]}"),
-            //     Text("${data["email"]}"),
-            //     Text("${data["phonenumber"]}"),
-            //     Container(
-            //       height: 100,
-            //       width: 100,
-            //       decoration: BoxDecoration(
-            //           image: DecorationImage(
-            //               image: NetworkImage("${data["imagePath"]}"),
-            //               fit: BoxFit.cover
-            //           )
-            //       ),
-            //     )
-            //   ],
-            // );
-          }
-          return const Center(child: Text("no data"),);
-        },
-      )
+      body: Container()
     );
   }
 
-  Widget buildName(String username) {
-    return Center(
-      child: Text(
-        username,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-      ),
-    );
-  }
 
-  Widget buildEmail(String email) {
-    return Center(
-      child: Text(
-          email,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-      ),
-    );
-  }
 
-  Widget buildNumber(String phonenumber) {
-    return Center(
-      child: Text(
-        phonenumber,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-      ),
-    );
-  }
+
 }
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final user = AuthController.instance.auth.currentUser;
+    // TODO: implement build
     return Container(
-      color: const Color(0xffF7F8FA),
+      height: 100,
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 0.5,
+                spreadRadius: 0.5,
+                offset: Offset(0, 3),
+                color: Colors.transparent
+            )
+          ]
+      ),
       padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(onTap: (){
-                Get.back();
-              },child: const Icon(Icons.arrow_back_outlined)),
-             // const Icon(Icons.more_vert),
-            ],
+          FutureBuilder(
+              future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
+              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
+                  Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                  return Text("Welcome ${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                }
+                return Text("Welcome", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+              }
           ),
-          const SizedBox(height: 21),
-          const Text(
-            'My Account',
-            style: TextStyle(
-              fontSize: 34,
-              fontWeight: FontWeight.w800,
-            ),
+          FutureBuilder(
+              future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
+              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting) {
+                  return Container(
+                    height: 30,
+                    width: 30,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage("images/Icon-48.png")
+                        )
+                    ),
+                  );
+                } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
+                  Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                  return Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: NetworkImage("${data["imagePath"]}"),
+                            fit: BoxFit.cover
+                        )
+                    ),
+                  );
+                }
+                return Container(
+                  height: 30,
+                  width: 30,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage("images/Icon-48.png")
+                      )
+                  ),
+                );
+              }
           ),
         ],
       ),
@@ -150,5 +113,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
+  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(126);
 }

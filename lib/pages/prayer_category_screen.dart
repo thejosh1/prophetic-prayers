@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
 
 import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
@@ -172,36 +173,6 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                     );
               }),
             ),
-            // SizedBox(height: 20,),
-            // SingleChildScrollView(
-            //   child: Container(
-            //     margin: EdgeInsets.only(left: 24),
-            //     height: 60,
-            //     child: ListView.builder(
-            //       shrinkWrap: true,
-            //       scrollDirection: Axis.horizontal,
-            //         itemCount: monthNames1.length,
-            //         itemBuilder: (_, index) {
-            //           return Row(
-            //             children: [
-            //               Container(
-            //                 height: 50,
-            //                 width: 150,
-            //                 decoration: BoxDecoration(
-            //                   borderRadius: BorderRadius.circular(10),
-            //                   color: colorList[index]
-            //                 ),
-            //                 child: Center(
-            //                   child: Text(monthNames1[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
-            //                 ),
-            //               ),
-            //               SizedBox(width: 5,)
-            //             ],
-            //           );
-            //         }
-            //     ),
-            //   ),
-            // ),
             SizedBox(height: 5,),
             SingleChildScrollView(
               child: Container(
@@ -225,15 +196,25 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        Container(
-                                          height: 50,
-                                          width: 200,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10),
-                                              color: colorList[index]
-                                          ),
-                                          child: Center(
-                                            child: Text(monthNames1[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+                                        InkWell(
+                                          splashColor: colorList[index].withOpacity(0.2),
+                                          onTap: () {
+                                            Get.to(()=> const PrayerListScreen(), arguments: [
+                                              monthNames1[index],
+                                              colorList[index],
+                                              currname.value
+                                            ]);
+                                        },
+                                          child: Container(
+                                            height: 50,
+                                            width: 200,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: colorList[index]
+                                            ),
+                                            child: Center(
+                                              child: Text(monthNames1[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+                                            ),
                                           ),
                                         ),
                                         SizedBox(width: 5,)
@@ -242,15 +223,25 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                     SizedBox(height: 5),
                                     Row(
                                       children: [
-                                        Container(
-                                          height: 50,
-                                          width: 200,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10),
-                                              color: colorList2[index]
-                                          ),
-                                          child: Center(
-                                            child: Text(monthNames2[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+                                        InkWell(
+                                          splashColor: colorList2[index].withOpacity(0.2),
+                                          onTap: () {
+                                            Get.to(()=> const PrayerListScreen(), arguments: [
+                                              monthNames2[index],
+                                              colorList2[index],
+                                              currname.value
+                                            ]);
+                                          },
+                                          child: Container(
+                                            height: 50,
+                                            width: 200,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: colorList2[index]
+                                            ),
+                                            child: Center(
+                                              child: Text(monthNames2[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+                                            ),
                                           ),
                                         ),
                                         SizedBox(width: 5,)
