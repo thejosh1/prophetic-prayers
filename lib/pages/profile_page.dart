@@ -62,18 +62,26 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
-                          children: [
+                          children: const [
                             Icon(Icons.bolt, color: Colors.amberAccent,),
                             Text("Streak")
                           ],
                         ),
-
+                        SizedBox(width: 5,),
+                        Row(
+                          children: const [
+                            Icon(Icons.sunny, color: Colors.amberAccent,),
+                            Text("Weeks")
+                          ],
+                        ),
                       ],
-                    )
+                    ),
+
                   ],
                 );
               }

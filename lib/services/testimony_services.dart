@@ -13,19 +13,21 @@ class TestimonyServices {
     required String title,
     required String testimonies,
     required String useruid,
+    required String prayertype
   }) async {
     Useruid = AuthController.instance.auth.currentUser!.uid;
     DocumentReference documentReference = _dbRef.doc();
     Map<String, dynamic> data = <String, dynamic>{
       "title": title,
       "testimonies": testimonies,
-      "useruid": Useruid
+      "useruid": Useruid,
+      "prayerType": prayertype
     };
     await documentReference.set(data).whenComplete(() => Get.snackbar(
       "Testimonies",
       "Your testimony has been successfully added",
       titleText: Text("Testimony"),
-      messageText: Text("Your Testimony has been added successfully"),
+      messageText: const Text("Your Testimony has been added successfully", style: TextStyle(color: Colors.white),),
       backgroundColor: const Color(0xff515BDE),
       colorText: Colors.white
     )).catchError((e) => Get.snackbar("Error", e,

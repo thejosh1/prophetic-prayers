@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:prophetic_prayers/services/testimony_services.dart';
 
+import '../widgets/big_text.dart';
+
 class CreateTestimonyScreen extends StatelessWidget {
   const CreateTestimonyScreen({Key? key}) : super(key: key);
 
@@ -25,6 +27,7 @@ class CreateTestimonyForm extends StatefulWidget {
 class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+  var data = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                           hintText: "Title(optional)",
                       ),
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.bold
                       ),
                     ),
@@ -69,6 +72,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                     title: _titleController.text.trim(),
                     testimonies: _noteController.text.trim(),
                     useruid: AuthController.instance.auth.currentUser!.uid.toString(),
+                    prayertype: data[0].toString()
                   );
                   Get.back();
                 },
@@ -111,35 +115,34 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = AuthController.instance.auth.currentUser;
+    // TODO: implement build
     return Container(
-      color: const Color(0xffF7F8FA),
+      height: 100,
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 0.5,
+                spreadRadius: 0.5,
+                offset: Offset(0, 3),
+                color: Colors.transparent
+            )
+          ]
+      ),
       padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(onTap: (){
-                FocusManager.instance.primaryFocus?.unfocus();
-                Get.back();
-              },child: const Icon(Icons.arrow_back_outlined)),
-              const Icon(Icons.more_vert),
-            ],
-          ),
-          const SizedBox(height: 21),
-          const Text(
-            'Testimony',
-            style: TextStyle(
-              fontSize: 34,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: const [
+          Icon(Icons.arrow_back, size: 24,),
+          SizedBox(width: 20,),
+          BigText(text: "Testimony")
         ],
       ),
     );
   }
 
   @override
+  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(126);
 }

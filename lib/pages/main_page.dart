@@ -44,10 +44,10 @@ class _MainPageState extends State<MainPage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart_sharp), label: "My plans"),
+              icon: Icon(Icons.bar_chart_sharp), label: "My plans",),
           BottomNavigationBarItem(
-              icon: Icon(Icons.search), label: "Discover"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "My page")
+              icon: Icon(Icons.search), label: "Discover",),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "My page", )
         ],
       ),
     );

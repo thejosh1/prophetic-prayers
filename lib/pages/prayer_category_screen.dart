@@ -41,7 +41,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    PageController pageController = PageController(viewportFraction: 0.8);
+    PageController pageController = PageController(viewportFraction: 0.8 );
     List planNames = ["Children", "Marriage", "Business", "Work", "Finance"];
     List planImages = ["images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/alex-kotliarskyi.jpg", "images/ibrahim-boran.jpg"];
     List monthNames1 = ["January", "February", "March", "April", "May", "June"];
@@ -296,7 +296,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                              scriptureList[getTodaysDay()-1].prayerPoint,
                              scriptureList[getTodaysDay()-1].title,
                              scriptureList[getTodaysDay()-1].verse,
-                             scriptureList[getTodaysDay()-1].date
+                             scriptureList[getTodaysDay()-1].date,
+                             currname.value
                            ]);
                          },
                          child: Row(
@@ -322,10 +323,12 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
-                                         Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 5,),
-                                         Text(scriptureList[getTodaysDay()+1].title.toString()),
-                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()-1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()-1].title.toString()),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()-1].date.toString()),
+                                         SizedBox(height: 3),
                                          Row(
                                            children: [
                                              Wrap(children:
@@ -350,7 +353,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                              scriptureList[getTodaysDay()].prayerPoint,
                              scriptureList[getTodaysDay()].title,
                              scriptureList[getTodaysDay()].verse,
-                             scriptureList[getTodaysDay()].date
+                             scriptureList[getTodaysDay()].date,
+                             currname.value
                            ]);
                          },
                          child: Row(
@@ -377,9 +381,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
                                          Text(scriptureList[getTodaysDay()].title.toString()),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()].date.toString()),
+                                         SizedBox(height: 3,),
                                          Row(
                                            children: [
                                              Wrap(children:
@@ -404,7 +410,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                              scriptureList[getTodaysDay()+1].prayerPoint,
                              scriptureList[getTodaysDay()+1].title,
                              scriptureList[getTodaysDay()+1].verse,
-                             scriptureList[getTodaysDay()+1].date
+                             scriptureList[getTodaysDay()+1].date,
+                             currname.value
                            ]);
                          },
                          child: Row(
@@ -431,9 +438,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
                                          Text(scriptureList[getTodaysDay()+1].title.toString()),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()+1].date.toString()),
+                                         SizedBox(height: 3,),
                                          Row(
                                            children: [
                                              Wrap(children:
@@ -460,7 +469,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()-1].prayerPoint,
                                scriptureList[getTodaysDay()-1].title,
                                scriptureList[getTodaysDay()-1].verse,
-                               scriptureList[getTodaysDay()-1].date
+                               scriptureList[getTodaysDay()-1].date,
+                               currname.value
                              ]);
                            },
                            child: Row(
@@ -486,10 +496,12 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
-                                         Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 5,),
-                                         Text(scriptureList[getTodaysDay()+1].title.toString()),
-                                         SizedBox(height: 5,),
+                                         Text(scriptureList[getTodaysDay()-1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()-1].title.toString()),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()-1].date.toString()),
+                                         SizedBox(height: 3,),
                                          Row(
                                            children: [
                                              Wrap(children:
@@ -514,7 +526,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()].prayerPoint,
                                scriptureList[getTodaysDay()].title,
                                scriptureList[getTodaysDay()].verse,
-                               scriptureList[getTodaysDay()].date
+                               scriptureList[getTodaysDay()].date,
+                               currname.value
                              ]);
                            },
                            child: Row(
@@ -541,9 +554,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
                                          Text(scriptureList[getTodaysDay()].title.toString()),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()].date.toString()),
+                                         SizedBox(height: 3,),
                                          Row(
                                            children: [
                                              Wrap(children:
@@ -568,7 +583,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()+1].prayerPoint,
                                scriptureList[getTodaysDay()+1].title,
                                scriptureList[getTodaysDay()+1].verse,
-                               scriptureList[getTodaysDay()+1].date
+                               scriptureList[getTodaysDay()+1].date,
+                               currname.value
                              ]);
                            },
                            child: Row(
@@ -595,9 +611,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
                                          Text(scriptureList[getTodaysDay()+1].title.toString()),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()+1].date.toString()),
+                                         SizedBox(height: 3,),
                                          Row(
                                            children: [
                                              Wrap(children:
@@ -622,7 +640,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()+2].prayerPoint,
                                scriptureList[getTodaysDay()+2].title,
                                scriptureList[getTodaysDay()+2].verse,
-                               scriptureList[getTodaysDay()+2].date
+                               scriptureList[getTodaysDay()+2].date,
+                               currname.value
                              ]);
                            },
                            child: Row(
@@ -649,9 +668,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+2].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
                                          Text(scriptureList[getTodaysDay()+2].title.toString()),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()+2].date.toString()),
+                                         SizedBox(height: 3,),
                                          Row(
                                            children: [
                                              Wrap(children:
@@ -676,7 +697,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()+3].prayerPoint,
                                scriptureList[getTodaysDay()+3].title,
                                scriptureList[getTodaysDay()+3].verse,
-                               scriptureList[getTodaysDay()+3].date
+                               scriptureList[getTodaysDay()+3].date,
+                               currname.value
                              ]);
                            },
                            child: Row(
@@ -703,9 +725,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+3].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
                                          Text(scriptureList[getTodaysDay()+3].title.toString()),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 3,),
+                                         Text(scriptureList[getTodaysDay()+3].date.toString()),
+                                         SizedBox(height: 3,),
                                          Row(
                                            children: [
                                              Wrap(children:
@@ -730,7 +754,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()+4].prayerPoint,
                                scriptureList[getTodaysDay()+4].title,
                                scriptureList[getTodaysDay()+4].verse,
-                               scriptureList[getTodaysDay()+4].date
+                               scriptureList[getTodaysDay()+4].date,
+                               currname.value
                              ]);
                            },
                            child: Row(
@@ -757,9 +782,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+4].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 4,),
                                          Text(scriptureList[getTodaysDay()+4].title.toString()),
-                                         SizedBox(height: 5,),
+                                         SizedBox(height: 4,),
+                                         Text(scriptureList[getTodaysDay()+4].date.toString()),
+                                         SizedBox(height: 4,),
                                          Row(
                                            children: [
                                              Wrap(children:

@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/discover_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
@@ -35,6 +36,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = MaterialLocalizations.of(context);
+    String currname = data[5].toString();
     Future<void> _openTimePicker(BuildContext context) async {
       final TimeOfDay? time = await showTimePicker(
           context: context,
@@ -217,52 +219,32 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                             ),
                             GestureDetector(
                               onTap: (() {
-                                Get.to(()=> const DiscoverScreen(), arguments: []);
+                                Get.to(()=> const CreateTestimonyScreen(), arguments: [
+                                 currname
+                                ]);
                               }),
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Stack(
-                                    children: <Widget>[
+                                  Column(
+                                    children: [
                                       Icon(
-                                        Icons.note_outlined,
+                                        Icons.edit,
                                         size: Dimensions.prayerDetailScreenHeight29,
                                         color: Color(0xFFD1D1D6),
                                       ),
-                                      Positioned(
-                                        right: 0,
-                                          child: Container(
-                                            padding: EdgeInsets.all(1),
-                                            decoration: BoxDecoration(
-                                              color: Colors.red,
-                                              borderRadius: BorderRadius.circular(6)
-                                            ),
-                                            constraints: BoxConstraints(
-                                              minWidth: 12,
-                                              minHeight: 12
-                                            ),
-                                            //get the number of testimonies and display
-                                            child: Text(
-                                              "10",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 8,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          )
-                                      )
+                                      SizedBox(
+                                        height: Dimensions.prayerDetailScreenHeight8,
+                                      ),
+                                      Text(
+                                        "Testify",
+                                        style:TextStyle(
+                                            fontSize: Dimensions.prayerListScreenContainerWidth14,
+                                            fontWeight: FontWeight.w200,
+                                            color: Color(0xFF1E2432)),
+                                      ),
                                     ],
-                                  ),
-                                  SizedBox(
-                                    height: Dimensions.prayerDetailScreenHeight8,
-                                  ),
-                                  Text(
-                                    "Testimonies",
-                                    style:TextStyle(
-                                        fontSize: Dimensions.prayerListScreenContainerWidth14,
-                                        fontWeight: FontWeight.w200,
-                                        color: Color(0xFF1E2432)),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),

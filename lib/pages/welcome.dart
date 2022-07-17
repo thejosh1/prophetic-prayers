@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/pages/prayer_category_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/pages/start_plan_screen.dart';
 import 'package:prophetic_prayers/services/testimony_services.dart';
 
 import '../controller/auth_controller.dart';
@@ -46,6 +48,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     List daysInsWeek = [getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5];
     List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange];
     String currname = "Children";
+    bool isFromWelcomeScreen = false;
+    List index = [0, 1, 2, 3, 4];
     Color _randomColor = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
     return Scaffold(
       appBar: const MyAppBar(),
@@ -150,7 +154,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                  scriptureList[daysInsWeek[index]].prayerPoint,
                                                  scriptureList[daysInsWeek[index]].title,
                                                  scriptureList[daysInsWeek[index]].verse,
-                                                 scriptureList[daysInsWeek[index]].date]);
+                                                 scriptureList[daysInsWeek[index]].date,
+                                                 currname
+                                               ]);
                                              },
                                              child: Container(
                                                 height: 90,
@@ -396,6 +402,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ) : SizedBox();
               }
             ),
+            // StreamBuilder(
+            //   stream: TestimonyServices.showTestimony(),
+            //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            //     if(!snapshot.hasData) {
+            //       return const SizedBox(height: 0,);
+            //     }
+            //     final snapData = snapshot.data!.docs;
+            //   }
+            // ),
+
+            //my plans
             Container(
               height: 460,
               width: size.width,
@@ -412,43 +429,54 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     SizedBox(height: 20,),
                     Row(
                       children: [
-                        Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Container(
-                              height: 150,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey,
-                                image: DecorationImage(
-                                  image: AssetImage("images/child(36).jpg"),
-                                  fit: BoxFit.cover
-                                )
+                        GestureDetector(
+                          onTap: (){
+                            Get.to(() => const PrayerCategoryScreen());
+                          },
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+                              Container(
+                                height: 150,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey,
+                                  image: DecorationImage(
+                                    image: AssetImage("images/child(36).jpg"),
+                                    fit: BoxFit.cover
+                                  )
+                                ),
                               ),
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              child: Text("Children", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),)
-                            )
-                          ],
+                              const Positioned(
+                                bottom: 0,
+                                child: Text("Children", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),)
+                              )
+                            ],
+                          ),
                         ),
                         SizedBox(width: 10,),
-                        Container(
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey
-                          ),
-                          child: Center(
-                            child: Icon(Icons.add, color: Colors.blue, size: 32,),
+                        InkWell(
+                          splashColor: Colors.grey,
+                          onTap: () {
+                            Get.to(()=> const PrayerCategoryScreen(),);
+                          },
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey
+                            ),
+                            child: const Center(
+                              child: Icon(Icons.add, color: Colors.blue, size: 32,),
+                            ),
                           ),
                         )
                       ],
                     ),
                     SizedBox(height: 20,),
-                    const Center(child: Text("Choose a plan", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),)),
+                    //const Center(child: Text("Choose a plan", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),)),
                     SizedBox(height: 20,),
                     const Text("Featured Plans", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),),
                     SingleChildScrollView(
@@ -457,114 +485,143 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
-                            Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey,
-                                      image: const DecorationImage(
-                                          image: AssetImage("images/child(36).jpg"),
-                                          fit: BoxFit.cover
-                                      )
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(()=> const StartPlanScreen(), arguments: [index[0], isFromWelcomeScreen]);
+                              },
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey,
+                                        image: const DecorationImage(
+                                            image: AssetImage("images/child(36).jpg"),
+                                            fit: BoxFit.cover
+                                        )
+                                    ),
                                   ),
-                                ),
-                                const Positioned(
-                                    bottom: 0,
-                                    child: Text("Children", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                )
-                              ],
+                                  const Positioned(
+                                      bottom: 0,
+                                      child: Text("Children", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                  )
+                                ],
+                              ),
                             ),
                             SizedBox(width: 10,),
-                            Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey,
-                                      image: const DecorationImage(
-                                          image: AssetImage("images/ben-white.jpg"),
-                                          fit: BoxFit.cover
-                                      )
+                            GestureDetector(
+                              onTap: (){
+                                isFromWelcomeScreen = true;
+                                Get.to(()=> const PrayerCategoryScreen(), arguments: [index[1], isFromWelcomeScreen]);
+                              },
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey,
+                                        image: const DecorationImage(
+                                            image: AssetImage("images/ben-white.jpg"),
+                                            fit: BoxFit.cover
+                                        )
+                                    ),
                                   ),
-                                ),
-                                const Positioned(
-                                    bottom: 0,
-                                    child: Text("Marriage", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                )
-                              ],
+                                  const Positioned(
+                                      bottom: 0,
+                                      child: Text("Marriage", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                  )
+                                ],
+                              ),
                             ),
                             SizedBox(width: 10,),
-                            Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey,
-                                      image: const DecorationImage(
-                                          image: AssetImage("images/sean-pollock.jpg"),
-                                          fit: BoxFit.cover
-                                      )
+                            GestureDetector(
+                              onTap: (){
+                                isFromWelcomeScreen = true;
+                                Get.to(()=> const PrayerCategoryScreen(), arguments: [index[2], isFromWelcomeScreen]);
+                              },
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey,
+                                        image: const DecorationImage(
+                                            image: AssetImage("images/sean-pollock.jpg"),
+                                            fit: BoxFit.cover
+                                        )
+                                    ),
                                   ),
-                                ),
-                                const Positioned(
-                                    bottom: 0,
-                                    child: Text("Business", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                )
-                              ],
+                                  const Positioned(
+                                      bottom: 0,
+                                      child: Text("Business", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                  )
+                                ],
+                              ),
                             ),
                             SizedBox(width: 10,),
-                            Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey,
-                                      image: const DecorationImage(
-                                          image: AssetImage("images/alex-kotliarskyi.jpg"),
-                                          fit: BoxFit.cover
-                                      )
+                            GestureDetector(
+                              onTap: (){
+                                isFromWelcomeScreen = true;
+                                Get.to(()=> const PrayerCategoryScreen(), arguments: [index[3], isFromWelcomeScreen]);
+                              },
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey,
+                                        image: const DecorationImage(
+                                            image: AssetImage("images/alex-kotliarskyi.jpg"),
+                                            fit: BoxFit.cover
+                                        )
+                                    ),
                                   ),
-                                ),
-                                Positioned(
-                                    bottom: 0,
-                                    child: Text("Work", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                )
-                              ],
+                                  const Positioned(
+                                      bottom: 0,
+                                      child: Text("Work", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                  )
+                                ],
+                              ),
                             ),
                             SizedBox(width: 10,),
-                            Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey,
-                                      image: const DecorationImage(
-                                          image: AssetImage("images/ibrahim-boran.jpg"),
-                                          fit: BoxFit.cover
-                                      )
+                            GestureDetector(
+                              onTap: (){
+                                isFromWelcomeScreen = true;
+                                Get.to(()=> const PrayerCategoryScreen(), arguments: [index[4], isFromWelcomeScreen]);
+                              },
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey,
+                                        image: const DecorationImage(
+                                            image: AssetImage("images/ibrahim-boran.jpg"),
+                                            fit: BoxFit.cover
+                                        )
+                                    ),
                                   ),
-                                ),
-                                const Positioned(
-                                    bottom: 0,
-                                    child: Text("Finance", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                )
-                              ],
+                                  const Positioned(
+                                      bottom: 0,
+                                      child: Text("Finance", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -575,6 +632,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
             SizedBox(height: 20,),
+            //reminders
             Container(
               height: 370,
               width: size.width,
@@ -702,6 +760,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
             SizedBox(height: 20,),
+            //social media
             Container(
               height: 220,
               width: size.width,
