@@ -63,7 +63,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
             body: data[2],
             payload: data[2],
             //to implement this subtract the time the user chooses from the current time and pass it as a duration in datetime.add
-            scheduledDate: DateTime.now().add(const Duration(seconds: 12)),
+            scheduledDate: DateTime(int.parse(_time)),
           );
         });
       }

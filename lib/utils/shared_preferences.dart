@@ -1,14 +1,17 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
- Future<String> getStreak() async {
-  final SharedPreferences pref = await SharedPreferences.getInstance();
-  int value = 0;
-  pref.setInt("key", (value + 1));
-  pref.getInt("key") ?? 0;
-  print(pref.getInt("key"));
-  String string = pref.getInt("key").toString();
-  print(string);
-  return string;
+ class AppPreferences {
+  static SharedPreferences? _preferences;
 
+  static const _KeyPrayerTypes = "prayertype";
+
+  static Future init() async =>
+   _preferences = await SharedPreferences.getInstance();
+
+
+  static Future setPrayerType(String prayertype) async =>
+   await _preferences!.setString(_KeyPrayerTypes, prayertype);
+
+  static getPrayertype() => _preferences!.getString(_KeyPrayerTypes);
 }
 

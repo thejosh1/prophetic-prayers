@@ -774,7 +774,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 80,
+                                   height: 90,
                                    child: Padding(
                                      padding: const EdgeInsets.only(left: 10),
                                      child: Column(

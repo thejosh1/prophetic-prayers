@@ -1,11 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
 import 'package:prophetic_prayers/pages/welcome.dart';
-import 'package:prophetic_prayers/pages/prayer_screen.dart';
 import 'package:prophetic_prayers/services/notify_services.dart';
+import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
 
 Future<void> main() async{
@@ -14,12 +15,21 @@ Future<void> main() async{
   await Firebase.initializeApp().then((value) => Get.put(AuthController()));
   //AuthController.instance.Logout();
   NotifyServices.showScheduledDailyNotification(
-      title: "a reminder",
-      body: "my reminder",
-      payload: "",
+      title: "Reminder",
+      body: "Prophetic Prayers for children live",
+      payload: "$WelcomeScreen",
       scheduledDate: DateTime.now());
-  NotifyServices.showScheduledWeeklyNotification(scheduledDate: DateTime.now());
+  NotifyServices.showScheduledWeeklyNotification(
+      title: "Reminder",
+      body: "Prohetic Prayers for children is live",
+      payload: "$WelcomeScreen",
+      scheduledDate: DateTime.now());
 
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+  await AppPreferences.init();
 
   runApp(const MyApp());
 }

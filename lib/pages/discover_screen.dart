@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/pages/plan_list.dart';
 import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
-import 'package:get/get.dart';
 import 'package:prophetic_prayers/widgets/big_text.dart';
 
-import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
 import '../services/search_services.dart';
 import '../services/testimony_services.dart';
@@ -22,6 +21,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   Scripture scripture = Scripture();
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -69,20 +69,19 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                               await showSearch(context: context, delegate: SearchServices(scripture));
                             },
                             child:  Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.search_outlined,
                                   color: Colors.grey,
+                                  size: Dimensions.prayerListScreenContainerWidth14,
                                 ),
-                                Expanded(
-                                    child: Text("search", style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: Dimensions.prayerListScreenContainerWidth14,
-                                        color: Color(0xFFBEC2CE)
-                                    ))
-                                ),
+                                Text("search", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Dimensions.prayerListScreenContainerWidth14,
+                                    color: Color(0xFFBEC2CE)
+                                )),
 
                               ],
                             ),
@@ -117,26 +116,31 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
                                 children: [
-                                  Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: [
-                                      Container(
-                                        height: 220,
-                                        width: 150,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: Colors.grey,
-                                            image: const DecorationImage(
-                                                image: AssetImage("images/child(36).jpg"),
-                                                fit: BoxFit.cover
-                                            )
+                                  GestureDetector(
+                                    onTap: (){
+                                      Get.to(()=> PlanListScreen());
+                                    },
+                                    child: Stack(
+                                      alignment: Alignment.bottomCenter,
+                                      children: [
+                                        Container(
+                                          height: 220,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: Colors.grey,
+                                              image: const DecorationImage(
+                                                  image: AssetImage("images/child(36).jpg"),
+                                                  fit: BoxFit.cover
+                                              )
+                                          ),
                                         ),
-                                      ),
-                                      const Positioned(
-                                          bottom: 0,
-                                          child: Text("Children", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                      )
-                                    ],
+                                        const Positioned(
+                                            bottom: 0,
+                                            child: Text("Children", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                        )
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(width: 10,),
                                   Stack(
@@ -239,200 +243,115 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               StreamBuilder(
                   stream: TestimonyServices.showTestimony(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if(!snapshot.hasData) {
+                    if (!snapshot.hasData) {
                       return const SizedBox(height: 0,);
                     }
-                    final user = AuthController.instance.auth.currentUser;
                     final snapdata = snapshot.data!.docs;
-                    return snapdata.isNotEmpty ? FutureBuilder(
-                        future: FirebaseFirestore.instance.collection("users").doc(user!.uid).get(),
-                        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                          if(snapshot.connectionState == ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator(),);
-                          } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && !snapshot.data!.exists) {
-                            Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                            return Container(
-                              height: 320,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.white
-                              ),
-                              child: Container(
-                                margin: EdgeInsets.only(left: 20, right: 20, top: 40),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                    return snapdata.isNotEmpty ? Column(
+                      children: [
+                        Container(
+                          height: 320,
+                          width: size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.white,
+                          ),
+                          child: Container(
+                            margin: EdgeInsets.only(left: 20, right: 20, top: 40),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Text("Our Stories", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Row(
-                                            children: const [
-                                              Text("Testify", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
-                                              SizedBox(width: 5,),
-                                              Icon(Icons.arrow_forward_sharp, color: Colors.black, size: 18,),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(height: 50,),
-                                    SingleChildScrollView(
-                                      child: Container(
-                                        height: 200,
-                                        child: ListView(
-                                          scrollDirection: Axis.horizontal,
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Container(
-                                                  height: 170,
-                                                  width: 120,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      color: Colors.grey,
-                                                      image: DecorationImage(
-                                                          image: NetworkImage(
-                                                              "${data["imagePath"]}"
-                                                          ),
-                                                          fit: BoxFit.cover
-                                                      )
-                                                  ),
-                                                ),
-                                                SizedBox(height: 10,),
-                                                Center(
-                                                  child: Text("${data["name"]}", style: TextStyle(color: Color(0xFF1E2432)),),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(width: 10,),
-                                            Column(
-                                              children: [
-                                                Container(
-                                                  height: 170,
-                                                  width: 120,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    color: Colors.grey,
-                                                  ),
-                                                ),
-                                                SizedBox(height: 10,),
-                                                const Center(
-                                                  child: Text("Anonymous", style: TextStyle(color: Color(0xFF1E2432)),),
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(width: 10,),
-                                            Column(
-                                              children: [
-                                                Container(
-                                                  height: 170,
-                                                  width: 120,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      color: Colors.grey,
-                                                      image: const DecorationImage(
-                                                          image: AssetImage(
-                                                              "images/diana-simum.jpg"
-                                                          ),
-                                                          fit: BoxFit.cover
-                                                      )
-                                                  ),
-                                                ),
-                                                SizedBox(height: 10,),
-                                                const Center(
-                                                  child: Text("Diana", style: TextStyle(color: Color(0xFF1E2432)),),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                    const Text("Our Stories", style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFF1E2432)),),
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Row(
+                                        children: const [
+                                          Text("Testify", style: TextStyle(fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xFF1E2432)),),
+                                          SizedBox(width: 5,),
+                                          Icon(Icons.arrow_forward_sharp,
+                                            color: Colors.black, size: 18,),
+                                        ],
                                       ),
                                     )
                                   ],
                                 ),
-                              ),
-                            );
-                          }
-                          return Container(
-                            height: 320,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Colors.white
-                            ),
-                            child: Container(
-                              margin: EdgeInsets.only(left: 20, right: 20, top: 40),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text("Our Stories", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Row(
-                                          children: const [
-                                            Text("Testify", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
-                                            SizedBox(width: 5,),
-                                            Icon(Icons.arrow_forward_sharp, color: Colors.black, size: 18,),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(height: 50,),
-                                  SingleChildScrollView(
-                                    child: Container(
-                                      height: 200,
-                                      child: ListView(
+                                SizedBox(height: 50,),
+                                SingleChildScrollView(
+                                  child: Container(
+                                    height: 200,
+                                    child: ListView.builder(
+                                        itemCount: snapdata.take(3).length,
                                         scrollDirection: Axis.horizontal,
-                                        children: [
-                                          Column(
-                                            children: const [
-                                              Center(child: CircularProgressIndicator(),),
-                                              SizedBox(height: 10,),
-                                              Center(
-                                                child: CircularProgressIndicator(),
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(width: 10,),
-                                          Column(
-                                            children: const [
-                                              Center(child: CircularProgressIndicator(),),
-                                              SizedBox(height: 10,),
-                                              Center(
-                                                child: CircularProgressIndicator(),
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(width: 10,),
-                                          Column(
-                                            children: const [
-                                              Center(
-                                                child: CircularProgressIndicator(),
-                                              ),
-                                              SizedBox(height: 10,),
-                                              Center(
-                                                child: CircularProgressIndicator(),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                        itemBuilder: (BuildContext context, index) {
+                                          return FutureBuilder(
+                                              future: FirebaseFirestore.instance.collection("users").doc(snapdata[index]["useruid"].toString()).get(),
+                                              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot>snapshot) {
+                                                if(snapshot.connectionState == ConnectionState.waiting) {
+                                                  return Center(child: CircularProgressIndicator(),);
+                                                } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
+                                                  Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                                                  return Row(
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          Container(
+                                                            height: 170,
+                                                            width: 120,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(20),
+                                                                image: DecorationImage(
+                                                                    image: NetworkImage("${data["imagePath"]}"),
+                                                                    fit: BoxFit.cover
+                                                                )
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 10,),
+                                                          Center(
+                                                            child: Text("${data["name".split(" ")[0]]}"),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      SizedBox(width: 10,)
+                                                    ],
+                                                  );
+                                                }
+                                                return SizedBox();
+                                              }
+                                          );
+                                        }
                                     ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                )
+                              ],
                             ),
-                          );
-                        }
+                          ),
+                        ),
+                        SizedBox(height: 20,)
+                      ],
                     ) : SizedBox();
+                    // return snapdata.isNotEmpty ? FutureBuilder(
+                    //   future: FirebaseFirestore.instance.collection("users").doc(user!.uid).get(),
+                    //   builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    //     if(snapshot.connectionState == ConnectionState.waiting) {
+                    //       return Center(child: CircularProgressIndicator(),);
+                    //     } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && !snapshot.data!.exists) {
+                    //       Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                    //       return Container(
+                    //         height: 320,
+                    //         width: size.width,
+                    //         decoration: BoxDecoration(
+                    //             borderRadius: BorderRadius.circular(30),
+                    //             color: Colors.white
+                    //         ),
+                    //         child:
                   }
               ),
             ],

@@ -107,7 +107,7 @@ class _PlanListScreenState extends State<PlanListScreen> {
                             color: const Color(0xffF7F8FA),
                         ),
                         child: Center(
-                            child: Text(scriptureList[index].verse.toString()[0],
+                            child: Text(scriptureList[index].verse.toString()[0].toUpperCase(),
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black))
                         ),

@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
-import 'package:prophetic_prayers/pages/prayer_screen.dart';
 
 import '../pages/auth_pages/login.dart';
-import '../pages/welcome.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
-
   late Rx<User?> _user;
   FirebaseAuth auth = FirebaseAuth.instance;
 

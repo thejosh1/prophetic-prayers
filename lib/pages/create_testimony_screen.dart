@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:prophetic_prayers/services/testimony_services.dart';
 
@@ -28,6 +30,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   var data = Get.arguments;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +47,9 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                   children: [
                     TextFormField(
                       decoration: const InputDecoration.collapsed(
-                          hintText: "Title(optional)",
+                          hintText: "Title",
                       ),
+                      controller: _titleController,
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold
@@ -54,6 +58,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                     const Divider(),
                     SizedBox(height: 23),
                     TextFormField(
+                      controller: _noteController,
                       decoration: const InputDecoration.collapsed(
                         hintText: "Testimony",
                       ),
@@ -67,13 +72,18 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
               ),
               SizedBox(height: 300),
               GestureDetector(
-                onTap: () {
+                onTap: () async{
+                  _formKey.currentState?.save();
                   TestimonyServices.addItem(
                     title: _titleController.text.trim(),
                     testimonies: _noteController.text.trim(),
                     useruid: AuthController.instance.auth.currentUser!.uid.toString(),
-                    prayertype: data[0].toString()
+                    prayertype: data[0].toString(),
+                    timestamp: DateFormat.yMMMEd().format(DateTime.now()).toString()
                   );
+                  print("a text" + _titleController.text.trim());
+                  print("a text" + _noteController.text.trim());
+                  print("a text " + AuthController.instance.auth.currentUser!.uid.toString());
                   Get.back();
                 },
                 child: ClipRRect(

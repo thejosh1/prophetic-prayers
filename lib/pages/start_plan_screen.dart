@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/pages/plan_list.dart';
+import 'package:prophetic_prayers/pages/main_page.dart';
+
+import '../utils/shared_preferences.dart';
 
 class StartPlanScreen extends StatefulWidget {
   const StartPlanScreen({Key? key}) : super(key: key);
@@ -13,7 +15,9 @@ class StartPlanScreen extends StatefulWidget {
 class _StartPlanScreenState extends State<StartPlanScreen> {
   @override
   Widget build(BuildContext context) {
-
+    List Listindex = [0, 1, 2, 3, 4,];
+    var data = Get.arguments;
+    RxString currPrayerType = "a".obs;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -22,9 +26,9 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
             Container(
               height: 200,
               width: size.width,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("images/child(36).jpg"),
+                  image: AssetImage(data[1]),
                   fit: BoxFit.cover
                 )
               ),
@@ -32,8 +36,8 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
             Container(
               height: 50,
               width: size.width,
-              child: const Center(
-                child: Text("Prophetic prayers for children", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+              child: Center(
+                child: Text("Prophetic prayers for ${data[2]}", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
               ),
             ),
             const Divider(),
@@ -43,23 +47,24 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.only(left: 20),
                     child: Text("Grace upon Grace", style: TextStyle(fontSize: 16),),
                   ),
                   SizedBox(height: 10,),
                   const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text("365 days", style: TextStyle(fontSize: 16),),
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text("A 365 days prayer plan", style: TextStyle(fontSize: 16),),
                   ),
                   SizedBox(height: 20,),
                   GestureDetector(
-                    onTap: () {
-                      Get.to(() => const PlanListScreen());
+                    onTap: () async{
+                      await AppPreferences.setPrayerType(data[2].toString());
+                      Get.back();
                     },
                     child: Container(
                       height: 50,
                       width: 320,
-                      margin: EdgeInsets.only(left: 10),
+                      margin: EdgeInsets.only(left: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
                         color: Colors.brown
@@ -71,7 +76,7 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                   ),
                   SizedBox(height: 20,),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    margin: EdgeInsets.symmetric(horizontal: 20),
                     child: const Text(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
                             "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
@@ -85,7 +90,7 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                     height: 30,
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                    padding: EdgeInsets.only(left: 20),
                     child: Text("Other Plans", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),),
                   ),
                   Divider(),
@@ -106,34 +111,35 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                                   child: ListView(
                                     scrollDirection: Axis.horizontal,
                                     children: [
-                                      // GestureDetector(
-                                      //   onTap: () {
-                                      //     Get.to(()=> const StartPlanScreen());
-                                      //   },
-                                      //   child: Stack(
-                                      //     alignment: Alignment.bottomCenter,
-                                      //     children: [
-                                      //       Container(
-                                      //         height: 100,
-                                      //         width: 100,
-                                      //         decoration: BoxDecoration(
-                                      //             borderRadius: BorderRadius.circular(10),
-                                      //             color: Colors.grey,
-                                      //             image: const DecorationImage(
-                                      //                 image: AssetImage("images/child(36).jpg"),
-                                      //                 fit: BoxFit.cover
-                                      //             )
-                                      //         ),
-                                      //       ),
-                                      //       const Positioned(
-                                      //           bottom: 0,
-                                      //           child: Text("Children", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
                                       SizedBox(width: 20,),
-                                      GestureDetector(
+                                      Listindex[0] == data[0] ? SizedBox():GestureDetector(
+                                        onTap: () {
+                                          Get.to(()=> const StartPlanScreen());
+                                        },
+                                        child: Stack(
+                                          alignment: Alignment.bottomCenter,
+                                          children: [
+                                            Container(
+                                              height: 100,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  color: Colors.grey,
+                                                  image: const DecorationImage(
+                                                      image: AssetImage("images/child(36).jpg"),
+                                                      fit: BoxFit.cover
+                                                  )
+                                              ),
+                                            ),
+                                            const Positioned(
+                                                bottom: 0,
+                                                child: Text("Children", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Listindex[0] == data[0] ? SizedBox():SizedBox(width: 10,),
+                                      Listindex[1] == data[0] ? SizedBox():GestureDetector(
                                         onTap: (){
                                           Get.to(()=> const StartPlanScreen());
                                         },
@@ -142,7 +148,7 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                                           children: [
                                             Container(
                                               height: 100,
-                                              width: 100,
+                                              width: 120,
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(10),
                                                   color: Colors.grey,
@@ -159,8 +165,8 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(width: 10,),
-                                      GestureDetector(
+                                      Listindex[1] == data[0] ? SizedBox():SizedBox(width: 10,),
+                                      Listindex[2] == data[0] ? SizedBox():GestureDetector(
                                         onTap: (){
                                           Get.to(()=> const StartPlanScreen());
                                         },
@@ -169,7 +175,7 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                                           children: [
                                             Container(
                                               height: 100,
-                                              width: 100,
+                                              width: 120,
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(10),
                                                   color: Colors.grey,
@@ -186,8 +192,8 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(width: 10,),
-                                      GestureDetector(
+                                      Listindex[2] == data[0] ? SizedBox():SizedBox(width: 10,),
+                                      Listindex[3] == data[0] ? SizedBox():GestureDetector(
                                         onTap: (){
                                           Get.to(()=> const StartPlanScreen());
                                         },
@@ -196,7 +202,7 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                                           children: [
                                             Container(
                                               height: 100,
-                                              width: 100,
+                                              width: 120,
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(10),
                                                   color: Colors.grey,
@@ -213,8 +219,8 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(width: 10,),
-                                      GestureDetector(
+                                      Listindex[3] == data[0] ? SizedBox():SizedBox(width: 10,),
+                                      Listindex[4] == data[0] ? SizedBox():GestureDetector(
                                         onTap: (){
                                           Get.to(()=> const StartPlanScreen());
                                         },
@@ -223,7 +229,7 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                                           children: [
                                             Container(
                                               height: 100,
-                                              width: 100,
+                                              width: 120,
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(10),
                                                   color: Colors.grey,
