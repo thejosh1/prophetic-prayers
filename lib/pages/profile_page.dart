@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 import 'package:prophetic_prayers/services/testimony_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
 import '../controller/auth_controller.dart';
-import '../widgets/profile_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             SizedBox(height: 20,),
             Container(
-              height: 300,
+              height: 100,
               width: size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
@@ -43,73 +43,40 @@ class _ProfilePageState extends State<ProfilePage> {
                       future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
                       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if(snapshot.connectionState == ConnectionState.waiting) {
-                          return Container(
-                            height: 30,
-                            width: 30,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage("images/Icon-48.png"),
-                                  fit: BoxFit.cover
-                                )
-                            ),
-                          );
+                          return const Center(child: CircularProgressIndicator(),);
                         } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                          return Column(
-                            children: [
-                              Center(
-                                child: Container(
-                                  height: 150,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: NetworkImage("${data["imagePath"]}"),
-                                          fit: BoxFit.cover
-                                      )
-                                  ),
+                          return Container(
+                            margin: EdgeInsets.only(left: 20, right: 20),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text("Name:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                                    Container(
+                                      width: 150,
+                                      child: Text("${data["name"]}".toUpperCase(), style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16), overflow: TextOverflow.ellipsis,),
+                                    )
+                                  ],
                                 ),
-                              ),
-                              SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(Icons.bolt, color: Colors.amberAccent,),
-                                      Text("Streak")
-                                    ],
-                                  ),
-                                  SizedBox(width: 5,),
-                                  Row(
-                                    children: const [
-                                      Icon(Icons.sunny, color: Colors.amberAccent,),
-                                      Text("Weeks")
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 20,),
-                              Text("${data["name"]}".toUpperCase()),
-                              SizedBox(width: 10,),
-                              Text("${data["email"]}".toUpperCase()),
-                              SizedBox(width: 10,),
-                              Text("${data["phonenumber"]}".toUpperCase())
-                            ],
+                                SizedBox(height: 20,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text("Email:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                                    Container(
+                                      width: 150,
+                                      child: Text("${data["email"]}".toUpperCase(), style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16), overflow: TextOverflow.ellipsis,),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(width: 20,),
+                              ],
+                            ),
                           );
                         }
-                        return Container(
-                          height: 30,
-                          width: 30,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage("images/Icon-48.png"),
-                                fit: BoxFit.cover
-                              )
-                          ),
-                        );
+                        return const Center(child: Text("No testimonies yet "),);
                       }
                   ),
                   SizedBox(height: 20,),
@@ -162,8 +129,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   child: Center(child: Text("${data["name"]}"[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)));
                                             }
                                         ),
-                                        Text("${snapdata[index]["title"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
-                                        Text("${snapdata[index]["timestamp"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)
+                                        Text("${snapdata[index]["title"]}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),),
+                                        Text("created ${snapdata[index]["timestamp"]}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),)
                                       ],
                                     ),
                                   ),
@@ -175,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       children: [
                                         Container(
                                           height: 100,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               border: Border(
                                                   left: BorderSide(
                                                       width: 8.0,
@@ -190,7 +157,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           children: [
                                             Container(
                                                 width: 300,
-                                                child: Text("${snapdata[index]["testimonies"]}", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16,),
+                                                child: Text("${snapdata[index]["testimonies"]}",
+                                                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16,),
                                                 )
                                             ),
                                           ],

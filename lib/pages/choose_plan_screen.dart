@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/pages/start_plan_screen.dart';
 import '../utils/dimensions.dart';
 
 class ChoosePlanScreen extends StatelessWidget {
@@ -8,6 +9,9 @@ class ChoosePlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List planNames = ["Children", "Marriage", "Business", "Work", "Finance"];
+    List index = [0, 1, 2, 3, 4];
+    List images = ["images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/alex-kotliarskyi.jpg", "images/ibrahim-boran.jpg"];
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -36,15 +40,20 @@ class ChoosePlanScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 165,
-                            width: 165,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              image: const DecorationImage(
-                                image: AssetImage("images/child(36).jpg"),
-                                fit: BoxFit.cover
-                              )
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => const StartPlanScreen(), arguments: [index[0], images[0], planNames[0]]);
+                            },
+                            child: Container(
+                              height: 165,
+                              width: 165,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                image: const DecorationImage(
+                                  image: AssetImage("images/child(36).jpg"),
+                                  fit: BoxFit.cover
+                                )
+                              ),
                             ),
                           ),
                           SizedBox(height: 13,),
@@ -55,15 +64,20 @@ class ChoosePlanScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 165,
-                            width: 165,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                image: const DecorationImage(
-                                    image: AssetImage("images/ben-white.jpg"),
-                                    fit: BoxFit.cover
-                                )
+                          GestureDetector(
+                            onTap: (){
+                              Get.to(()=> const StartPlanScreen(), arguments: [index[1], images[1], planNames[1]]);
+                            },
+                            child: Container(
+                              height: 165,
+                              width: 165,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  image: const DecorationImage(
+                                      image: AssetImage("images/ben-white.jpg"),
+                                      fit: BoxFit.cover
+                                  )
+                              ),
                             ),
                           ),
                           SizedBox(height: 13,),
@@ -78,15 +92,20 @@ class ChoosePlanScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 165,
-                            width: 165,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                image: const DecorationImage(
-                                    image: AssetImage("images/sean-pollock.jpg"),
-                                    fit: BoxFit.cover
-                                )
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(()=> const StartPlanScreen(), arguments: [index[2], images[2], planNames[2]]);
+                            },
+                            child: Container(
+                              height: 165,
+                              width: 165,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  image: const DecorationImage(
+                                      image: AssetImage("images/sean-pollock.jpg"),
+                                      fit: BoxFit.cover
+                                  )
+                              ),
                             ),
                           ),
                           SizedBox(height: 13,),
@@ -97,15 +116,20 @@ class ChoosePlanScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 165,
-                            width: 165,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                image: const DecorationImage(
-                                    image: AssetImage("images/alex-kotliarskyi.jpg"),
-                                    fit: BoxFit.cover
-                                )
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => const StartPlanScreen(), arguments: [index[3], images[3], planNames[3]]);
+                            },
+                            child: Container(
+                              height: 165,
+                              width: 165,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  image: const DecorationImage(
+                                      image: AssetImage("images/alex-kotliarskyi.jpg"),
+                                      fit: BoxFit.cover
+                                  )
+                              ),
                             ),
                           ),
                           SizedBox(height: 13,),
@@ -119,15 +143,20 @@ class ChoosePlanScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 165,
-                            width: 165,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                image: const DecorationImage(
-                                    image: AssetImage("images/ibrahim-boran.jpg"),
-                                    fit: BoxFit.cover
-                                )
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(()=> StartPlanScreen(), arguments: [index[4], images[4], planNames[4]]);
+                            },
+                            child: Container(
+                              height: 165,
+                              width: 165,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  image: const DecorationImage(
+                                      image: AssetImage("images/ibrahim-boran.jpg"),
+                                      fit: BoxFit.cover
+                                  )
+                              ),
                             ),
                           ),
                           SizedBox(height: 13,),
