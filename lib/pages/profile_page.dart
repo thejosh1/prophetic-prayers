@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
+import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
 import 'package:prophetic_prayers/services/testimony_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
@@ -29,15 +30,39 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 20,),
+            SizedBox(height: 10,),
+            Row(
+              children: [
+                Expanded(child: Container(),),
+                GestureDetector(
+                  onTap: () {
+                    AuthController.instance.Logout();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    height: 40,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40),
+                      color: const Color(0xff515BDE)
+                    ),
+                    child: const Center(child:
+                    Text("SignOut",
+                      style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w400),),),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10,),
             Container(
-              height: 100,
+              height: 200,
               width: size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 color: Colors.white
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FutureBuilder(
                       future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
@@ -89,157 +114,107 @@ class _ProfilePageState extends State<ProfilePage> {
                 stream: FirebaseFirestore.instance.collection("testimonies").snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if(!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: Text("No Testimonies yet be the first to testify"));
                   }
                   List snapdata = snapshot.data!.docs;
                   return snapdata.isNotEmpty ? Container(
                     height: 200,
+                    width: size.width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white
+                    ),
                     child: ListView.builder(
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
                           String useruid = snapdata[index]["useruid"];
-                          return Container(
-                              height: 300,
-                              width: size.width,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.white
-                              ),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 15, right: 15),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        FutureBuilder(
-                                            future: FirebaseFirestore.instance.collection("users").doc(useruid).get(),
-                                            builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot>snapshot) {
-                                              if(!snapshot.hasData) {
-                                                return Container();
-                                              }
-                                              Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                                              return Container(
-                                                  height: 30,
-                                                  width: 30,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black),
-                                                      shape: BoxShape.circle
-                                                  ),
-                                                  child: Center(child: Text("${data["name"]}"[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)));
+                          return InkWell(
+                            splashColor: Colors.grey,
+                            onTap: (){
+                              Get.to(()=> const TestimonyDetailPage());
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+                                  child: Row(
+                                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      FutureBuilder(
+                                          future: FirebaseFirestore.instance.collection("users").doc(useruid).get(),
+                                          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot>snapshot) {
+                                            if(!snapshot.hasData) {
+                                              return Container();
                                             }
-                                        ),
-                                        Text("${snapdata[index]["title"]}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),),
-                                        Text("created ${snapdata[index]["timestamp"]}", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),)
-                                      ],
-                                    ),
+                                            Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                                            return Container(
+                                                height: 30,
+                                                width: 30,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(color: Colors.black),
+                                                    shape: BoxShape.circle
+                                                ),
+                                                child: Center(child: Text("${data["name"]}"[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)));
+                                          }
+                                      ),
+                                      SizedBox(width: 10),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("${snapdata[index]["title"]}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
+                                          Row(
+                                            children: [
+                                              const Icon(Icons.access_time, size: 18,),
+                                              SizedBox(width: 5,),
+                                              Text("${snapdata[index]["timestamp"]}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(height: 20,),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 20),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 100,
-                                          decoration: const BoxDecoration(
-                                              border: Border(
-                                                  left: BorderSide(
-                                                      width: 8.0,
-                                                      color: Colors.black
-                                                  )
+                                ),
+                                SizedBox(height: 10,),
+                                Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 120,
+                                        decoration: const BoxDecoration(
+                                            border: Border(
+                                                left: BorderSide(
+                                                    width: 4.0,
+                                                    color: Colors.black
+                                                )
+                                            )
+                                        ),
+
+                                      ),
+                                      SizedBox(width: 10,),
+                                      Column(
+                                        children: [
+                                          Container(
+                                              width: 300,
+                                              child: Text("${snapdata[index]["testimonies"]}",
+                                                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16,),
+
                                               )
                                           ),
-
-                                        ),
-                                        SizedBox(width: 10,),
-                                        Column(
-                                          children: [
-                                            Container(
-                                                width: 300,
-                                                child: Text("${snapdata[index]["testimonies"]}",
-                                                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16,),
-                                                )
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           );
                         }
                     ),
                   ): SizedBox();
                 }
             ),
-            // StreamBuilder(
-            //     stream: TestimonyServices.showTestimony(),
-            //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            //       if(!snapshot.hasData) {
-            //         return Center(child: CircularProgressIndicator());
-            //       }
-            //       final snapdata = snapshot.data!.docs;
-            //       return Container(
-            //         height: 420,
-            //         width: size.width,
-            //         decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.circular(30),
-            //             color: Colors.white
-            //         ),
-            //         child: ListView.builder(
-            //             itemCount: snapdata.length,
-            //             scrollDirection: Axis.horizontal,
-            //             itemBuilder: (BuildContext context, index) {
-            //               return FutureBuilder(
-            //                   future: FirebaseFirestore.instance.collection("users").doc(snapdata[index]["useruid"].toString()).get(),
-            //                   builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot>snapshot) {
-            //                     if(snapshot.connectionState == ConnectionState.waiting) {
-            //                       return Center(child: CircularProgressIndicator(),);
-            //                     } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
-            //                       Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-            //                       return Column(
-            //                         crossAxisAlignment: CrossAxisAlignment.start,
-            //                         children: [
-            //                           Row(
-            //                             children: [
-            //                               Container(
-            //                                 width: 40,
-            //                                 height: 40,
-            //                                 decoration: BoxDecoration(
-            //                                     border: Border.all(color: Colors.black),
-            //                                     shape: BoxShape.circle
-            //                                 ),
-            //                                 child: Center(child: Text("${data["name"]}"[0]),),
-            //                               ),
-            //                               SizedBox(width: 10,),
-            //                               Text("${DateFormat.MMMEd().format(snapdata[index]["timestamp"])}")
-            //                             ],
-            //                           ),
-            //                           SizedBox(height: 20,),
-            //                           Text("${snapdata[index]["prayertype"]}"),
-            //                           SizedBox(height: 20,),
-            //                           Container(
-            //                             width: 250,
-            //                             decoration: BoxDecoration(
-            //                                 border: Border(
-            //                                     left: BorderSide(color: Colors.black, width: 16)
-            //                                 )
-            //                             ),
-            //                             child: Text("${snapdata[index]["testimonies"]}"),
-            //                           )
-            //                         ],
-            //                       );
-            //                     }
-            //                     return SizedBox();
-            //                   }
-            //               );
-            //             }
-            //         ),
-            //       );
-            //     }
-            // )
           ],
         ),
       )
@@ -282,9 +257,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
                 } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                  return Text("${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                  return Text("${data["name"]}".toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
                 }
-                return Text("Welcome", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
               }
           ),
           FutureBuilder(

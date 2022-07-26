@@ -32,7 +32,7 @@ class AuthController extends GetxController {
     return await auth.currentUser!;
   }
   
-  void register(String email, password, String name, String phonenumber, String imagepath) async{
+  void register(String email, password, String name, String imagepath) async{
    try {
      await auth.createUserWithEmailAndPassword(email: email, password: password);
      User? user = auth.currentUser;
@@ -40,7 +40,6 @@ class AuthController extends GetxController {
        "uid": user?.uid,
        "email": user?.email,
        "name" : name,
-       "phonenumber": phonenumber,
        "imagePath" : imagepath,
      });
    } catch(e) {

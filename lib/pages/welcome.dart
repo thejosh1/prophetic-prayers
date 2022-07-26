@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
@@ -12,6 +13,7 @@ import 'package:prophetic_prayers/services/testimony_services.dart';
 
 import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
+import '../services/notify_services.dart';
 import '../utils/shared_preferences.dart';
 import 'choose_plan_screen.dart';
 
@@ -63,7 +65,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     List planNames = ["Children", "Marriage", "Business", "Work", "Finance"];
     String prayertype = AppPreferences.getPrayertype() ?? " ";
     List index = [0, 1, 2, 3, 4];
-
+    final localizations = MaterialLocalizations.of(context);
     return Scaffold(
       appBar: const MyAppBar(),
       backgroundColor:  const Color(0xffF7F8FA),
@@ -559,105 +561,124 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
                 SizedBox(height: 20,),
-                Container(
-                  height: 370,
-                  width: size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white
-                  ),
+                InkWell(
+                  onTap: () {
+                    Future<void> _openTimePicker(BuildContext context) async {
+                      final TimeOfDay? time = await showTimePicker(
+                          context: context,
+                          // initialEntryMode:
+                          // TimePickerEntryMode.input,
+                          initialTime: TimeOfDay.now()
+                      );
+                      if(time !=null) {
+                        //set a scheduled notification based on the time
+                        final _time = localizations.formatTimeOfDay(time).split(" ")[0];
+                        int formattedtime = int.parse(_time.split(":")[0]);
+                        print(formattedtime);
+                        setState(() {
+                          NotifyServices.showScheduledNotification(
+                            title: "It's time to pray",
+                            body: scriptureList[getTodaysDay()-1].prayerPoint.toString(),
+                            payload: scriptureList[getTodaysDay()-1].prayerPoint.toString(),
+                            //to implement this subtract the time the user chooses from the current time and pass it as a duration in datetime.add
+                            scheduledDate: DateTime(int.parse(_time)),
+                          );
+                        });
+                      }
+                    }
+                  },
                   child: Container(
-                    margin: EdgeInsets.only(left: 20, top: 40, right: 20),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text("Reminders", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
-                            IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_outlined, color: Colors.grey,))
-                          ],
-                        ),
-                        SizedBox(height: 20,),
-                        Container(
-                          height: 200,
-                          width: 300,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.grey.withOpacity(0.4)
+                    height: 370,
+                    width: size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.white
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20, top: 40, right: 20),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Reminders", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
+                              IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_outlined, color: Colors.grey,))
+                            ],
                           ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Stack(
-                                  alignment: Alignment.topCenter,
-                                  children: [
-                                    Container(
-                                      height: 150,
-                                      width: 90,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 1,
-                                            spreadRadius: 1,
-                                            offset: Offset(3,0),
-                                            color: Colors.grey
-                                          )
-                                        ],
-                                        image: const DecorationImage(
-                                          image: AssetImage("images/welcome-one.png"),
-                                          fit: BoxFit.cover
-                                        )
-                                      )
-                                    ),
-                                    // const Positioned(
-                                    //   top: 0,
-                                    //   child: Text("Pray Now",
-                                    //     style: TextStyle(
-                                    //         fontWeight: FontWeight.bold, fontSize: 12, color: Colors.black
-                                    //       ),
-                                    //     )
-                                    // )
-                                  ],
-                                ),
-                                Container(
-                                  height: 150,
-                                  width: 90,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                          SizedBox(height: 20,),
+                          Container(
+                            height: 200,
+                            width: 300,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey.withOpacity(0.4)
+                            ),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.topCenter,
                                     children: [
-                                      const Text("Daily Prayer Reminder",
-                                        style:
-                                        TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.black54),
-                                      ),
-                                      SizedBox(height: 20,),
-                                      const Text("Start talking to God",
-                                        style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12, color: Color(0xFF1E2432)),
-                                      ),
-                                      SizedBox(height: 20,),
                                       Container(
-                                        height: 40,
-                                        width: 80,
+                                        height: 150,
+                                        width: 90,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(40),
-                                          color: Colors.grey
-                                        ),
-                                        child: const Center(
-                                          child: Text("Pray Now", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
-                                        ),
-                                      )
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.white,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              blurRadius: 1,
+                                              spreadRadius: 1,
+                                              offset: Offset(3,0),
+                                              color: Colors.grey
+                                            )
+                                          ],
+                                          image: const DecorationImage(
+                                            image: AssetImage("images/welcome-one.png"),
+                                            fit: BoxFit.cover
+                                          )
+                                        )
+                                      ),
                                     ],
                                   ),
-                                )
-                              ],
-                            )
+                                  Container(
+                                    height: 150,
+                                    width: 90,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Daily Prayer Reminder",
+                                          style:
+                                          TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.black54),
+                                        ),
+                                        SizedBox(height: 20,),
+                                        const Text("Start talking to God",
+                                          style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12, color: Color(0xFF1E2432)),
+                                        ),
+                                        SizedBox(height: 20,),
+                                        Container(
+                                          height: 40,
+                                          width: 80,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(40),
+                                            color: Colors.grey
+                                          ),
+                                          child: const Center(
+                                            child: Text("Pray Now", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 20,),
+                          SizedBox(height: 20,),
 
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -687,7 +708,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 )
                             ),
                             const Positioned(
-
+                              bottom: 50,
                               child: Icon(Icons.follow_the_signs_sharp, color: Colors.grey, size: 18,),
                             )
                           ],
@@ -710,13 +731,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     width: 30,
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          "images/facebook-social.png"
-                                        ),
-                                        fit: BoxFit.fill
-                                      )
                                     ),
+                                    child: Icon(FontAwesomeIcons.facebook,)
                                   ),
                                 ],
                               )

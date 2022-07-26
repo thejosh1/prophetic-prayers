@@ -53,6 +53,7 @@ dependencies:
   firebase_storage: ^10.3.0
   path: ^1.8.1
   flutter_svg: ^1.1.1+1
+  font_awesome_flutter: ^10.1.0
 
 
 dev_dependencies:

@@ -49,7 +49,10 @@ class _SignUpFormState extends State<SignUpForm> {
                      Get.snackbar(
                        "success",
                        "picture has been added successfully click the signup button to complete your signup",
-                       backgroundColor: Color(0xff515BDE),
+                       titleText: const Text("success", style: TextStyle(color: Colors.white),),
+                       messageText: const Text("picture has been added successfully click the signup button to complete your signup",
+                           style: TextStyle(color: Colors.white)),
+                       backgroundColor: const Color(0xff515BDE),
                        colorText: Colors.white
                      )
                    );
@@ -127,27 +130,27 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
             const SizedBox(height: 40),
-            TextField(
-              style: const TextStyle(),
-              controller: _phonenumberController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffBEC2CE),
-                  ),
-                ),
-                hintText: 'Phone Number',
-                hintStyle: TextStyle(
-                  color: Color(0xffBEC2CE),
-                  fontSize: 16,
-                ),
-                prefixIcon: Icon(
-                  Icons.phone_iphone_outlined,
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            ),
+            // TextField(
+            //   style: const TextStyle(),
+            //   controller: _phonenumberController,
+            //   decoration: const InputDecoration(
+            //     border: UnderlineInputBorder(
+            //       borderSide: BorderSide(
+            //         width: 1,
+            //         color: Color(0xffBEC2CE),
+            //       ),
+            //     ),
+            //     hintText: 'Phone Number',
+            //     hintStyle: TextStyle(
+            //       color: Color(0xffBEC2CE),
+            //       fontSize: 16,
+            //     ),
+            //     prefixIcon: Icon(
+            //       Icons.phone_iphone_outlined,
+            //       color: Color(0xffBEC2CE),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 40),
             TextField(
               controller: _passwordController,
@@ -207,7 +210,6 @@ class _SignUpFormState extends State<SignUpForm> {
                     _emailController.text.trim(),
                     _passwordController.text.trim(),
                     _nameController.text.trim(),
-                    _phonenumberController.text.trim(),
                     value,
                 );
               },

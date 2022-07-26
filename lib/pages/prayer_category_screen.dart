@@ -83,9 +83,9 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                           return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
                         } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                          return Text("Welcome ${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                          return Text("Welcome ${data["name"]}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
                         }
-                        return Text("Welcome", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                        return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
                       }
                   ),
                   FutureBuilder(
@@ -277,7 +277,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                         },
                         child: Row(
                           children: [
-                            const Text("see all", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                            const Text("Expand", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                             SizedBox(width: 10,),
                             Obx(()=>  isTapped.value == false ? const Icon(Icons.arrow_forward_ios_outlined, size: 18,): const Icon(Icons.arrow_drop_down, size: 18,))
                           ],

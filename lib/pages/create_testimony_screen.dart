@@ -69,7 +69,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                     const Text("Create Testimony", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
                     GestureDetector(
                       onTap: () {
-                        Get.off(()=> const MainPage());
+                        Get.offAll(()=> const MainPage());
                       },
                       child: Container(
                         height: 30,

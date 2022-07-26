@@ -56,19 +56,18 @@ class _MainPageState extends State<MainPage> {
         height: 80,
         child: BottomNavigationBar(
           backgroundColor: Colors.red,
-          selectedFontSize: 0,
           unselectedFontSize: 0,
           onTap: onTap,
           currentIndex: currentIndex,
-          selectedItemColor: Colors.black,
+          selectedItemColor: const Color(0xff515BDE),
           unselectedItemColor: Colors.grey.withOpacity(0.5),
           showSelectedLabels: true,
           showUnselectedLabels: false,
           elevation: 0,
-          items: const [
+          items: const<BottomNavigationBarItem> [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.bar_chart_sharp), label: "My plans",),
+                icon: Icon(Icons.apps), label: "My plans",),
             BottomNavigationBarItem(
                 icon: Icon(Icons.list_sharp), label: "Testimonies"),
             BottomNavigationBarItem(
