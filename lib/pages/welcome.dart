@@ -3,7 +3,6 @@ import 'dart:math' as math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
@@ -33,7 +32,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     super.initState();
     readJson();
     controller = ScrollController();
+    NotifyServices.init(initScheduled: true);
+    listenNotifications();
   }
+
+  void listenNotifications() =>
+      NotifyServices.onNotifications.stream.listen(onClickedNotification);
+  void onClickedNotification(String? payload) => Get.to(() => const PrayerDetailScreen(), arguments: [payload]);
 
   @override
   void dispose() {
@@ -66,6 +71,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     String prayertype = AppPreferences.getPrayertype() ?? " ";
     List index = [0, 1, 2, 3, 4];
     final localizations = MaterialLocalizations.of(context);
+
+    Future<void> _openTimePicker(BuildContext context) async {
+      final TimeOfDay? time = await showTimePicker(
+          context: context,
+          // initialEntryMode:
+          // TimePickerEntryMode.input,
+          initialTime: TimeOfDay.now()
+      );
+      if(time !=null) {
+        //set a scheduled notification based on the time
+        final _time = localizations.formatTimeOfDay(time).split(" ")[0];
+        int formattedtime = int.parse(_time.split(":")[0]);
+        print(formattedtime);
+        setState(() {
+          NotifyServices.showScheduledNotification(
+            title: "It's time to pray",
+            body: scriptureList[getTodaysDay()-1].prayerPoint.toString(),
+            payload: scriptureList[getTodaysDay()-1].prayerPoint.toString(),
+            //to implement this subtract the time the user chooses from the current time and pass it as a duration in datetime.add
+            scheduledDate: DateTime(int.parse(_time)),
+          );
+        });
+      }
+    }
     return Scaffold(
       appBar: const MyAppBar(),
       backgroundColor:  const Color(0xffF7F8FA),
@@ -563,29 +592,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SizedBox(height: 20,),
                 InkWell(
                   onTap: () {
-                    Future<void> _openTimePicker(BuildContext context) async {
-                      final TimeOfDay? time = await showTimePicker(
-                          context: context,
-                          // initialEntryMode:
-                          // TimePickerEntryMode.input,
-                          initialTime: TimeOfDay.now()
-                      );
-                      if(time !=null) {
-                        //set a scheduled notification based on the time
-                        final _time = localizations.formatTimeOfDay(time).split(" ")[0];
-                        int formattedtime = int.parse(_time.split(":")[0]);
-                        print(formattedtime);
-                        setState(() {
-                          NotifyServices.showScheduledNotification(
-                            title: "It's time to pray",
-                            body: scriptureList[getTodaysDay()-1].prayerPoint.toString(),
-                            payload: scriptureList[getTodaysDay()-1].prayerPoint.toString(),
-                            //to implement this subtract the time the user chooses from the current time and pass it as a duration in datetime.add
-                            scheduledDate: DateTime(int.parse(_time)),
-                          );
-                        });
-                      }
-                    }
+                    _openTimePicker(context);
                   },
                   child: Container(
                     height: 370,
@@ -731,8 +738,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     width: 30,
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          "images/facebook-social.png"
+                                        ),
+                                        fit: BoxFit.fill
+                                      )
                                     ),
-                                    child: Icon(FontAwesomeIcons.facebook,)
                                   ),
                                 ],
                               )
