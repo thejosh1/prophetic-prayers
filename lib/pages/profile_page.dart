@@ -32,8 +32,11 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             SizedBox(height: 10,),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(child: Container(),),
+                Container(
+                  margin: EdgeInsets.only(left: 10),
+                  child: Text("Profile Settings", style: TextStyle(fontWeight: FontWeight.w300, color: Color(0xff515BDE).withOpacity(0.6)),)),
                 GestureDetector(
                   onTap: () {
                     AuthController.instance.Logout();
@@ -54,6 +57,27 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             SizedBox(height: 10,),
+            Container(
+              height: 200,
+              width: size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.white
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black, width: 4)
+                    ),
+                    child: ,
+                  )
+                ],
+              ),
+            ),
             Container(
               height: 200,
               width: size.width,
@@ -118,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                   List snapdata = snapshot.data!.docs;
                   return snapdata.isNotEmpty ? Container(
-                    height: 200,
+                    height: 150,
                     width: size.width,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
@@ -151,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 height: 30,
                                                 width: 30,
                                                 decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.black),
+                                                    border: Border.all(color: Colors.grey),
                                                     shape: BoxShape.circle
                                                 ),
                                                 child: Center(child: Text("${data["name"]}"[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)));
@@ -164,9 +188,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                           Text("${snapdata[index]["title"]}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
                                           Row(
                                             children: [
-                                              const Icon(Icons.access_time, size: 18,),
+                                              const Icon(Icons.access_time, size: 14, color: Colors.grey,),
                                               SizedBox(width: 5,),
-                                              Text("${snapdata[index]["timestamp"]}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
+                                              Text("${snapdata[index]["timestamp"]}", style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 14, color: Colors.grey),),
                                             ],
                                           )
                                         ],
@@ -181,7 +205,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        height: 120,
+                                        height: 60,
                                         decoration: const BoxDecoration(
                                             border: Border(
                                                 left: BorderSide(

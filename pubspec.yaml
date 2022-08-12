@@ -121,6 +121,9 @@ flutter:
     - images/alex-kotliarskyi.jpg
     - images/ibrahim-boran.jpg
     - images/facebook-social.png
+    - images/welcome-one.png
+    - images/welcome-two.png
+    - images/welcome-three.png
 
   fonts:
     - family: Poppins

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
 
 import '../pages/auth_pages/login.dart';
+import '../pages/splash_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -22,7 +23,7 @@ class AuthController extends GetxController {
 
   _initialScreen (User? user) {
     if(user == null) {
-      Get.offAll(()=> const LoginScreen());
+      Get.offAll(()=> const SplashScreen());
     } else {
       Get.offAll(()=> const MainPage());
     }

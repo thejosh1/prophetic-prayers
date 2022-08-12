@@ -63,7 +63,7 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                       }
                       List snapdata = snapshot.data!.docs;
                       return snapdata.isNotEmpty ? Container(
-                        height: 200,
+                        height: 150,
                         width: size.width,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -96,7 +96,7 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                                   height: 30,
                                                   width: 30,
                                                   decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.black),
+                                                    border: Border.all(color: Colors.grey),
                                                     shape: BoxShape.circle
                                                   ),
                                                   child: Center(child: Text("${data["name"]}"[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)));
@@ -109,9 +109,9 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                               Text("${snapdata[index]["title"]}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
                                               Row(
                                                 children: [
-                                                  const Icon(Icons.access_time, size: 18,),
+                                                  const Icon(Icons.access_time, size: 14, color: Colors.grey,),
                                                   SizedBox(width: 5,),
-                                                  Text("${snapdata[index]["timestamp"]}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
+                                                  Text("${snapdata[index]["timestamp"]}", style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 14, color: Colors.grey),),
                                                 ],
                                               )
                                             ],
@@ -126,7 +126,7 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            height: 120,
+                                            height: 60,
                                             decoration: const BoxDecoration(
                                               border: Border(
                                                 left: BorderSide(

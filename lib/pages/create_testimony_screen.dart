@@ -156,9 +156,6 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                                           prayertype: data[0].toString(),
                                           timestamp: DateFormat.yMMMEd().format(DateTime.now()).toString()
                                       );
-                                      print("a text" + _titleController.text.trim());
-                                      print("a text" + _noteController.text.trim());
-                                      print("a text " + AuthController.instance.auth.currentUser!.uid.toString());
                                       Get.back();
                                       },
                                     child: ClipRRect(
