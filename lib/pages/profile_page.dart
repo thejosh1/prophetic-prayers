@@ -64,22 +64,67 @@ class _ProfilePageState extends State<ProfilePage> {
                 borderRadius: BorderRadius.circular(30),
                 color: Colors.white
               ),
-              child: Column(
-                children: [
-                  Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black, width: 4)
-                    ),
-                    child: ,
-                  )
-                ],
+              child: Container(
+                margin: EdgeInsets.only(top: 40),
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Positioned(
+                            child: Container(
+                          height: 90,
+                          width: 90,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.black, width: 1)
+                          ),
+                          child: Center(
+                            child: Text("A"),
+                          ),
+                        )
+                        ),
+                        Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white
+                              ),
+                              child: Container(
+                                height: 20,
+                                width: 20,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black
+                                ),
+                                child: const Center(
+                                  child: Text("+", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+                                ),
+                              ),
+                            )
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
+
+            SizedBox(height: 20,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    margin: EdgeInsets.only(left: 10),
+                    child: Text("Contact Details", style: TextStyle(fontWeight: FontWeight.w300, color: Color(0xff515BDE).withOpacity(0.6)),)),
+              ],
+            ),
+            SizedBox(height: 10,),
             Container(
-              height: 200,
+              height: 300,
               width: size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
@@ -99,28 +144,28 @@ class _ProfilePageState extends State<ProfilePage> {
                             margin: EdgeInsets.only(left: 20, right: 20),
                             child: Column(
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                ExpansionTile(
+                                  title: ListTile(
+                                      leading: Icon(Icons.person, color: Color(0xff515BDE),),
+                                      title: Text("Name"),
+                                    ),
                                   children: [
-                                    const Text("Name:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-                                    Container(
-                                      width: 150,
-                                      child: Text("${data["name"]}".toUpperCase(), style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16), overflow: TextOverflow.ellipsis,),
+                                    ListTile(
+                                      title: Text("${data["name"]}"),
                                     )
                                   ],
                                 ),
-                                SizedBox(height: 20,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                ExpansionTile(
+                                  title: ListTile(
+                                    leading: Icon(Icons.email, color: Color(0xff515BDE),),
+                                    title: Text("Email"),
+                                  ),
                                   children: [
-                                    const Text("Email:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
-                                    Container(
-                                      width: 150,
-                                      child: Text("${data["email"]}".toUpperCase(), style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16), overflow: TextOverflow.ellipsis,),
+                                    ListTile(
+                                      title: Text("${data["email"]}"),
                                     )
                                   ],
                                 ),
-                                SizedBox(width: 20,),
                               ],
                             ),
                           );
