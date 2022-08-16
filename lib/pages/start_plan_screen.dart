@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
+import 'package:prophetic_prayers/pages/welcome.dart';
 
 import '../utils/shared_preferences.dart';
 
@@ -17,7 +18,6 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
   Widget build(BuildContext context) {
     List Listindex = [0, 1, 2, 3, 4,];
     var data = Get.arguments;
-    RxString currPrayerType = "a".obs;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -59,7 +59,9 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                   GestureDetector(
                     onTap: () async{
                       await AppPreferences.setPrayerType(data[2].toString());
-                      Get.back();
+                      await AppPreferences.setImageType(data[2].toString());
+                      await AppPreferences.setImageName(data[1]);
+                      Get.to(()=> const WelcomeScreen());
                     },
                     child: Container(
                       height: 50,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/start_plan_screen.dart';
+import 'package:prophetic_prayers/pages/welcome.dart';
+import 'package:prophetic_prayers/utils/shared_preferences.dart';
 import '../utils/dimensions.dart';
 
 class ChoosePlanScreen extends StatelessWidget {
@@ -41,8 +43,11 @@ class ChoosePlanScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async{
+                              await AppPreferences.setImageName(images[0]);
+                              await AppPreferences.setImageType(planNames[0]);
                               Get.to(() => const StartPlanScreen(), arguments: [index[0], images[0], planNames[0]]);
+
                             },
                             child: Container(
                               height: 165,
@@ -65,8 +70,10 @@ class ChoosePlanScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
-                            onTap: (){
-                              Get.to(()=> const StartPlanScreen(), arguments: [index[1], images[1], planNames[1]]);
+                            onTap: () async{
+                              await AppPreferences.setImageName(images[1]);
+                              await AppPreferences.setImageType(planNames[1]);
+                              Get.to(() => const StartPlanScreen(), arguments: [index[1], images[1], planNames[1]]);
                             },
                             child: Container(
                               height: 165,
@@ -93,8 +100,10 @@ class ChoosePlanScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Get.to(()=> const StartPlanScreen(), arguments: [index[2], images[2], planNames[2]]);
+                            onTap: () async{
+                              await AppPreferences.setImageName(images[2]);
+                              await AppPreferences.setImageType(planNames[2]);
+                              Get.to(() => const StartPlanScreen(), arguments: [index[2], images[2], planNames[2]]);
                             },
                             child: Container(
                               height: 165,
@@ -117,7 +126,9 @@ class ChoosePlanScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async{
+                              await AppPreferences.setImageName(images[3]);
+                              await AppPreferences.setImageType(planNames[3]);
                               Get.to(() => const StartPlanScreen(), arguments: [index[3], images[3], planNames[3]]);
                             },
                             child: Container(
@@ -144,8 +155,10 @@ class ChoosePlanScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Get.to(()=> StartPlanScreen(), arguments: [index[4], images[4], planNames[4]]);
+                            onTap: () async{
+                              await AppPreferences.setImageName(images[4]);
+                              await AppPreferences.setImageType(planNames[4]);
+                              Get.to(() => const StartPlanScreen(), arguments: [index[4], images[4], planNames[4]]);
                             },
                             child: Container(
                               height: 165,

@@ -88,6 +88,7 @@ class NotifyServices {
 
   );
 
+
   static Future showScheduledDailyNotification (
       {
         int id = 0,
@@ -99,7 +100,7 @@ class NotifyServices {
     id,
     title,
     body,
-    _scheduledDailyNotification(const Time(9)),
+    _scheduledDailyNotification(const Time(08, 59)),
     await _notificationDetails(),
     payload: payload,
     uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,

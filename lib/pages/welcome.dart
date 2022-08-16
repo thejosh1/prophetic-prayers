@@ -5,10 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/pages/start_plan_screen.dart';
-import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
-import 'package:prophetic_prayers/services/testimony_services.dart';
 
 import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
@@ -68,33 +67,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     String currname = "Children";
     Color _randomColor = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
     List planNames = ["Children", "Marriage", "Business", "Work", "Finance"];
-    String prayertype = AppPreferences.getPrayertype() ?? " ";
+    String prayertype = AppPreferences.getPrayertype() ?? "Children";
+    String imagename = AppPreferences.getImageName() ?? "images/child(36).jpg";
+    String imagetype = AppPreferences.getImageType() ?? "Children";
     List index = [0, 1, 2, 3, 4];
-    final localizations = MaterialLocalizations.of(context);
-
-    Future<void> _openTimePicker(BuildContext context) async {
-      final TimeOfDay? time = await showTimePicker(
-          context: context,
-          // initialEntryMode:
-          // TimePickerEntryMode.input,
-          initialTime: TimeOfDay.now()
-      );
-      if(time !=null) {
-        //set a scheduled notification based on the time
-        final _time = localizations.formatTimeOfDay(time).split(" ")[0];
-        int formattedtime = int.parse(_time.split(":")[0]);
-        print(formattedtime);
-        setState(() {
-          NotifyServices.showScheduledNotification(
-            title: "It's time to pray",
-            body: scriptureList[getTodaysDay()-1].prayerPoint.toString(),
-            payload: scriptureList[getTodaysDay()-1].prayerPoint.toString(),
-            //to implement this subtract the time the user chooses from the current time and pass it as a duration in datetime.add
-            scheduledDate: DateTime(int.parse(_time)),
-          );
-        });
-      }
-    }
     return Scaffold(
       appBar: const MyAppBar(),
       backgroundColor:  const Color(0xffF7F8FA),
@@ -106,7 +82,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               children: [
                 SizedBox(height: 10,),
                 Container(
-                  height: 400,
+                  height: 420,
                   width: size.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
@@ -287,36 +263,33 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         SizedBox(height: 20,),
                         Row(
                           children: [
-                            GestureDetector(
-                              onTap: (){
-                              },
-                              child: Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  Container(
-                                    height: 150,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.grey,
-                                        image: const DecorationImage(
-                                            image: AssetImage("images/child(36).jpg"),
-                                            fit: BoxFit.cover
-                                        )
-                                    ),
+                            Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Container(
+                                  height: 150,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.grey,
+                                      image: DecorationImage(
+                                          image: AssetImage(imagename),
+                                          fit: BoxFit.cover
+                                      )
                                   ),
-                                  const Positioned(
-                                      bottom: 0,
-                                      child: Text("Children", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),)
-                                  )
-                                ],
-                              ),
+                                ),
+                                Positioned(
+                                    bottom: 0,
+                                    child: Text(imagetype, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),)
+                                )
+                              ],
                             ),
                             SizedBox(width: 10,),
                             InkWell(
                               splashColor: Colors.grey,
                               onTap: () {
-                                Get.to(()=> ChoosePlanScreen());
+                                Get.to(() => const ChoosePlanScreen());
+                                setState(() {});
                               },
                               child: Container(
                                 height: 150,
@@ -345,6 +318,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 GestureDetector(
                                   onTap: () {
                                     Get.to(() => const StartPlanScreen(), arguments: [index[0], images[0], planNames[0]]);
+                                    setState(() {});
                                   },
                                   child: Stack(
                                     alignment: Alignment.bottomCenter,
@@ -372,6 +346,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 GestureDetector(
                                   onTap: (){
                                     Get.to(()=> const StartPlanScreen(), arguments: [index[1], images[1], planNames[1]]);
+                                    setState(() {});
                                   },
                                   child: Stack(
                                     alignment: Alignment.bottomCenter,
@@ -399,6 +374,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 GestureDetector(
                                   onTap: (){
                                     Get.to(()=> const StartPlanScreen(), arguments: [index[2], images[2], planNames[2]]);
+                                    setState(() {});
                                   },
                                   child: Stack(
                                     alignment: Alignment.bottomCenter,
@@ -426,6 +402,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 GestureDetector(
                                   onTap: (){
                                     Get.to(()=> const StartPlanScreen(), arguments: [index[3], images[3], planNames[3]]);
+                                    setState(() {});
                                   },
                                   child: Stack(
                                     alignment: Alignment.bottomCenter,
@@ -453,6 +430,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 GestureDetector(
                                   onTap: (){
                                     Get.to(()=> const StartPlanScreen(), arguments: [index[4], images[4], planNames[4]]);
+                                    setState(() {});
                                   },
                                   child: Stack(
                                     alignment: Alignment.bottomCenter,
@@ -487,7 +465,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SizedBox(height: 20,),
                 InkWell(
                   onTap: () {
-                    _openTimePicker(context);
+                    Get.to(()=> const CreateTestimonyScreen());
                   },
                   child: Container(
                     height: 370,
@@ -503,7 +481,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Reminders", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
+                              const Text("Tesify", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
                               IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_outlined, color: Colors.grey,))
                             ],
                           ),
@@ -550,12 +528,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        const Text("Daily Prayer Reminder",
+                                        const Text("Do you have a testimony",
                                           style:
                                           TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.black54),
                                         ),
                                         SizedBox(height: 20,),
-                                        const Text("Start talking to God",
+                                        const Text("Start thanking God",
                                           style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12, color: Color(0xFF1E2432)),
                                         ),
                                         SizedBox(height: 20,),
@@ -567,7 +545,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             color: Colors.grey
                                           ),
                                           child: const Center(
-                                            child: Text("Pray Now", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
+                                            child: Text("Testify Now", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
                                           ),
                                         )
                                       ],
@@ -627,18 +605,62 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               const Text("Follow us on all our socials", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
                               SizedBox(height: 10),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          "images/facebook-social.png"
-                                        ),
-                                        fit: BoxFit.fill
-                                      )
+                                  GestureDetector(
+                                    onTap: () {
+                                      //link to social media app or website
+                                    },
+                                    child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            "images/facebook-logo.png"
+                                          ),
+                                          fit: BoxFit.cover
+                                        )
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      //link to social media app or website
+                                    },
+                                    child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  "images/instagrams-logo.png"
+                                              ),
+                                              fit: BoxFit.cover
+                                          )
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      //link to social media app or website
+                                    },
+                                    child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  "images/twitter-logo.png"
+                                              ),
+                                              fit: BoxFit.cover
+                                          )
+                                      ),
                                     ),
                                   ),
                                 ],
