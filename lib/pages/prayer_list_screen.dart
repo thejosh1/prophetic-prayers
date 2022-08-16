@@ -1,11 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:prophetic_prayers/controller/scripture_controller.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
-import 'package:prophetic_prayers/pages/prayer_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 import '../models/prayers.dart';
 

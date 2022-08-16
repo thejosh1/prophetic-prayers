@@ -132,6 +132,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
               ),
             ),
             SizedBox(height: 20,),
+            //pageview builder
             Container(
               height: 250,
               color: Colors.white,
@@ -174,6 +175,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
               }),
             ),
             SizedBox(height: 5,),
+            //month names
             SingleChildScrollView(
               child: Container(
                 height: 120,

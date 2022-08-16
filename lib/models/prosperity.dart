@@ -3,15 +3,17 @@ class ProsperityScripture {
   String? title;
   String? verse;
   String? prayerPoint;
-  String? data;
+  String? date;
 
-  ProsperityScripture({this.id, this.title, this.verse, this.prayerPoint, this.data});
+  ProsperityScripture({this.id, this.title, this.verse, this.prayerPoint, this.date});
 
   ProsperityScripture.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    verse = json['verse'];
-    prayerPoint = json['prayerPoint'];
-    data = json['date'];
+    verse = json['verses'];
+    prayerPoint = json['prayer_point'];
+    date = json['date'];
   }
+
+
 }

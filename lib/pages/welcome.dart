@@ -5,8 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/models/prosperity.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/pages/prayer_screen.dart';
 import 'package:prophetic_prayers/pages/start_plan_screen.dart';
 
 import '../controller/auth_controller.dart';
@@ -24,6 +26,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   List<Scripture> scriptureList = [];
+  List <ProsperityScripture> prosperityList = [];
   late ScrollController controller;
 
   @override
@@ -56,6 +59,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       });
     });
   }
+  // Future<void> readScriptureJson() async {
+  //   //read the json file
+  //   await DefaultAssetBundle.of(context)
+  //       .loadString("json/scripture1.json")
+  //       .then((jsonData) {
+  //         setState(() {
+  //           final list = json.decode(jsonData) as List<dynamic>;
+  //           prosperityList = list.map((e) => ProsperityScripture.fromJson(e)).toList();
+  //         });
+  //       });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +85,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     String imagename = AppPreferences.getImageName() ?? "images/child(36).jpg";
     String imagetype = AppPreferences.getImageType() ?? "Children";
     List index = [0, 1, 2, 3, 4];
+    List names = ["Children", "Prosperity"];
+
+    //List combinedList = [scriptureList, prosperityList];
+
     return Scaffold(
       appBar: const MyAppBar(),
       backgroundColor:  const Color(0xffF7F8FA),
@@ -102,11 +120,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Text(prayertype, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(left: 20),
+                      //   child: Text(prayertype, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                      // ),
                       SizedBox(height: 10,),
                       InkWell(
                         splashColor: Colors.grey,
@@ -259,30 +276,35 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("My plans", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Color(0xFF1E2432)),),
+                        const Text("My Other plan", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Color(0xFF1E2432)),),
                         SizedBox(height: 20,),
                         Row(
                           children: [
-                            Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Container(
-                                  height: 150,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey,
-                                      image: DecorationImage(
-                                          image: AssetImage(imagename),
-                                          fit: BoxFit.cover
-                                      )
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(()=> const PrayerScreen());
+                              },
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Container(
+                                    height: 150,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey,
+                                        image: DecorationImage(
+                                            image: AssetImage(imagename),
+                                            fit: BoxFit.cover
+                                        )
+                                    ),
                                   ),
-                                ),
-                                Positioned(
-                                    bottom: 0,
-                                    child: Text(imagetype, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),)
-                                )
-                              ],
+                                  Positioned(
+                                      bottom: 0,
+                                      child: Text(imagetype, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),)
+                                  )
+                                ],
+                              ),
                             ),
                             SizedBox(width: 10,),
                             InkWell(
@@ -315,34 +337,34 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             child: ListView(
                               scrollDirection: Axis.horizontal,
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.to(() => const StartPlanScreen(), arguments: [index[0], images[0], planNames[0]]);
-                                    setState(() {});
-                                  },
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: [
-                                      Container(
-                                        height: 100,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: Colors.grey,
-                                            image: const DecorationImage(
-                                                image: AssetImage("images/child(36).jpg"),
-                                                fit: BoxFit.cover
-                                            )
-                                        ),
-                                      ),
-                                      const Positioned(
-                                          bottom: 0,
-                                          child: Text("Children", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 10,),
+                                // GestureDetector(
+                                //   onTap: () {
+                                //     Get.to(() => const StartPlanScreen(), arguments: [index[0], images[0], planNames[0]]);
+                                //     setState(() {});
+                                //   },
+                                //   child: Stack(
+                                //     alignment: Alignment.bottomCenter,
+                                //     children: [
+                                //       Container(
+                                //         height: 100,
+                                //         width: 100,
+                                //         decoration: BoxDecoration(
+                                //             borderRadius: BorderRadius.circular(10),
+                                //             color: Colors.grey,
+                                //             image: const DecorationImage(
+                                //                 image: AssetImage("images/child(36).jpg"),
+                                //                 fit: BoxFit.cover
+                                //             )
+                                //         ),
+                                //       ),
+                                //       const Positioned(
+                                //           bottom: 0,
+                                //           child: Text("Children", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                //       )
+                                //     ],
+                                //   ),
+                                // ),
+                                // SizedBox(width: 10,),
                                 GestureDetector(
                                   onTap: (){
                                     Get.to(()=> const StartPlanScreen(), arguments: [index[1], images[1], planNames[1]]);
@@ -449,7 +471,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       ),
                                       const Positioned(
                                           bottom: 0,
-                                          child: Text("Finance", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                          child: Text("Prosperity", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
                                       )
                                     ],
                                   ),
@@ -608,8 +630,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   GestureDetector(
-                                    onTap: () {
+                                    onTap: () async{
                                       //link to social media app or website
+                                      const url = "";
+
                                     },
                                     child: Container(
                                       height: 20,
