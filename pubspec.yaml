@@ -88,6 +88,8 @@ flutter:
     - json/prosperityscriptures.json
     - json/lifestyle_scriptures.json
     - json/health_scriptures.json
+    - json/the_blessing_scripture.json
+    - json/academic_scriptures.json
     - images/welcome.png
     - images/propheticpicture2.jpeg
     - images/welcome-one.png
