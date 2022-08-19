@@ -29,10 +29,20 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                Container(
                  margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth10, right: Dimensions.prayerListScreenContainerWidth16, top: Dimensions.prayerListScreenContainerHeight44),
                  child: Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
-                     IconButton(onPressed: (){Get.back();}, icon: Icon(Icons.arrow_back, size: Dimensions.prayerListScreenContainerWidth18, color: Color(0xFF000000),)),
-                  //   IconButton(onPressed: (){}, icon: Icon(Icons.more_vert, size: 20, color: Color(0xFF000000),))
+                     IconButton(onPressed: (){Get.back();},
+                         icon: Icon(Icons.arrow_back,
+                           size: Dimensions.prayerListScreenContainerWidth18,
+                           color: Color(0xFF000000),
+                         )
+                     ),
+                     SizedBox(width: 20,),
+                     Text("Prayers For the Year",
+                       style: TextStyle(
+                           fontSize: Dimensions.prayerListScreenContainerWidth16,
+                           fontWeight: FontWeight.bold, color: const Color(0xFF1E2432)
+                       ),
+                     ),
                    ],
                  ),
                ),
@@ -41,14 +51,11 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                  color: Color(0xFFEAECEF),
                  thickness: Dimensions.prayerListScreenContainerWidth2,
                ),
-               SizedBox(height: Dimensions.prayerListScreenContainerheight22,),
                Container(
                    margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth20),
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
-                       Text("Prayers For the Year", style: TextStyle(fontSize: Dimensions.prayerListScreenContainerWidth16, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
-                       SizedBox(height: 10,),
                        Container(
                          height: Dimensions.prayerListScreenContainerHeight532,
                          width: Dimensions.prayerListScreenContainerWidth335,
@@ -111,7 +118,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                           color: data[1]
                       ),
                       child: Center(
-                          child: Text(scriptureList[index].verse.toString()[0],
+                          child: Text(scriptureList[index].verse.toString()[0].toUpperCase(),
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white))
                       ),

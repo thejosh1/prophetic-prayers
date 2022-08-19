@@ -80,11 +80,7 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: const Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-                            "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-                            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
-                            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
-                            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                        """This prayer journal is designed for parents to raise a daily prayer altar for their children. The author received major inspiration from people like Susana Wesley who by consistency in prayer produced great men like Charles and John Wesley, founders of Methodist Church. The new method of worship is a design that also originated from the home of the Wesley’s. Another great source of inspiration for him were the Winans who produced great women of God like Dede and Cece Winans through discipline and prayers. The songs they wrote often originated from the rule of going over sermon notes after service.""",
                       style: TextStyle(fontWeight: FontWeight.bold, height: 1.5),
                     ),
                   ),

@@ -19,7 +19,6 @@ class PrayerCategoryScreen extends StatefulWidget {
 
 class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
   List<Scripture> scriptureList = [];
-
   @override
   void initState() {
     super.initState();
@@ -42,14 +41,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     PageController pageController = PageController(viewportFraction: 0.8 );
-    List planNames = ["Children", "Marriage", "Business", "Work", "Finance"];
-    List planImages = ["images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/alex-kotliarskyi.jpg", "images/ibrahim-boran.jpg"];
-    List monthNames1 = ["January", "February", "March", "April", "May", "June"];
-    List monthNames2 = ["July", "August", "September", "October", "November", "December"];
-    List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange];
-    List colorList2 = [Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent,];
+    List monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+    List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent,];
     final user = AuthController.instance.auth.currentUser;
-    RxString currname = "Children".obs;
+    DateTime now = DateTime.now();
+    RxString currname = "January".obs;
     RxBool isTapped = false.obs;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -138,7 +134,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
               color: Colors.white,
               child: PageView.builder(
                   controller: pageController,
-                  itemCount: planNames.length,
+                  itemCount: monthNames.length,
+                  pageSnapping: true,
                   itemBuilder: (BuildContext context, index) {
                     return Row(
                       children: [
@@ -147,26 +144,30 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                currname.value = planNames[index];
+                                Get.to(()=> PrayerListScreen(), arguments: [
+                                  monthNames[index],
+                                  colorList[index],
+                                  "Children"
+                                ]);
                               },
                               child: Container(
                                 height: 200,
                                 width: 280,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Colors.grey,
-                                  image: DecorationImage(
-                                    image: AssetImage(planImages[index]),
-                                    fit: BoxFit.cover
-                                  )
+                                  color: colorList[index],
+                                  // image: DecorationImage(
+                                  //   image: AssetImage(planImages[index]),
+                                  //   fit: BoxFit.cover
+                                  // )
                                 ),
                                 child: Center(
-                                  child: Text(planNames[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white),),
+                                  child: Text(monthNames[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white),),
                                 )
                               ),
                             ),
                             SizedBox(height: 20,),
-                            Text(planNames[index])
+                            Text(monthNames[index])
                           ],
                         ),
 
@@ -175,103 +176,16 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
               }),
             ),
             SizedBox(height: 5,),
-            //month names
-            SingleChildScrollView(
-              child: Container(
-                height: 120,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        SizedBox(width: 24,),
-                        Container(
-                          height: 120,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: monthNames1.length,
-                              itemBuilder: (_, index) {
-                                return Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        InkWell(
-                                          splashColor: colorList[index].withOpacity(0.2),
-                                          onTap: () {
-                                            Get.to(()=> const PrayerListScreen(), arguments: [
-                                              monthNames1[index],
-                                              colorList[index],
-                                              currname.value
-                                            ]);
-                                        },
-                                          child: Container(
-                                            height: 50,
-                                            width: 200,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                color: colorList[index]
-                                            ),
-                                            child: Center(
-                                              child: Text(monthNames1[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 5,)
-                                      ],
-                                    ),
-                                    SizedBox(height: 5),
-                                    Row(
-                                      children: [
-                                        InkWell(
-                                          splashColor: colorList2[index].withOpacity(0.2),
-                                          onTap: () {
-                                            Get.to(()=> const PrayerListScreen(), arguments: [
-                                              monthNames2[index],
-                                              colorList2[index],
-                                              currname.value
-                                            ]);
-                                          },
-                                          child: Container(
-                                            height: 50,
-                                            width: 200,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                color: colorList2[index]
-                                            ),
-                                            child: Center(
-                                              child: Text(monthNames2[index], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 5,)
-                                      ],
-                                    ),
-                                  ],
-                                );
-                              }
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                ),
-              ),
-            ),
-            SizedBox(height: 30,),
             Container(
               margin: EdgeInsets.only(left: 24, right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(DateFormat.MMMEd().format(DateTime.now()), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                   SizedBox(height: 20,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Obx(()=> Text(currname.value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)),
+                      Text(DateFormat.MMMEd().format(DateTime.now()), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
                       GestureDetector(
                         onTap: () {
                           isTapped.value = !isTapped.value;

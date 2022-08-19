@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/controller/scripture_controller.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
-import '../controller/prosperity_scripture_controller.dart';
-import '../models/prayers.dart';
 import '../models/prosperity.dart';
 
 class PrayerScreen extends StatefulWidget {
@@ -31,44 +28,56 @@ class _PrayerScreenState extends State<PrayerScreen> {
             Container(
               margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth10, right: Dimensions.prayerListScreenContainerWidth16, top: Dimensions.prayerListScreenContainerHeight44),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(onPressed: (){Get.back();}, icon: Icon(Icons.arrow_back, size: Dimensions.prayerListScreenContainerWidth18, color: Color(0xFF000000),)),
+                  IconButton(
+                      onPressed: (){Get.back();},
+                      icon: Icon(Icons.arrow_back,
+                        size: Dimensions.prayerListScreenContainerWidth18,
+                        color: const Color(0xFF000000),
+                      )
+                  ),
+                  SizedBox(width: 20),
+                  Text("Prayers For the Year",
+                    style: TextStyle(
+                        fontSize: Dimensions.prayerListScreenContainerWidth16,
+                        fontWeight: FontWeight.bold, color: const Color(0xFF1E2432)
+                    ),
+                  ),
                   //   IconButton(onPressed: (){}, icon: Icon(Icons.more_vert, size: 20, color: Color(0xFF000000),))
                 ],
               ),
             ),
             Divider(
               height: Dimensions.prayerListScreenContainerHeight2,
-              color: Color(0xFFEAECEF),
+              color: const Color(0xFFEAECEF),
               thickness: Dimensions.prayerListScreenContainerWidth2,
             ),
-            SizedBox(height: Dimensions.prayerListScreenContainerheight22,),
+            //SizedBox(height: Dimensions.prayerListScreenContainerheight22,),
             Container(
                 margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Prayers For the Year", style: TextStyle(fontSize: Dimensions.prayerListScreenContainerWidth16, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
-                    SizedBox(height: 10,),
-                    Container(
-                        height: Dimensions.prayerListScreenContainerHeight532,
-                        width: Dimensions.prayerListScreenContainerWidth335,
-                        child: FutureBuilder(
-                            future: readScriptureJson(),
-                            builder: (context, snapshot) {
-                              if(snapshot.hasError) {
-                                return Center(child: Text("${snapshot.error}"));
-                              } else if(snapshot.hasData){
+                    SingleChildScrollView(
+                      child: Container(
+                          height: 632,
+                          width: Dimensions.prayerListScreenContainerWidth335,
+                          child: FutureBuilder(
+                              future: readScriptureJson(),
+                              builder: (context, snapshot) {
+                                if(snapshot.hasError) {
+                                  return Center(child: Text("${snapshot.error}"));
+                                } else if(snapshot.hasData){
 
-                                var _scriptures = snapshot.data as List<ProsperityScripture>;
+                                  var _scriptures = snapshot.data as List<ProsperityScripture>;
 
-                                return buildScriptures(_scriptures);
-                              } else {
-                                return Center(child: const Text("Loading"),);
+                                  return buildScriptures(_scriptures);
+                                } else {
+                                  return Center(child: const Text("Loading"),);
+                                }
                               }
-                            }
-                        )
+                          )
+                      ),
                     )
                   ],
                 )

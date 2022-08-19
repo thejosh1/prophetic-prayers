@@ -85,6 +85,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - json/scriptures.json
+    - json/prosperityscriptures.json
     - images/welcome.png
     - images/propheticpicture2.jpeg
     - images/welcome-one.png
