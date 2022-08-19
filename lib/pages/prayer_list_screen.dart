@@ -57,7 +57,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        Container(
-                         height: Dimensions.prayerListScreenContainerHeight532,
+                         height: 632,
                          width: Dimensions.prayerListScreenContainerWidth335,
                          child: FutureBuilder(
                            future: readJson(),

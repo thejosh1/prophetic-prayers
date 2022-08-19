@@ -1,9 +1,72 @@
 [
-    {
+  {
        "id": "1",
-       "title": "Philippians 4:13",
-       "verses": "I can do all things through Christ who strengthens me",
+       "title": "Deuteronomy 8:18",
+       "verses": "But remember the LORD your God, for it is he who gives you the ability to produce wealth, and so confirms his covenant, which he swore to your ancestors, as it is today.",
        "prayer_point": "Strength is made available to raise my children in the way of the Lord",
-       "date": "January 1"
-    }
+       "date": "Day 1"
+  },
+  {
+    "id": "2",
+    "title": "Philippians 4:19",
+    "verses": "And my God will meet all your needs according to the riches of his glory in Christ Jesus.",
+    "prayer_point": "Strength is made available to raise my children in the way of the Lord",
+    "date": "Day 2"
+  },
+  {
+    "id": "3",
+    "title": "Malachi 3:10",
+    "verses": "Bring the whole tithe into the storehouse, that there may be food in my house. Test me in this,” says the LORD Almighty, “and see if I will not throw open the floodgates of heaven and pour out so much blessing that there will not be room enough to store it.",
+    "prayer_point": "Strength is made available to raise my children in the way of the Lord",
+    "date": "Day 3"
+  },
+  {
+    "id": "4",
+    "title": "Joshua 1:8",
+    "verses": "This Book of the Law shall not depart from your mouth, but you shall meditate on it day and night, so that you may be careful to do according to all that is written in it. For then you will make your way prosperous, and then you will have good success.",
+    "prayer_point": "Strength is made available to raise my children in the way of the Lord",
+    "date": "Day 4"
+  },
+  {
+    "id": "5",
+    "title": "Psalms 128:2",
+    "verses": "You shall eat the fruit of the labor of your hands; you shall be blessed, and it shall be well with you.",
+    "prayer_point": "Strength is made available to raise my children in the way of the Lord",
+    "date": "Day 5"
+  },
+  {
+    "id": "6",
+    "title": "Corinthians 9:8",
+    "verses": "And God is able to bless you abundantly, so that in all things at all times, having all that you need, you will abound in every good work.",
+    "prayer_point": "Strength is made available to raise my children in the way of the Lord",
+    "date": "Day 6"
+  },
+  {
+    "id": "7",
+    "title": "Corinthians 8:9",
+    "verses": "For you know the grace of our Lord Jesus Christ, that though he was rich, yet for your sake he became poor, so that you through his poverty might become rich.",
+    "prayer_point": "Strength is made available to raise my children in the way of the Lord",
+    "date": "Day 7"
+  },
+  {
+    "id": "8",
+    "title": "Luke 6:38",
+    "verses": "Give, and it will be given to you. A good measure, pressed down, shaken together and running over, will be poured into your lap. For with the measure you use, it will be measured to you.",
+    "prayer_point": "Strength is made available to raise my children in the way of the Lord",
+    "date": "Day 8"
+  },
+  {
+    "id": "9",
+    "title": "Proverbs 10:22",
+    "verses": "The blessing of the LORD, it maketh rich, and he addeth no sorrow with it.",
+    "prayer_point": "Strength is made available to raise my children in the way of the Lord",
+    "date": "Day 9"
+  },
+  {
+    "id": "10",
+    "title": "Deuteronomy 28:12",
+    "verses": "The LORD will open the heavens, the storehouse of his bounty, to send rain on your land in season and to bless all the work of your hands. You will lend to many nations but will borrow from none.",
+    "prayer_point": "Strength is made available to raise my children in the way of the Lord",
+    "date": "Day 10"
+  }
 ]
