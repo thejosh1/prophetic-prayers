@@ -86,6 +86,8 @@ flutter:
   assets:
     - json/scriptures.json
     - json/prosperityscriptures.json
+    - json/lifestyle_scriptures.json
+    - json/health_scriptures.json
     - images/welcome.png
     - images/propheticpicture2.jpeg
     - images/welcome-one.png
