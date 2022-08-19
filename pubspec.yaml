@@ -90,6 +90,10 @@ flutter:
     - json/health_scriptures.json
     - json/the_blessing_scripture.json
     - json/academic_scriptures.json
+    - json/spiritual_warfare_scriptures.json
+    - json/professional_career_scriptures.json
+    - json/calling_scriptures.json
+    - json/discipline_scriptures.json
     - images/welcome.png
     - images/propheticpicture2.jpeg
     - images/welcome-one.png
