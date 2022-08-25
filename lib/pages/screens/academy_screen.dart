@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/controller/scripture_controller.dart';
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/models/academy.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
-import '../models/prosperity.dart';
+import '../../models/prosperity.dart';
 
-class PrayerScreen extends StatefulWidget {
-  const PrayerScreen({Key? key}) : super(key: key);
+class AcademyScreen extends StatefulWidget {
+  const AcademyScreen({Key? key}) : super(key: key);
 
   @override
-  State<PrayerScreen> createState() => _PrayerScreenState();
+  State<AcademyScreen> createState() => _AcademyScreenState();
 }
 
-class _PrayerScreenState extends State<PrayerScreen> {
+class _AcademyScreenState extends State<AcademyScreen> {
 
   @override
   void iniState(){
     super.initState();
-    readScriptureJson();
+    ScriptureController.instance.readAcademyJson();
   }
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         color: const Color(0xFF000000),
                       )
                   ),
-                  SizedBox(width: 20),
-                  Text("Prayers For the Year",
+                  SizedBox(width: 10),
+                  Text("Prophetic Prayers For Academics",
                     style: TextStyle(
                         fontSize: Dimensions.prayerListScreenContainerWidth16,
                         fontWeight: FontWeight.bold, color: const Color(0xFF1E2432)
@@ -52,7 +53,6 @@ class _PrayerScreenState extends State<PrayerScreen> {
               color: const Color(0xFFEAECEF),
               thickness: Dimensions.prayerListScreenContainerWidth2,
             ),
-            //SizedBox(height: Dimensions.prayerListScreenContainerheight22,),
             Container(
                 margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth20),
                 child: Column(
@@ -63,13 +63,12 @@ class _PrayerScreenState extends State<PrayerScreen> {
                           height: 632,
                           width: Dimensions.prayerListScreenContainerWidth335,
                           child: FutureBuilder(
-                              future: readScriptureJson(),
+                              future: ScriptureController.instance.readAcademyJson(),
                               builder: (context, snapshot) {
                                 if(snapshot.hasError) {
                                   return Center(child: Text("${snapshot.error}"));
                                 } else if(snapshot.hasData){
-
-                                  var _scriptures = snapshot.data as List<ProsperityScripture>;
+                                  var _scriptures = snapshot.data as List<Academy>;
 
                                   return buildScriptures(_scriptures);
                                 } else {
@@ -88,7 +87,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
     );
 
   }
-  Widget buildScriptures(List<ProsperityScripture> scriptures) {
+  Widget buildScriptures(List<Academy> scriptures) {
     //List data = Get.arguments;
     return mounted ? ListView.builder(
       shrinkWrap: true,
@@ -117,8 +116,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: Colors.grey, width: 2),
-                          color: Colors.brown
-                          //color: data[1]
+                          color: Colors.blue
+                        //color: data[1]
                       ),
                       child: Center(
                           child: Text(scriptureList[index].verse.toString()[0],

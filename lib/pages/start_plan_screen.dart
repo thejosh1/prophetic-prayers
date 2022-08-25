@@ -16,7 +16,7 @@ class StartPlanScreen extends StatefulWidget {
 class _StartPlanScreenState extends State<StartPlanScreen> {
   @override
   Widget build(BuildContext context) {
-    List Listindex = [0, 1, 2, 3, 4,];
+    List Listindex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     var data = Get.arguments;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -53,7 +53,7 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                   SizedBox(height: 10,),
                   const Padding(
                     padding: EdgeInsets.only(left: 20),
-                    child: Text("A 365 days prayer plan", style: TextStyle(fontSize: 16),),
+                    child: Text("A Carefully curated prayer plan", style: TextStyle(fontSize: 16),),
                   ),
                   SizedBox(height: 20,),
                   GestureDetector(
@@ -61,7 +61,8 @@ class _StartPlanScreenState extends State<StartPlanScreen> {
                       await AppPreferences.setPrayerType(data[2].toString());
                       await AppPreferences.setImageType(data[2].toString());
                       await AppPreferences.setImageName(data[1]);
-                      Get.to(()=> const WelcomeScreen());
+                      await AppPreferences.setJsonType(data[3]);
+                      Get.to(()=> const WelcomeScreen(), arguments: [data[3], data[4]]);
                     },
                     child: Container(
                       height: 50,

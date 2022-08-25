@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
   static const _KeyPrayerTypes = "prayerType";
   static const _KeyImageName = "imageName";
   static const _KeyImageType = "imageType";
+  static const _KeyJsonType = "jsonType";
 
   static Future init() async =>
    _preferences = await SharedPreferences.getInstance();
@@ -20,10 +21,15 @@ import 'package:shared_preferences/shared_preferences.dart';
   static Future setImageType(String imageType) async =>
   await _preferences!.setString(_KeyImageType, imageType);
 
+  static Future setJsonType(String jsonType) async =>
+  await _preferences!.setString(_KeyJsonType, jsonType);
+
   static getPrayertype() => _preferences!.getString(_KeyPrayerTypes);
 
   static getImageName() => _preferences!.getString(_KeyImageName);
 
   static getImageType() => _preferences!.getString(_KeyImageType);
+
+  static getJsonType() => _preferences!.getString(_KeyJsonType);
 }
 

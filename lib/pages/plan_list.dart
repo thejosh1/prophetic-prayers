@@ -18,7 +18,7 @@ class _PlanListScreenState extends State<PlanListScreen> {
   @override
   void iniState(){
     super.initState();
-    readJson();
+    ScriptureController.instance.readJson();
   }
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _PlanListScreenState extends State<PlanListScreen> {
                         height: 733,
                         width: Dimensions.prayerListScreenContainerWidth335,
                         child: FutureBuilder(
-                            future: readJson(),
+                            future: ScriptureController.instance.readJson(),
                             builder: (context, snapshot) {
                               if(snapshot.hasError) {
                                 return Center(child: Text("${snapshot.error}"));

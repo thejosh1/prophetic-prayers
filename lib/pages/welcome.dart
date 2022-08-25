@@ -5,17 +5,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/models/prosperity.dart';
+import 'package:prophetic_prayers/models/discipline.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
-import 'package:prophetic_prayers/pages/prayer_screen.dart';
+import 'package:prophetic_prayers/pages/screens/academy_screen.dart';
+import 'package:prophetic_prayers/pages/screens/blessings_screen.dart';
+import 'package:prophetic_prayers/pages/screens/calling_screen.dart';
+import 'package:prophetic_prayers/pages/screens/career_screen.dart';
+import 'package:prophetic_prayers/pages/screens/discipline_screen.dart';
+import 'package:prophetic_prayers/pages/screens/health_screen.dart';
+import 'package:prophetic_prayers/pages/screens/lifestyle_screen.dart';
+import 'package:prophetic_prayers/pages/screens/marriage_screen.dart';
+import 'package:prophetic_prayers/pages/screens/prosperity_screen.dart';
+import 'package:prophetic_prayers/pages/screens/warfare_screen.dart';
 import 'package:prophetic_prayers/pages/start_plan_screen.dart';
 
 import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
 import '../services/notify_services.dart';
 import '../utils/shared_preferences.dart';
-import 'choose_plan_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -26,7 +34,6 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   List<Scripture> scriptureList = [];
-  List <ProsperityScripture> prosperityList = [];
   late ScrollController controller;
 
   @override
@@ -59,35 +66,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       });
     });
   }
-  // Future<void> readScriptureJson() async {
-  //   //read the json file
-  //   await DefaultAssetBundle.of(context)
-  //       .loadString("json/scripture1.json")
-  //       .then((jsonData) {
-  //         setState(() {
-  //           final list = json.decode(jsonData) as List<dynamic>;
-  //           prosperityList = list.map((e) => ProsperityScripture.fromJson(e)).toList();
-  //         });
-  //       });
-  // }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List daysofWeek = ["M", "T", "W", "T", "F", "S", "S"];
-    List images = ["images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/alex-kotliarskyi.jpg", "images/ibrahim-boran.jpg"];
+    List images = ["images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/alex-kotliarskyi.jpg", "images/ibrahim-boran.jpg", "images/adrianna-geo.jpg", "images/diana-simum.jpg", "images/child(40).jpg", "images/child(41).jpg", "images/child(42).jpg"];
     List daysInsWeek = [getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5];
     List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange];
     String currname = "Children";
     Color _randomColor = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-    List planNames = ["Children", "Marriage", "Business", "Work", "Finance"];
-    String prayertype = AppPreferences.getPrayertype() ?? "Children";
-    String imagename = AppPreferences.getImageName() ?? "images/child(36).jpg";
-    String imagetype = AppPreferences.getImageType() ?? "Children";
+    List planNames = ["Prosperity", "Academics", "Blessings", "Calling", "Career", "Discipline", "Health", "Lifestyle", "Marriage", "Warfare"];
     List index = [0, 1, 2, 3, 4];
-    List names = ["Children", "Prosperity"];
-
-    //List combinedList = [scriptureList, prosperityList];
+    var data = Get.arguments;
 
     return Scaffold(
       appBar: const MyAppBar(),
@@ -265,221 +256,366 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 SizedBox(height: 20,),
                 Container(
-                  height: 460,
+                  height: 240,
                   width: size.width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       color: Colors.white
                   ),
                   child: Container(
-                    margin: EdgeInsets.only(left: 20, top: 40),
+                    margin: EdgeInsets.only(top: 40),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("My Other plan", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Color(0xFF1E2432)),),
-                        SizedBox(height: 20,),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(()=> const PrayerScreen());
-                              },
-                              child: Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  Container(
-                                    height: 150,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.grey,
-                                        image: DecorationImage(
-                                            image: AssetImage(imagename),
-                                            fit: BoxFit.cover
-                                        )
-                                    ),
-                                  ),
-                                  Positioned(
-                                      bottom: 0,
-                                      child: Text(imagetype, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),)
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: 10,),
-                            InkWell(
-                              splashColor: Colors.grey,
-                              onTap: () {
-                                Get.to(() => const ChoosePlanScreen());
-                                setState(() {});
-                              },
-                              child: Container(
-                                height: 150,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.grey
-                                ),
-                                child: const Center(
-                                  child: Icon(Icons.add, color: Colors.blue, size: 32,),
-                                ),
-                              ),
-                            )
-                          ],
+                        const Padding(
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Text("Featured Plans", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),),
                         ),
-                        SizedBox(height: 20,),
-                        //const Center(child: Text("Choose a plan", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),)),
-                        SizedBox(height: 20,),
-                        const Text("Featured Plans", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),),
                         SingleChildScrollView(
                           child: Container(
                             height: 120,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                // GestureDetector(
-                                //   onTap: () {
-                                //     Get.to(() => const StartPlanScreen(), arguments: [index[0], images[0], planNames[0]]);
-                                //     setState(() {});
-                                //   },
-                                //   child: Stack(
-                                //     alignment: Alignment.bottomCenter,
-                                //     children: [
-                                //       Container(
-                                //         height: 100,
-                                //         width: 100,
-                                //         decoration: BoxDecoration(
-                                //             borderRadius: BorderRadius.circular(10),
-                                //             color: Colors.grey,
-                                //             image: const DecorationImage(
-                                //                 image: AssetImage("images/child(36).jpg"),
-                                //                 fit: BoxFit.cover
-                                //             )
-                                //         ),
-                                //       ),
-                                //       const Positioned(
-                                //           bottom: 0,
-                                //           child: Text("Children", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                //       )
-                                //     ],
-                                //   ),
-                                // ),
-                                // SizedBox(width: 10,),
-                                GestureDetector(
-                                  onTap: (){
-                                    Get.to(()=> const StartPlanScreen(), arguments: [index[1], images[1], planNames[1]]);
-                                    setState(() {});
-                                  },
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 1,
+                                itemBuilder: (context, index) {
+                                  return Row(
                                     children: [
+                                      SizedBox(width: 20,),
                                       Container(
-                                        height: 100,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: Colors.grey,
-                                            image: const DecorationImage(
-                                                image: AssetImage("images/ben-white.jpg"),
-                                                fit: BoxFit.cover
-                                            )
+                                        height: 120,
+                                        child: ListView(
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const PrayerScreen(), arguments: [images[0]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[0]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[0], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const AcademyScreen(), arguments: [images[1]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[1]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[1], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const BlessingsScreen(), arguments: [images[2]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[2]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[2], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const CallingScreen(), arguments: [images[3]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[3]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[3], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const CareerScreen(), arguments: [images[4]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[4]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[4], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const DisciplineScreen(), arguments: [images[5]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[5]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[5], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const HealthScreen(), arguments: [images[6]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[6]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[6], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const LifeStyleScreen(), arguments: [images[7]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[7]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[7], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const MarriageScreen(), arguments: [images[8]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[8]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[8], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=> const WarfareScreen(), arguments: [images[9]]);
+                                                setState(() {});
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.bottomCenter,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: Colors.grey,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(images[9]),
+                                                            fit: BoxFit.cover
+                                                        )
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                      bottom: 0,
+                                                      child: Text(planNames[9], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                          ],
                                         ),
+                                        // ListView.builder(
+                                        //     scrollDirection: Axis.horizontal,
+                                        //     shrinkWrap: true,
+                                        //     itemCount: planNames.length,
+                                        //     itemBuilder: (_, index) {
+                                        //       return Row(
+                                        //         children: [
+                                        //           GestureDetector(
+                                        //             onTap: (){
+                                        //               Get.to(()=> const PrayerScreen());
+                                        //               setState(() {});
+                                        //             },
+                                        //             child: Stack(
+                                        //               alignment: Alignment.bottomCenter,
+                                        //               children: [
+                                        //                 Container(
+                                        //                   height: 100,
+                                        //                   width: 100,
+                                        //                   decoration: BoxDecoration(
+                                        //                       borderRadius: BorderRadius.circular(10),
+                                        //                       color: Colors.grey,
+                                        //                       image: DecorationImage(
+                                        //                           image: AssetImage(images[index]),
+                                        //                           fit: BoxFit.cover
+                                        //                       )
+                                        //                   ),
+                                        //                 ),
+                                        //                 Positioned(
+                                        //                     bottom: 0,
+                                        //                     child: Text(planNames[index], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                        //                 )
+                                        //               ],
+                                        //             ),
+                                        //           ),
+                                        //           SizedBox(width: 10)
+                                        //         ],
+                                        //       );
+                                        //     }
+                                        // ),
                                       ),
-                                      const Positioned(
-                                          bottom: 0,
-                                          child: Text("Marriage", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                      )
                                     ],
-                                  ),
-                                ),
-                                SizedBox(width: 10,),
-                                GestureDetector(
-                                  onTap: (){
-                                    Get.to(()=> const StartPlanScreen(), arguments: [index[2], images[2], planNames[2]]);
-                                    setState(() {});
-                                  },
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: [
-                                      Container(
-                                        height: 100,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: Colors.grey,
-                                            image: const DecorationImage(
-                                                image: AssetImage("images/sean-pollock.jpg"),
-                                                fit: BoxFit.cover
-                                            )
-                                        ),
-                                      ),
-                                      const Positioned(
-                                          bottom: 0,
-                                          child: Text("Business", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 10,),
-                                GestureDetector(
-                                  onTap: (){
-                                    Get.to(()=> const StartPlanScreen(), arguments: [index[3], images[3], planNames[3]]);
-                                    setState(() {});
-                                  },
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: [
-                                      Container(
-                                        height: 100,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: Colors.grey,
-                                            image: const DecorationImage(
-                                                image: AssetImage("images/alex-kotliarskyi.jpg"),
-                                                fit: BoxFit.cover
-                                            )
-                                        ),
-                                      ),
-                                      const Positioned(
-                                          bottom: 0,
-                                          child: Text("Work", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 10,),
-                                GestureDetector(
-                                  onTap: (){
-                                    Get.to(()=> const StartPlanScreen(), arguments: [index[4], images[4], planNames[4]]);
-                                    setState(() {});
-                                  },
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: [
-                                      Container(
-                                        height: 100,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            color: Colors.grey,
-                                            image: const DecorationImage(
-                                                image: AssetImage("images/ibrahim-boran.jpg"),
-                                                fit: BoxFit.cover
-                                            )
-                                        ),
-                                      ),
-                                      const Positioned(
-                                          bottom: 0,
-                                          child: Text("Prosperity", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                  );
+                                }
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

@@ -94,6 +94,7 @@ flutter:
     - json/professional_career_scriptures.json
     - json/calling_scriptures.json
     - json/discipline_scriptures.json
+    - json/marriage_scriptures.json
     - images/welcome.png
     - images/propheticpicture2.jpeg
     - images/welcome-one.png

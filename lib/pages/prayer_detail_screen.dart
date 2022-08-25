@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
-import 'package:prophetic_prayers/pages/discover_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
 

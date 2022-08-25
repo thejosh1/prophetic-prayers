@@ -32,7 +32,7 @@ class SearchServices extends SearchDelegate<Scripture>{
   Widget buildResults(BuildContext context) {
     var _selectedImage = images[Random().nextInt(images.length)];
     return FutureBuilder(
-        future: readJson(),
+        future: ScriptureController.instance.readJson(),
         builder: (context, snapshot) {
           if(!snapshot.hasData) {
             return const Center(child: Text("no data"),);
@@ -68,7 +68,7 @@ class SearchServices extends SearchDelegate<Scripture>{
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder(
-        future: readJson(),
+        future: ScriptureController.instance.readJson(),
         builder: (context, snapshot) {
           if(!snapshot.hasData) {
             return const Center(child: Text("Search could not find what you were looking for sorry!"),);
