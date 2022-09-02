@@ -4,7 +4,6 @@ import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
 import '../controller/auth_controller.dart';
-import '../widgets/big_text.dart';
 
 class TestimoniesScreen extends StatefulWidget {
   const TestimoniesScreen({Key? key}) : super(key: key);
@@ -17,154 +16,162 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    PageController page_controller = PageController(viewportFraction: 0.8);
-    List planNames = ["Children", "Marriage", "Business", "Work", "Finance"];
     return Scaffold(
       backgroundColor: Color(0xffF7F8FA),
       appBar: MyAppBar(),
-      body: ListView(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 10,),
-                Row(
-                  children: [
-                    Expanded(child: Container()),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      height: 30,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        border: Border.all(color: const Color(0xff515BDE),),
-                        color: Colors.white
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.person, color: const Color(0xff515BDE),),
-                          GestureDetector(
-                            onTap: (){Get.to(()=> const CreateTestimonyScreen());
-                            },
-                            child: const Text("Testify", style: TextStyle(color: Color(0xff515BDE),),)
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 20,),
-                StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection("testimonies").snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if(!snapshot.hasData) {
-                        return const Center(child: Text("No Testimonies yet be the first to testify"));
-                      }
-                      List snapdata = snapshot.data!.docs;
-                      return snapdata.isNotEmpty ? Container(
-                        height: 150,
-                        width: size.width,
+      body: /*Container(
+        child: ListView(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Expanded(child: Container()),
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        height: 30,
+                        width: 100,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.white
+                          borderRadius: BorderRadius.circular(40),
+                          border: Border.all(color: Colors.white,),
+                          color: const Color(0xff515BDE)
                         ),
-                        child: ListView.builder(
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (context, index) {
-                              String useruid = snapdata[index]["useruid"];
-                              return InkWell(
-                                splashColor: Colors.grey,
-                                onTap: (){
-                                  Get.to(()=> const TestimonyDetailPage());
-                                },
-                                child: Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.person, color: Colors.white,),
+                            GestureDetector(
+                              onTap: (){Get.to(()=> const CreateTestimonyScreen(), arguments: ["Prophetic Prayers For Children"]);
+                              },
+                              child: const Text("Testify", style: TextStyle(color: Colors.white,),)
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 20,),
+                  StreamBuilder(
+                      stream: FirebaseFirestore.instance.collection("testimonies").snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if(!snapshot.hasData) {
+                          return const Center(child: Text("No Testimonies yet be the first to testify"));
+                        }
+                        List snapdata = snapshot.data!.docs;
+                        return snapdata.isNotEmpty ? Container(
+                          height: size.width,
+                          width: size.width,
+                          child: ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                String useruid = snapdata[index]["useruid"];
+                                return Column(
                                   children: [
-                                    Container(
-                                      margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-                                      child: Row(
-                                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          FutureBuilder(
-                                            future: FirebaseFirestore.instance.collection("users").doc(useruid).get(),
-                                            builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot>snapshot) {
-                                              if(!snapshot.hasData) {
-                                                return Container();
-                                              }
-                                              Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                                              return Container(
-                                                  height: 30,
-                                                  width: 30,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.grey),
-                                                    shape: BoxShape.circle
-                                                  ),
-                                                  child: Center(child: Text("${data["name"]}"[0].toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)));
-                                            }
-                                          ),
-                                          SizedBox(width: 10),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text("${snapdata[index]["title"]}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
-                                              Row(
+                                    InkWell(
+                                      splashColor: Colors.grey,
+                                      onTap: (){
+                                        Get.to(()=> const TestimonyDetailPage());
+                                      },
+                                      child: Container(
+                                        height: 200,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colors.blue
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+                                              child: Row(
+                                                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  const Icon(Icons.access_time, size: 14, color: Colors.grey,),
-                                                  SizedBox(width: 5,),
-                                                  Text("${snapdata[index]["timestamp"]}", style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 14, color: Colors.grey),),
+                                                  FutureBuilder(
+                                                    future: FirebaseFirestore.instance.collection("users").doc(useruid).get(),
+                                                    builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot>snapshot) {
+                                                      if(!snapshot.hasData) {
+                                                        return Container();
+                                                      }
+                                                      Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                                                      return Container(
+                                                          height: 30,
+                                                          width: 30,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(color: Colors.grey),
+                                                            shape: BoxShape.circle
+                                                          ),
+                                                          child: Center(child: Text("${data["name"]}"[0].toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)));
+                                                    }
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text("${snapdata[index]["title"]}", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
+                                                      Row(
+                                                        children: [
+                                                          const Icon(Icons.access_time, size: 14, color: Colors.grey,),
+                                                          SizedBox(width: 5,),
+                                                          Text("${snapdata[index]["timestamp"]}", style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 14, color: Colors.grey),),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
                                                 ],
-                                              )
-                                            ],
-                                          ),
-                                        ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 10,),
+                                            Container(
+                                              margin: EdgeInsets.only(left: 20),
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    height: 60,
+                                                    decoration: const BoxDecoration(
+                                                      border: Border(
+                                                        left: BorderSide(
+                                                          width: 4.0,
+                                                          color: Colors.grey
+                                                        )
+                                                      )
+                                                    ),
+
+                                                  ),
+                                                  SizedBox(width: 10,),
+                                                  Column(
+                                                    children: [
+                                                      Container(
+                                                        width: 300,
+                                                          child: Text("${snapdata[index]["testimonies"]}",
+                                                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16,),
+
+                                                          )
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    SizedBox(height: 10,),
-                                    Container(
-                                      margin: EdgeInsets.only(left: 20),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height: 60,
-                                            decoration: const BoxDecoration(
-                                              border: Border(
-                                                left: BorderSide(
-                                                  width: 4.0,
-                                                  color: Colors.black
-                                                )
-                                              )
-                                            ),
-
-                                          ),
-                                          SizedBox(width: 10,),
-                                          Column(
-                                            children: [
-                                              Container(
-                                                width: 300,
-                                                  child: Text("${snapdata[index]["testimonies"]}",
-                                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16,),
-
-                                                  )
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    )
+                                    SizedBox(height: 20,)
                                   ],
-                                ),
-                              );
-                            }
-                        ),
-                      ): SizedBox();
-                    }
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+                                );
+                              }
+                          ),
+                        ): SizedBox();
+                      }
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      )*/ Text("coming soon")
     );
   }
 }

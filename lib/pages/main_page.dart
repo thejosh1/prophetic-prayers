@@ -3,7 +3,6 @@ import 'package:prophetic_prayers/pages/prayer_category_screen.dart';
 import 'package:prophetic_prayers/pages/profile_page.dart';
 import 'package:prophetic_prayers/pages/discover_screen.dart';
 import 'package:prophetic_prayers/pages/testimonies_screen.dart';
-import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
 import 'package:prophetic_prayers/pages/welcome.dart';
 
 import '../widgets/scroll_to_hide_widget.dart';
@@ -35,7 +34,6 @@ class _MainPageState extends State<MainPage> {
     const WelcomeScreen(),
     const PrayerCategoryScreen(),
     const TestimoniesScreen(),
-    const DiscoverScreen(),
     const ProfilePage()
   ];
 
@@ -70,8 +68,6 @@ class _MainPageState extends State<MainPage> {
                 icon: Icon(Icons.apps), label: "My plans",),
             BottomNavigationBarItem(
                 icon: Icon(Icons.list_sharp), label: "Testimonies"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search), label: "Discover",),
             BottomNavigationBarItem(
               icon: Icon(Icons.person), label: "My page", )
           ],

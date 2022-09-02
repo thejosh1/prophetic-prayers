@@ -105,7 +105,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
                     scriptureList[index].title,
                     scriptureList[index].verse,
                     scriptureList[index].date,
-                    data[0]
+                    data[0],
+                    data[1]
                   ]);
                 },
                 child: Row(

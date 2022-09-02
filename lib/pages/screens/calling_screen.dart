@@ -107,7 +107,8 @@ class _CallingScreenState extends State<CallingScreen> {
                     scriptureList[index].title,
                     scriptureList[index].verse,
                     scriptureList[index].date,
-                    data[0]
+                    data[0],
+                    data[1]
                   ]);
                 },
                 child: Row(

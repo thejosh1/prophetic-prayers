@@ -94,7 +94,6 @@ class ScriptureController extends GetxController {
     final list = json.decode(jsonData) as List<dynamic>;
     return list.map((e) => Warfare.fromJson(e)).toList();
   }
-
 }
 
 

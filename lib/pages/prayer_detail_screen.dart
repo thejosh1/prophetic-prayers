@@ -79,9 +79,9 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                 child: Container(
                   height: 440,
                   width: double.maxFinite,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("images/child(36).jpg"),
+                          image: AssetImage(data[6]),
                           fit: BoxFit.cover)),
                 )
             ),

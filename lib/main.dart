@@ -8,6 +8,8 @@ import 'package:prophetic_prayers/pages/welcome.dart';
 import 'package:prophetic_prayers/services/notify_services.dart';
 import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
+import 'controller/scripture_controller.dart';
+
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();

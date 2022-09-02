@@ -108,7 +108,8 @@ class _WarfareScreenState extends State<WarfareScreen> {
                     scriptureList[index].title,
                     scriptureList[index].verse,
                     scriptureList[index].date,
-                    data[2]
+                    data[0],
+                    data[1]
                   ]);
                 },
                 child: Row(

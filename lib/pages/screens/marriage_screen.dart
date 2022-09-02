@@ -108,7 +108,8 @@ class _MarriageScreenState extends State<MarriageScreen> {
                     scriptureList[index].title,
                     scriptureList[index].verse,
                     scriptureList[index].date,
-                    data[0]
+                    data[0],
+                    data[1]
                   ]);
                 },
                 child: Row(

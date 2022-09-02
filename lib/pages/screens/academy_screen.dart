@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:prophetic_prayers/models/academy.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 import '../../models/prosperity.dart';
+import '../prayer_detail_screen.dart';
 
 class AcademyScreen extends StatefulWidget {
   const AcademyScreen({Key? key}) : super(key: key);
@@ -88,7 +89,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
 
   }
   Widget buildScriptures(List<Academy> scriptures) {
-    //List data = Get.arguments;
+    List data = Get.arguments;
     return mounted ? ListView.builder(
       shrinkWrap: true,
       itemCount: scriptures.length,
@@ -99,14 +100,15 @@ class _AcademyScreenState extends State<AcademyScreen> {
               InkWell(
                 splashColor: Colors.grey,
                 onTap: (){
-                  // Get.to(()=> const PrayerDetailScreen(), arguments: [
-                  //   scriptureList[index].id,
-                  //   scriptureList[index].prayerPoint,
-                  //   scriptureList[index].title,
-                  //   scriptureList[index].verse,
-                  //   scriptureList[index].date,
-                  //   data[2]
-                  // ]);
+                  Get.to(()=> const PrayerDetailScreen(), arguments: [
+                    scriptureList[index].id,
+                    scriptureList[index].prayerPoint,
+                    scriptureList[index].title,
+                    scriptureList[index].verse,
+                    scriptureList[index].date,
+                    data[0],
+                    data[1]
+                  ]);
                 },
                 child: Row(
                   children: [

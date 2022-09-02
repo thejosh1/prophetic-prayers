@@ -1,12 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:path/path.dart';
+import 'package:prophetic_prayers/pages/edit_screen.dart';
 import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
-import 'package:prophetic_prayers/services/testimony_services.dart';
-import 'package:prophetic_prayers/utils/dimensions.dart';
 
 import '../controller/auth_controller.dart';
 
@@ -20,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final user = AuthController.instance.auth.currentUser;
   final CollectionReference ref = FirebaseFirestore.instance.collection("users");
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -27,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: const MyAppBar(),
       backgroundColor: const Color(0xffF7F8FA),
-      body: SingleChildScrollView(
+      body: /*SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: 10,),
@@ -57,62 +54,99 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             SizedBox(height: 10,),
-            Container(
-              height: 200,
-              width: size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.white
-              ),
-              child: Container(
-                margin: EdgeInsets.only(top: 40),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Positioned(
-                            child: Container(
-                          height: 90,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: Colors.black, width: 1)
-                          ),
-                          child: Center(
-                            child: Text("A"),
-                          ),
-                        )
+            StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+              return FutureBuilder(
+                  future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
+                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if(snapshot.connectionState == ConnectionState.waiting) {
+                      return Container(
+                        height: 30,
+                        width: 30,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
                         ),
-                        Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: Container(
-                              height: 30,
-                              width: 30,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white
-                              ),
-                              child: Container(
-                                height: 20,
-                                width: 20,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black
+                        child: Center(child: Icon(Icons.person)),
+                      );
+                    } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
+                      Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                      return Container(
+                        height: 200,
+                        width: size.width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.white
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 40),
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    Get.to(()=> const EditScreen());
+                                  });
+                                },
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                        child: Container(
+                                          height: 90,
+                                          width: 90,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(color: Colors.black, width: 1),
+                                            image: DecorationImage(
+                                                image: NetworkImage("${data["imagePath"]}"),
+                                                fit: BoxFit.cover
+                                            ),
+                                          ),
+                                        )
+                                    ),
+                                    Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        child: Container(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white
+                                          ),
+                                          child: Container(
+                                            height: 20,
+                                            width: 20,
+                                            decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.black
+                                            ),
+                                            child: const Center(
+                                              child: Text("+", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+                                            ),
+                                          ),
+                                        )
+                                    )
+                                  ],
                                 ),
-                                child: const Center(
-                                  child: Text("+", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
-                                ),
-                              ),
-                            )
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                    return Container(
+                      height: 30,
+                      width: 30,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: AssetImage("images/Icon-48.png"),
+                              fit: BoxFit.cover
+                          )
+                      ),
+                    );
+                  }
+              );
+            }),
             SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -286,13 +320,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
-      )
+      )*/Text("coming soon")
     );
   }
-
-
-
-
 }
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);

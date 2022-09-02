@@ -213,7 +213,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                              scriptureList[getTodaysDay()-1].title,
                              scriptureList[getTodaysDay()-1].verse,
                              scriptureList[getTodaysDay()-1].date,
-                             currname.value
+                             currname.value,
+                             "images/child(36).jpg"
                            ]);
                          },
                          child: Row(
@@ -270,7 +271,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                              scriptureList[getTodaysDay()].title,
                              scriptureList[getTodaysDay()].verse,
                              scriptureList[getTodaysDay()].date,
-                             currname.value
+                             currname.value,
+                             "images/child(36).jpg"
                            ]);
                          },
                          child: Row(
@@ -327,7 +329,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                              scriptureList[getTodaysDay()+1].title,
                              scriptureList[getTodaysDay()+1].verse,
                              scriptureList[getTodaysDay()+1].date,
-                             currname.value
+                             currname.value,
+                             "images/child(36).jpg"
                            ]);
                          },
                          child: Row(
@@ -386,7 +389,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()-1].title,
                                scriptureList[getTodaysDay()-1].verse,
                                scriptureList[getTodaysDay()-1].date,
-                               currname.value
+                               currname.value,
+                               "images/child(36).jpg"
                              ]);
                            },
                            child: Row(
@@ -443,7 +447,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()].title,
                                scriptureList[getTodaysDay()].verse,
                                scriptureList[getTodaysDay()].date,
-                               currname.value
+                               currname.value,
+                               "images/child(36).jpg"
                              ]);
                            },
                            child: Row(
@@ -500,7 +505,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()+1].title,
                                scriptureList[getTodaysDay()+1].verse,
                                scriptureList[getTodaysDay()+1].date,
-                               currname.value
+                               currname.value,
+                               "images/child(36).jpg"
                              ]);
                            },
                            child: Row(
@@ -557,7 +563,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()+2].title,
                                scriptureList[getTodaysDay()+2].verse,
                                scriptureList[getTodaysDay()+2].date,
-                               currname.value
+                               currname.value,
+                               "images/child(36).jpg"
                              ]);
                            },
                            child: Row(
@@ -614,7 +621,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()+3].title,
                                scriptureList[getTodaysDay()+3].verse,
                                scriptureList[getTodaysDay()+3].date,
-                               currname.value
+                               currname.value,
+                               "images/child(36).jpg"
                              ]);
                            },
                            child: Row(
@@ -671,7 +679,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                scriptureList[getTodaysDay()+4].title,
                                scriptureList[getTodaysDay()+4].verse,
                                scriptureList[getTodaysDay()+4].date,
-                               currname.value
+                               currname.value,
+                               "images/child(36).jpg"
                              ]);
                            },
                            child: Row(

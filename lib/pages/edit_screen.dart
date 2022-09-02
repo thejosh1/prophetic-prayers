@@ -1,36 +1,70 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
-import 'package:prophetic_prayers/pages/auth_pages/login.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:prophetic_prayers/pages/auth_pages/login.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class EditScreen extends StatelessWidget {
+  const EditScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: MyAppBar(),
-      body: SignUpForm(),
+      body: EditForm(),
     );
   }
 }
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({Key? key}) : super(key: key);
+class EditForm extends StatefulWidget {
+  const EditForm({Key? key}) : super(key: key);
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  State<EditForm> createState() => _EditFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _EditFormState extends State<EditForm> {
   FirebaseStorage storage = FirebaseStorage.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    newPasswordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
+  }
+
+  String _newPassword = "";
+  final currentUser = FirebaseAuth.instance.currentUser;
+  final TextEditingController newPasswordController = TextEditingController();
+
+  changePassword(String _newPassword) async{
+    try {
+      await currentUser!.updatePassword(_newPassword);
+      FirebaseAuth.instance.signOut();
+      Get.offAll(()=> const LoginScreen());
+      Get.snackbar("Profile Information", "Profile has been changed",
+          backgroundColor: Colors.black,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+          titleText: Text("Profile Update Sucessful"),
+          messageText: const Text(
+           "Profile info has been changed", style: TextStyle(color: Colors.white),
+          )
+      );
+    } catch(e) {
+
+    }
+  }
 
   Future<void>showInformationDialogue(BuildContext context) async {
     return await showDialog(
@@ -41,21 +75,21 @@ class _SignUpFormState extends State<SignUpForm> {
             actions: [
               TextButton(
                   onPressed: () async{
-                   upload(true);
-                   setState(() {});
-                   Navigator.of(context, rootNavigator: true).pop(
-                     Get.snackbar(
-                       "success",
-                       "picture has been added successfully click the signup button to complete your signup",
-                       titleText: const Text("success", style: TextStyle(color: Colors.white),),
-                       messageText: const Text("picture has been added successfully click the signup button to complete your signup",
-                           style: TextStyle(color: Colors.white)),
-                       backgroundColor: const Color(0xff515BDE),
-                       colorText: Colors.white
-                     )
-                   );
+                    upload(true);
+                    setState(() {});
+                    Navigator.of(context, rootNavigator: true).pop(
+                        Get.snackbar(
+                            "success",
+                            "picture has been Changed successfully",
+                            titleText: const Text("success", style: TextStyle(color: Colors.white),),
+                            messageText: const Text("picture has been changed",
+                                style: TextStyle(color: Colors.white)),
+                            backgroundColor: const Color(0xff515BDE),
+                            colorText: Colors.white
+                        )
+                    );
 
-                    },
+                  },
                   child: const Text("browse gallery")
               ),
               TextButton(
@@ -151,10 +185,33 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
             const SizedBox(height: 23),
+            TextField(
+              controller: _confirmPasswordController,
+              style: const TextStyle(),
+              obscureText: true,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: Color(0xffBEC2CE),
+                  ),
+                ),
+                hintText: 'Confirm Password',
+                hintStyle: TextStyle(
+                  color: Color(0xffBEC2CE),
+                  fontSize: 16,
+                ),
+                prefixIcon: Icon(
+                  Icons.lock,
+                  color: Color(0xffBEC2CE),
+                ),
+              ),
+            ),
+            const SizedBox(height: 23),
             GestureDetector(
               onTap: (() {
-               showInformationDialogue(context);
-               setState(() {});
+                showInformationDialogue(context);
+                setState(() {});
               }),
               child: Row(
                 children: [
@@ -166,8 +223,8 @@ class _SignUpFormState extends State<SignUpForm> {
                       Text(
                         "add Image",
                         style: TextStyle(
-                          color: Color(0xffBEC2CE),
-                          fontSize: 16
+                            color: Color(0xffBEC2CE),
+                            fontSize: 16
                         ),
                       )
                     ],
@@ -182,12 +239,15 @@ class _SignUpFormState extends State<SignUpForm> {
               onTap: () async{
                 await uploadPfp().then((value) {});
                 String value = await getDownload();
-                AuthController.instance.register(
-                    _emailController.text.trim(),
-                    _passwordController.text.trim(),
-                    _nameController.text.trim(),
-                    value,
+                AuthController.instance.edit(
+                  _emailController.text.trim(),
+                  _nameController.text.trim(),
+                  value,
                 );
+                if(_confirmPasswordController == _passwordController) {
+                  _newPassword == _confirmPasswordController;
+                }
+                changePassword(_newPassword);
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
@@ -197,7 +257,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   color: const Color(0xff515BDE),
                   alignment: Alignment.center,
                   child: const Text(
-                    'SignUp',
+                    'Submit',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -208,20 +268,12 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
             SizedBox(height: 30),
-            const Text(
-              'Forgot password?',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Color(0xffBEC2CE),
-              ),
-            ),
-            const SizedBox(height: 30),
             GestureDetector(
               onTap: ((){
-                Get.offAll(() => const LoginScreen());
+                AuthController.instance.Logout();
               }),
               child: const Text(
-                'Have an account? Login',
+                'LogOut',
                 style: TextStyle(
                   color: Color(0xffBEC2CE),
                 ),
@@ -246,13 +298,13 @@ class _SignUpFormState extends State<SignUpForm> {
       setState(() {});
     }
   }
-  
+
   Future<void> uploadPfp() async {
     File uploadFile =File(photo!.path);
 
     try {
       await storage.ref("avatar/${uploadFile.path}").putFile(
-        uploadFile != null ? uploadFile : File("images/adrianna-geo.png"));
+          uploadFile != null ? uploadFile : File("images/adrianna-geo.png"));
     } on FirebaseException catch(e) {
       print(e);
     }
@@ -288,7 +340,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           const SizedBox(height: 21),
           const Text(
-            'Sign Up',
+            'Edit Profile',
             style: TextStyle(
               fontSize: 34,
               fontWeight: FontWeight.w800,

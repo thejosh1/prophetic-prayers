@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/models/discipline.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/pages/screens/academy_screen.dart';
@@ -18,7 +17,8 @@ import 'package:prophetic_prayers/pages/screens/lifestyle_screen.dart';
 import 'package:prophetic_prayers/pages/screens/marriage_screen.dart';
 import 'package:prophetic_prayers/pages/screens/prosperity_screen.dart';
 import 'package:prophetic_prayers/pages/screens/warfare_screen.dart';
-import 'package:prophetic_prayers/pages/start_plan_screen.dart';
+import 'package:prophetic_prayers/pages/about_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
@@ -77,8 +77,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     String currname = "Children";
     Color _randomColor = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
     List planNames = ["Prosperity", "Academics", "Blessings", "Calling", "Career", "Discipline", "Health", "Lifestyle", "Marriage", "Warfare"];
-    List index = [0, 1, 2, 3, 4];
-    var data = Get.arguments;
 
     return Scaffold(
       appBar: const MyAppBar(),
@@ -91,7 +89,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               children: [
                 SizedBox(height: 10,),
                 Container(
-                  height: 420,
+                  height: 400,
                   width: size.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
@@ -125,7 +123,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             scriptureList[getTodaysDay()-1].title,
                             scriptureList[getTodaysDay()-1].verse,
                             scriptureList[getTodaysDay()-1].date,
-                            currname
+                            currname,
+                            images[0]
                           ]);
                         },
                         child: Column(
@@ -189,7 +188,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                    scriptureList[daysInsWeek[index]].title,
                                                    scriptureList[daysInsWeek[index]].verse,
                                                    scriptureList[daysInsWeek[index]].date,
-                                                   currname
+                                                   currname,
+                                                   images[0]
                                                  ]);
                                                },
                                                child: Container(
@@ -233,24 +233,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                       ),
                       SizedBox(height: 20,),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20,),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              onTap: () {},
-                              child: Row(
-                                children: const [
-                                  Icon(Icons.notifications, color: Color(0xFF1E2432),),
-                                  SizedBox(width: 5,),
-                                  Text("Add Reminder", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 20,),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       InkWell(
+                      //         onTap: () {},
+                      //         child: Row(
+                      //           children: const [
+                      //             Icon(Icons.notifications, color: Color(0xFF1E2432),),
+                      //             SizedBox(width: 5,),
+                      //             Text("Add Reminder", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),)
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -290,7 +290,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           children: [
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const PrayerScreen(), arguments: [images[0]]);
+                                                Get.to(()=> const PrayerScreen(), arguments: [planNames[0], images[1]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -318,7 +318,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             SizedBox(width: 10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const AcademyScreen(), arguments: [images[1]]);
+                                                Get.to(()=> const AcademyScreen(), arguments: [planNames[1], images[1]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -346,7 +346,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             SizedBox(width: 10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const BlessingsScreen(), arguments: [images[2]]);
+                                                Get.to(()=> const BlessingsScreen(), arguments: [planNames[2],images[2]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -374,7 +374,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             SizedBox(width: 10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const CallingScreen(), arguments: [images[3]]);
+                                                Get.to(()=> const CallingScreen(), arguments: [planNames[3],images[3]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -402,7 +402,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             SizedBox(width: 10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const CareerScreen(), arguments: [images[4]]);
+                                                Get.to(()=> const CareerScreen(), arguments: [planNames[4],images[4]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -430,7 +430,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             SizedBox(width: 10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const DisciplineScreen(), arguments: [images[5]]);
+                                                Get.to(()=> const DisciplineScreen(), arguments: [planNames[5],images[5]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -458,7 +458,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             SizedBox(width: 10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const HealthScreen(), arguments: [images[6]]);
+                                                Get.to(()=> const HealthScreen(), arguments: [planNames[6],images[6]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -486,7 +486,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             SizedBox(width: 10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const LifeStyleScreen(), arguments: [images[7]]);
+                                                Get.to(()=> const LifeStyleScreen(), arguments: [planNames[7],images[7]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -514,7 +514,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             SizedBox(width: 10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const MarriageScreen(), arguments: [images[8]]);
+                                                Get.to(()=> const MarriageScreen(), arguments: [planNames[8],images[8]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -542,7 +542,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             SizedBox(width: 10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const WarfareScreen(), arguments: [images[9]]);
+                                                Get.to(()=> const WarfareScreen(), arguments: [planNames[9],images[9]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -623,7 +623,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SizedBox(height: 20,),
                 InkWell(
                   onTap: () {
-                    Get.to(()=> const CreateTestimonyScreen());
+                    Get.to(()=> const CreateTestimonyScreen(), arguments: ["Prophetic Prayers For Children"]);
                   },
                   child: Container(
                     height: 370,
@@ -633,7 +633,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       color: Colors.white
                     ),
                     child: Container(
-                      margin: EdgeInsets.only(left: 20, top: 40, right: 20),
+                      margin: EdgeInsets.only(left: 20, top: 20, right: 20),
                       child: Column(
                         children: [
                           Row(
@@ -737,13 +737,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Stack(
                           alignment: Alignment.center,
                           children: [
-                            Container(
-                                height: 150,
-                                width: 90,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                )
+                            GestureDetector(
+                              onTap: (){
+                                Get.to(() => const AboutScreen());
+                              },
+                              child: Container(
+                                  height: 150,
+                                  width: 90,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                  )
+                              ),
                             ),
                             const Positioned(
                               bottom: 50,
@@ -768,7 +773,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   GestureDetector(
                                     onTap: () async{
                                       //link to social media app or website
-                                      const url = "";
+                                      final url = Uri.parse("https://facebook.com");
+
+                                      if(await canLaunchUrl(url)) {
+                                        launchUrl(url);
+                                      } else {
+                                        print("cannot launch");
+                                      }
 
                                     },
                                     child: Container(
@@ -785,10 +796,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 10),
+                                  SizedBox(width: 40),
                                   GestureDetector(
-                                    onTap: () {
+                                    onTap: () async{
                                       //link to social media app or website
+                                      final url = Uri.parse("https://instagram.com");
+
+                                      if(await canLaunchUrl(url)) {
+                                      launchUrl(url,);
+                                      } else {
+                                      print("cannot launch");
+                                      }
                                     },
                                     child: Container(
                                       height: 20,
@@ -804,10 +822,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 10),
+                                  SizedBox(width: 40),
                                   GestureDetector(
-                                    onTap: () {
+                                    onTap: () async{
                                       //link to social media app or website
+                                      final url = Uri.parse("https://twitter.com");
+
+                                        if(await canLaunchUrl(url)) {
+                                          launchUrl(url,);
+                                        } else {
+                                          print("cannot launch");
+                                        }
                                     },
                                     child: Container(
                                       height: 20,

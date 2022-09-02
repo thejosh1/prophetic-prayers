@@ -33,7 +33,7 @@ class AuthController extends GetxController {
     return await auth.currentUser!;
   }
   
-  void register(String email, password, String name, String imagepath) async{
+  void register(String email, String password, String name, String imagepath) async{
    try {
      await auth.createUserWithEmailAndPassword(email: email, password: password);
      User? user = auth.currentUser;
@@ -51,9 +51,30 @@ class AuthController extends GetxController {
          titleText: Text("Account creation failed"),
          messageText: Text(
          e.toString(), style: TextStyle(color: Colors.white),
-     )
+         )
      );
    }
+  }
+  void edit(String? email, String? name, String? imagepath) async {
+    try {
+      User? user = auth.currentUser;
+      await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
+        "uid":user?.uid,
+        "email":user?.email,
+        "name":name,
+        "imagePath":imagepath,
+      });
+    } catch(e) {
+      Get.snackbar("Profile Information", "Couldn't update Profile info",
+        backgroundColor: Colors.black,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: Text("Profile Update Failed"),
+        messageText: Text(
+          e.toString(), style: TextStyle(color: Colors.white),
+        )
+      );
+    }
   }
   void Login(String email, password) async{
     try {
