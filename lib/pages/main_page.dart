@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/pages/prayer_category_screen.dart';
 import 'package:prophetic_prayers/pages/profile_page.dart';
-import 'package:prophetic_prayers/pages/discover_screen.dart';
 import 'package:prophetic_prayers/pages/testimonies_screen.dart';
 import 'package:prophetic_prayers/pages/welcome.dart';
 

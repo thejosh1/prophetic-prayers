@@ -356,7 +356,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
                 } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                  return Text("${data["name"]}".toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
+                  return Text("Welcome ${data["name"]}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
                 }
                 return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
               }

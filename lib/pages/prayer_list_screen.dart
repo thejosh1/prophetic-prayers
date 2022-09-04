@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 import '../models/prayers.dart';
+import '../services/route_services.dart';
 
 class PrayerListScreen extends StatefulWidget {
   const PrayerListScreen({Key? key}) : super(key: key);
@@ -98,7 +99,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
               InkWell(
                 splashColor: Colors.grey,
                 onTap: (){
-                  Get.to(()=> const PrayerDetailScreen(), arguments: [
+                  Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
                     scriptureList[index].id,
                     scriptureList[index].prayerPoint,
                     scriptureList[index].title,

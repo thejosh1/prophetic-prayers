@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
+import 'package:prophetic_prayers/services/route_services.dart';
 
 class TestimonyDetailPage extends StatelessWidget {
   const TestimonyDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var data = Get.arguments;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
@@ -20,8 +22,7 @@ class TestimonyDetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                    width: 150,
-                    child: Text("Anonymous", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),)
+                  child: Text(data[2], style: TextStyle(fontSize: 16, fontWeight: FontWeight.w200, color: Colors.grey),),
                 ),
                 Container(
                   width: 154,
@@ -32,7 +33,7 @@ class TestimonyDetailPage extends StatelessWidget {
                   ),
                   child: GestureDetector(
                     onTap: (){
-                      Get.to(()=> const CreateTestimonyScreen());
+                      Get.toNamed(RouteServices.CREATETESTIMONYSCREEN);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -41,7 +42,7 @@ class TestimonyDetailPage extends StatelessWidget {
                           Icons.note_add,
                           color: Color(0xFF515BDE),
                         ),
-                        Text("have a testimony?")
+                        Text("Have a testimony?")
                       ],
                     ),
                   ),
@@ -49,8 +50,9 @@ class TestimonyDetailPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 25,),
-            Text(textAlign: TextAlign.left,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi tristique senectus et netus. Hendrerit gravida rutrum quisque non. Id neque aliquam vestibulum morbi blandit. Sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum. Ultrices mi tempus imperdiet nulla. Et sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque. Et netus et malesuada fames ac turpis egestas. Suspendisse ultrices gravida dictum fusce. Pharetra sit amet aliquam id diam maecenas ultricies mi. Urna id volutpat lacus laoreet non curabitur gravida.",
-            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),)
+            Text(data[0], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
+            Text(data[1],textAlign: TextAlign.left,
+            style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),)
         ],
           ),
       ),

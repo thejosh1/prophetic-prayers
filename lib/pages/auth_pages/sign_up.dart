@@ -109,6 +109,7 @@ class _SignUpFormState extends State<SignUpForm> {
             TextField(
               style: const TextStyle(),
               controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(
                   borderSide: BorderSide(

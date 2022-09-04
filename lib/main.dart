@@ -6,6 +6,7 @@ import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
 import 'package:prophetic_prayers/pages/welcome.dart';
 import 'package:prophetic_prayers/services/notify_services.dart';
+import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
 import 'controller/scripture_controller.dart';
@@ -43,16 +44,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'Prophetic Prayers',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primarySwatch: Colors.blue,
             fontFamily: 'Poppins',
         ),
-        initialRoute: "/",
-        getPages: [
-          GetPage(name: "/", page: ()=> const MainPage()),
-        ],
+        initialRoute: RouteServices.INITIAL,
+        getPages: RouteServices.routes
     );
   }
 }
