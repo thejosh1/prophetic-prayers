@@ -3,20 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
-import 'package:prophetic_prayers/pages/main_page.dart';
 import 'package:prophetic_prayers/pages/welcome.dart';
 import 'package:prophetic_prayers/services/notify_services.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
-import 'controller/scripture_controller.dart';
 
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await NotifyServices.init(initScheduled: true);
   await Firebase.initializeApp().then((value) => Get.put(AuthController()));
-  //AuthController.instance.Logout();
+  AuthController.instance.Logout();
   NotifyServices.showScheduledDailyNotification(
       title: "Reminder",
       body: "Prophetic Prayers for children live",

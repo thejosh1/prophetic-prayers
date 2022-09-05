@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:prophetic_prayers/pages/auth_pages/login.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:prophetic_prayers/pages/auth_pages/verification_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -31,6 +32,17 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _confirmPasswordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
+  }
 
   Future<void>showInformationDialogue(BuildContext context) async {
     return await showDialog(
@@ -74,163 +86,215 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-    return SingleChildScrollView(
-      child: Container(
-        height: double.maxFinite,
-        width: double.maxFinite,
-        padding: const EdgeInsets.symmetric(horizontal: 22),
-        color: Colors.white,
-        child: Column(
-          children: [
-            SizedBox(height: 40),
-            TextField(
-              controller: _nameController,
-              style: const TextStyle(),
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffBEC2CE),
-                  ),
-                ),
-                hintText: 'Name',
-                hintStyle: TextStyle(
-                  color: Color(0xffBEC2CE),
-                  fontSize: 16,
-                ),
-                prefixIcon: Icon(
-                  Icons.person_add_outlined,
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            TextField(
-              style: const TextStyle(),
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffBEC2CE),
-                  ),
-                ),
-                hintText: 'Email',
-                hintStyle: TextStyle(
-                  color: Color(0xffBEC2CE),
-                  fontSize: 16,
-                ),
-                prefixIcon: Icon(
-                  Icons.email_outlined,
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            TextField(
-              controller: _passwordController,
-              style: const TextStyle(),
-              obscureText: true,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffBEC2CE),
-                  ),
-                ),
-                hintText: 'Password',
-                hintStyle: TextStyle(
-                  color: Color(0xffBEC2CE),
-                  fontSize: 16,
-                ),
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            ),
-            const SizedBox(height: 23),
-            GestureDetector(
-              onTap: (() {
-               showInformationDialogue(context);
-               setState(() {});
-              }),
-              child: Row(
+    return Scaffold(
+        key: _scaffoldKey,
+        body: SingleChildScrollView(
+          child: Container(
+            height: double.maxFinite,
+            width: double.maxFinite,
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            color: Colors.white,
+            child: Form(
+              key: formKey,
+              child:  Column(
                 children: [
-                  const Spacer(),
-                  Row(
-                    children: const [
-                      Icon(Icons.library_add, color: Color(0xffBEC2CE),),
-                      SizedBox(width: 5,),
-                      Text(
-                        "add Image",
-                        style: TextStyle(
+                  SizedBox(height: 40),
+                  TextFormField(
+                    style: const TextStyle(),
+                    controller: _nameController,
+                    decoration: const InputDecoration(
+                        hintText: 'Name',
+                        hintStyle: TextStyle(
                           color: Color(0xffBEC2CE),
-                          fontSize: 16
+                          fontSize: 16,
                         ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 23,
-            ),
-            GestureDetector(
-              onTap: () async{
-                await uploadPfp().then((value) {});
-                String value = await getDownload();
-                AuthController.instance.register(
-                    _emailController.text.trim(),
-                    _passwordController.text.trim(),
-                    _nameController.text.trim(),
-                    value,
-                );
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  color: const Color(0xff515BDE),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'SignUp',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
+                        prefixIcon: Icon(
+                          Icons.person_add_outlined,
+                          color: Color(0xffBEC2CE),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xffBEC2CE)
+                          ),
+                        )
+                    ),
+                    validator: (value) {
+                      if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                        return "please enter a correct name";
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 40),
+                  TextFormField(
+                    style: const TextStyle(),
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          color: Color(0xffBEC2CE),
+                          fontSize: 16,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.email_outlined,
+                          color: Color(0xffBEC2CE),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xffBEC2CE)
+                          ),
+                        )
+                    ),
+                    validator: (value) {
+                      if(value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}').hasMatch(value)) {
+                        return "please enter a correct email";
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 40),
+                  TextFormField(
+                    style: const TextStyle(),
+                    controller: _passwordController,
+                    decoration: const InputDecoration(
+                        hintText: 'password',
+                        hintStyle: TextStyle(
+                          color: Color(0xffBEC2CE),
+                          fontSize: 16,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Color(0xffBEC2CE),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xffBEC2CE)
+                          ),
+                        )
+                    ),
+                    validator: (value) {
+                      if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
+                        return "please password should contain 1 Upper case, 1 lowercase, 1 Numeric Number, 1 Special Character";
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 23),
+                  TextFormField(
+                    style: const TextStyle(),
+                    controller: _confirmPasswordController,
+                    decoration: const InputDecoration(
+                        hintText: 'confirm password',
+                        hintStyle: TextStyle(
+                          color: Color(0xffBEC2CE),
+                          fontSize: 16,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Color(0xffBEC2CE),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xffBEC2CE)
+                          ),
+                        )
+                    ),
+                    validator: (value) {
+                      if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
+                        return "please password should contain 1 Upper case, 1 lowercase, 1 Numeric Number, 1 Special Character";
+                      } else if(value != _passwordController.text) {
+                        return "passwords does not match";
+                      }
+                      else {
+                        return null;
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 23),
+                  GestureDetector(
+                    onTap: (() {
+                      showInformationDialogue(context);
+                      setState(() {});
+                    }),
+                    child: Row(
+                      children: [
+                        const Spacer(),
+                        Row(
+                          children: const [
+                            Icon(Icons.library_add, color: Color(0xffBEC2CE),),
+                            SizedBox(width: 5,),
+                            Text(
+                              "add Image",
+                              style: TextStyle(
+                                  color: Color(0xffBEC2CE),
+                                  fontSize: 16
+                              ),
+                            )
+                          ],
+                        )
+                      ],
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 23,
+                  ),
+                  GestureDetector(
+                    onTap: () async{
+                      await uploadPfp().then((value) {});
+                      String value = await getDownload();
+                      if(formKey.currentState!.validate()) {
+                        AuthController.instance.register(_emailController.value.text.trim(),
+                            _passwordController.value.text.trim(),
+                            _nameController.value.text.trim(),
+                            value
+                        );
+                        Get.offAll(()=>const VerificationScreen());
+                      }
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        color: const Color(0xff515BDE),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  GestureDetector(
+                    onTap: ((){
+                      Get.offAll(() => const LoginScreen());
+                    }),
+                    child: const Text(
+                      'Have an account? Login',
+                      style: TextStyle(
+                        color: Color(0xffBEC2CE),
+                      ),
+                    ),
+                  )
+                ]
               ),
             ),
-            SizedBox(height: 30),
-            const Text(
-              'Forgot password?',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Color(0xffBEC2CE),
-              ),
-            ),
-            const SizedBox(height: 30),
-            GestureDetector(
-              onTap: ((){
-                Get.offAll(() => const LoginScreen());
-              }),
-              child: const Text(
-                'Have an account? Login',
-                style: TextStyle(
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
+          ),
+        )
     );
   }
 

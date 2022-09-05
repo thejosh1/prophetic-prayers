@@ -33,38 +33,19 @@ class _EditFormState extends State<EditForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     super.dispose();
-    newPasswordController.dispose();
+    _confirmPasswordController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
   }
 
-  String _newPassword = "";
   final currentUser = FirebaseAuth.instance.currentUser;
-  final TextEditingController newPasswordController = TextEditingController();
-
-  changePassword(String _newPassword) async{
-    try {
-      await currentUser!.updatePassword(_newPassword);
-      FirebaseAuth.instance.signOut();
-      Get.offAll(()=> const LoginScreen());
-      Get.snackbar("Profile Information", "Profile has been changed",
-          backgroundColor: Colors.black,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
-          titleText: Text("Profile Update Sucessful"),
-          messageText: const Text(
-           "Profile info has been changed", style: TextStyle(color: Colors.white),
-          )
-      );
-    } catch(e) {
-
-    }
-  }
+  late String newPassword;
 
   Future<void>showInformationDialogue(BuildContext context) async {
     return await showDialog(
@@ -108,180 +89,247 @@ class _EditFormState extends State<EditForm> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-    return SingleChildScrollView(
-      child: Container(
-        height: double.maxFinite,
-        width: double.maxFinite,
-        padding: const EdgeInsets.symmetric(horizontal: 22),
-        color: Colors.white,
-        child: Column(
-          children: [
-            SizedBox(height: 40),
-            TextField(
-              controller: _nameController,
-              style: const TextStyle(),
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffBEC2CE),
+    return Scaffold(
+      key: _scaffoldKey,
+      body: SingleChildScrollView(
+        child: Container(
+          height: double.maxFinite,
+          width: double.maxFinite,
+          padding: const EdgeInsets.symmetric(horizontal: 22),
+          color: Colors.white,
+          child: Form(
+            key: formKey,
+            child:  Column(
+              children: [
+                SizedBox(height: 40),
+                TextFormField(
+                  style: const TextStyle(),
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                      hintText: 'Name',
+                      hintStyle: TextStyle(
+                        color: Color(0xffBEC2CE),
+                        fontSize: 16,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.person_add_outlined,
+                        color: Color(0xffBEC2CE),
+                      ),
+                      border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: Color(0xffBEC2CE)
+                      ),
+                    )
                   ),
+                  validator: (value) {
+                    if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                      return "please enter a correct name";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
-                hintText: 'Name',
-                hintStyle: TextStyle(
-                  color: Color(0xffBEC2CE),
-                  fontSize: 16,
-                ),
-                prefixIcon: Icon(
-                  Icons.person_add_outlined,
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            TextField(
-              style: const TextStyle(),
-              controller: _emailController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffBEC2CE),
-                  ),
-                ),
-                hintText: 'Email',
-                hintStyle: TextStyle(
-                  color: Color(0xffBEC2CE),
-                  fontSize: 16,
-                ),
-                prefixIcon: Icon(
-                  Icons.email_outlined,
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            TextField(
-              controller: _passwordController,
-              style: const TextStyle(),
-              obscureText: true,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffBEC2CE),
-                  ),
-                ),
-                hintText: 'Password',
-                hintStyle: TextStyle(
-                  color: Color(0xffBEC2CE),
-                  fontSize: 16,
-                ),
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            ),
-            const SizedBox(height: 23),
-            TextField(
-              controller: _confirmPasswordController,
-              style: const TextStyle(),
-              obscureText: true,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color(0xffBEC2CE),
-                  ),
-                ),
-                hintText: 'Confirm Password',
-                hintStyle: TextStyle(
-                  color: Color(0xffBEC2CE),
-                  fontSize: 16,
-                ),
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            ),
-            const SizedBox(height: 23),
-            GestureDetector(
-              onTap: (() {
-                showInformationDialogue(context);
-                setState(() {});
-              }),
-              child: Row(
-                children: [
-                  const Spacer(),
-                  Row(
-                    children: const [
-                      Icon(Icons.library_add, color: Color(0xffBEC2CE),),
-                      SizedBox(width: 5,),
-                      Text(
-                        "add Image",
-                        style: TextStyle(
-                            color: Color(0xffBEC2CE),
-                            fontSize: 16
+                const SizedBox(height: 40),
+                TextFormField(
+                  style: const TextStyle(),
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                      hintText: 'Email',
+                      hintStyle: TextStyle(
+                        color: Color(0xffBEC2CE),
+                        fontSize: 16,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: Color(0xffBEC2CE),
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1,
+                            color: Color(0xffBEC2CE)
                         ),
                       )
+                  ),
+                  validator: (value) {
+                    if(value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}').hasMatch(value)) {
+                      return "please enter a correct email";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                const SizedBox(height: 40),
+                TextFormField(
+                  style: const TextStyle(),
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
+                      hintText: 'password',
+                      hintStyle: TextStyle(
+                        color: Color(0xffBEC2CE),
+                        fontSize: 16,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Color(0xffBEC2CE),
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1,
+                            color: Color(0xffBEC2CE)
+                        ),
+                      )
+                  ),
+                  validator: (value) {
+                    if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
+                      return "please password should contain 1 Upper case, 1 lowercase, 1 Numeric Number, 1 Special Character";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                const SizedBox(height: 23),
+                TextFormField(
+                  style: const TextStyle(),
+                  controller: _confirmPasswordController,
+                  decoration: const InputDecoration(
+                      hintText: 'confirm password',
+                      hintStyle: TextStyle(
+                        color: Color(0xffBEC2CE),
+                        fontSize: 16,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Color(0xffBEC2CE),
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1,
+                            color: Color(0xffBEC2CE)
+                        ),
+                      )
+                  ),
+                  validator: (value) {
+                    if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
+                      return "please password should contain 1 Upper case, 1 lowercase, 1 Numeric Number, 1 Special Character";
+                    } else if(value != _passwordController.text) {
+                      return "passwords does not match";
+                    }
+                    else {
+                      newPassword = value;
+                      return null;
+                    }
+                  },
+                ),
+                const SizedBox(height: 23),
+                GestureDetector(
+                  onTap: (() {
+                    showInformationDialogue(context);
+                    setState(() {});
+                  }),
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Row(
+                        children: const [
+                          Icon(Icons.library_add, color: Color(0xffBEC2CE),),
+                          SizedBox(width: 5,),
+                          Text(
+                            "add Image",
+                            style: TextStyle(
+                                color: Color(0xffBEC2CE),
+                                fontSize: 16
+                            ),
+                          )
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 23,
-            ),
-            GestureDetector(
-              onTap: () async{
-                await uploadPfp().then((value) {});
-                String value = await getDownload();
-                AuthController.instance.edit(
-                  _emailController.text.trim(),
-                  _nameController.text.trim(),
-                  value,
-                );
-                if(_confirmPasswordController == _passwordController) {
-                  _newPassword == _confirmPasswordController;
-                }
-                changePassword(_newPassword);
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  color: const Color(0xff515BDE),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
+                  ),
+                ),
+                SizedBox(
+                  height: 23,
+                ),
+                GestureDetector(
+                  onTap: () async{
+                    await uploadPfp().then((value) {});
+                    String value = await getDownload();
+                    if(formKey.currentState!.validate()) {
+                      Get.snackbar("submitting", "check email for password",
+                          backgroundColor: Colors.black,
+                          colorText: Colors.white,
+                          snackPosition: SnackPosition.BOTTOM,
+                          titleText: Text("check email for password"),
+                          messageText: const Text(
+                            "check email for password", style: TextStyle(color: Colors.white),
+                          )
+                      );
+                      AuthController.instance.edit(_emailController.value.text.trim(),
+                          _nameController.value.text.trim(), value);
+                      if(newPassword.isNotEmpty) {
+                        try {
+                          AuthController.instance.resetPassword();
+                          FirebaseAuth.instance.signOut();
+                          Get.offAll(()=> const LoginScreen());
+                          Get.snackbar("Password update", "check email for new password",
+                              backgroundColor: Colors.black,
+                              colorText: Colors.white,
+                              snackPosition: SnackPosition.BOTTOM,
+                              titleText: Text("Password update"),
+                              messageText: const Text(
+                                "check email for new password", style: TextStyle(color: Colors.white),
+                              )
+                          );
+                        } catch(e) {
+                          Get.snackbar("Error", e.toString(),
+                              backgroundColor: Colors.black,
+                              colorText: Colors.white,
+                              snackPosition: SnackPosition.BOTTOM,
+                              titleText: Text("Error"),
+                              messageText: Text(
+                                e.toString(), style: TextStyle(color: Colors.white),
+                              )
+                          );
+                        }
+                      }
+                    }
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      color: const Color(0xff515BDE),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Submit',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                SizedBox(height: 30),
+                GestureDetector(
+                  onTap: ((){
+                    AuthController.instance.Logout();
+                  }),
+                  child: const Text(
+                    'LogOut',
+                    style: TextStyle(
+                      color: Color(0xffBEC2CE),
+                    ),
+                  ),
+                )
+              ],
             ),
-            SizedBox(height: 30),
-            GestureDetector(
-              onTap: ((){
-                AuthController.instance.Logout();
-              }),
-              child: const Text(
-                'LogOut',
-                style: TextStyle(
-                  color: Color(0xffBEC2CE),
-                ),
-              ),
-            )
-          ],
+          ),
         ),
-      ),
+      )
     );
   }
 

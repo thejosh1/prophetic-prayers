@@ -55,12 +55,24 @@ class AuthController extends GetxController {
      );
    }
   }
+  void resetPassword() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    auth.sendPasswordResetEmail(
+        email: user!.email.toString()
+    );
+  }
+  void verifyEmail() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if(!(user!.emailVerified)) {
+      user.sendEmailVerification();
+    }
+  }
   void edit(String? email, String? name, String? imagepath) async {
     try {
       User? user = auth.currentUser;
       await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
         "uid":user?.uid,
-        "email":user?.email,
+        "email":email,
         "name":name,
         "imagePath":imagepath,
       });
