@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/edit_screen.dart';
 import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
+import 'package:prophetic_prayers/services/route_services.dart';
 
 import '../controller/auth_controller.dart';
+import '../utils/dimensions.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -22,9 +24,239 @@ class _ProfilePageState extends State<ProfilePage> {
     Size size = MediaQuery.of(context).size;
     final user = AuthController.instance.auth.currentUser;
     return Scaffold(
-      appBar: const MyAppBar(),
+      // appBar: const MyAppBar(),
       backgroundColor: const Color(0xffF7F8FA),
-      body: /*SingleChildScrollView(
+      body: FutureBuilder(
+        future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
+        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
+            Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+            return Container(
+              height: size.height,
+              width: size.width,
+              child: Stack(
+                children: [
+                  Positioned(
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        height: 300,
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage("${data["imagePath"]}"),
+                                fit: BoxFit.cover)),
+                      )
+                  ),
+                  Positioned(
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth20, top: Dimensions.prayerDetailsScreenHeight60, right: Dimensions.prayerListScreenContainerWidth20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                Get.back();
+                              },
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
+                            ),
+                            // Icon(
+                            //   Icons.more_vert,
+                            //   color: Colors.white,
+                            // )
+                          ],
+                        ),
+                      )),
+                  Positioned(
+                      top: Dimensions.prayerDetailsScreenHeight270,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        physics: const BouncingScrollPhysics(),
+                        child: Container(
+                          padding: EdgeInsets.only(left: Dimensions.pageScreenExpandedPaddingWidth20+2, right: Dimensions.prayerListScreenContainerWidth20, top: Dimensions.prayerListStackPositionedContainerHeight20),
+                          width: MediaQuery.of(context).size.width,
+                          height: Dimensions.prayerDetailsScreenHeight500,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(Dimensions.prayerListStackPositionedContainerHeight20),
+                                  topRight: Radius.circular(Dimensions.prayerListStackPositionedContainerHeight20)),
+                              color: Colors.white),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.person,
+                                          color: Color(0xFFBEC2CE),
+                                          size: Dimensions.prayerListScreenContainerWidth15,
+                                        ),
+                                        SizedBox(width: Dimensions.prayerListScreenContainerWidth6-1,),
+                                        Text(
+                                          //prayer id
+                                          "Profile Settings",
+                                          style: TextStyle(
+                                              fontSize: Dimensions.prayerListScreenContainerWidth14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFFBEC2CE)),
+                                        )
+                                      ],
+                                    ),
+                                    Icon(
+                                      Icons.bookmark,
+                                      color: Color(0xFF1E2432),
+                                      size: Dimensions.prayerListScreenContainerWidth19,
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: Dimensions.prayerDetailScreenHeight7,
+                                ),
+                                Text(
+                                  //title
+                                  "${data["name"]}",
+                                  style: TextStyle(
+                                      color: Color(0xFF1E2432),
+                                      fontSize: Dimensions.prayerListStackPositionedContainerTextWidth28,
+                                      fontWeight: FontWeight.w900),
+                                  textAlign: TextAlign.start,
+                                ),
+                                SizedBox(height: Dimensions.pageScreenExpandedRadiusHeight10*2),
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("${data["email"]}", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.prayerListScreenContainerWidth18, fontWeight: FontWeight.bold),),
+                                        SizedBox(height: Dimensions.pageScreenExpandedRadiusHeight10*2,),
+                                        SizedBox(
+                                          height: Dimensions.prayerDetailScreenHeight18,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                InkWell(
+                                                  onTap: (){
+                                                    Get.toNamed(RouteServices.EDITPROFILESCREEN);
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.notifications,
+                                                        size: Dimensions.prayerDetailScreenHeight29,
+                                                        color: Color(0xFFD1D1D6),
+                                                      ),
+                                                      SizedBox(
+                                                        height: Dimensions.prayerDetailScreenHeight8,
+                                                      ),
+                                                      Text(
+                                                        "Edit Profile",
+                                                        style:TextStyle(
+                                                            fontSize: Dimensions.prayerListScreenContainerWidth14,
+                                                            fontWeight: FontWeight.w200,
+                                                            color: Color(0xFF1E2432)),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: Dimensions.prayerListScreenContainerWidth6+2,
+                                            ),
+                                            GestureDetector(
+                                              onTap: (() {
+                                                Get.toNamed(RouteServices.CREATETESTIMONYSCREEN);
+                                              }),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.edit,
+                                                        size: Dimensions.prayerDetailScreenHeight29,
+                                                        color: Color(0xFFD1D1D6),
+                                                      ),
+                                                      SizedBox(
+                                                        height: Dimensions.prayerDetailScreenHeight8,
+                                                      ),
+                                                      Text(
+                                                        "Testify",
+                                                        style:TextStyle(
+                                                            fontSize: Dimensions.prayerListScreenContainerWidth14,
+                                                            fontWeight: FontWeight.w200,
+                                                            color: Color(0xFF1E2432)),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: Dimensions.prayerListScreenContainerWidth6+2,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Icon(
+                                                  Icons.list,
+                                                  size: Dimensions.prayerDetailScreenHeight29,
+                                                  color: Color(0xFFD1D1D6),
+                                                ),
+                                                SizedBox(
+                                                  height: Dimensions.prayerDetailScreenHeight8,
+                                                ),
+                                                Text(
+                                                  "prayers",
+                                                  style: TextStyle(
+                                                      fontSize: Dimensions.prayerListScreenContainerWidth14,
+                                                      fontWeight: FontWeight.w200,
+                                                      color: Color(0xFF1E2432)),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: Dimensions.pageScreenSizedBoxHeight12,
+                                            ),
+                                          ],
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: Dimensions.pageScreenExpandedRadiusHeight10,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                  )
+                ],
+              ),
+            );
+          }
+          return Container();
+        },
+      )
+      /*SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: 10,),
@@ -320,7 +552,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
-      )*/Text("coming soon")
+      )*/
     );
   }
 }

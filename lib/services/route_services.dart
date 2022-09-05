@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
+import 'package:prophetic_prayers/pages/edit_screen.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/pages/screens/academy_screen.dart';
@@ -29,6 +30,8 @@ class RouteServices {
   static const WARFARESCRIPTURESCREEN = "/warfare-scripture-screen";
   static const TESTIMONYDETAILSCREEN = "/testimony-detail-screen";
   static const CREATETESTIMONYSCREEN = "/create-testimony-screen";
+  static const EDITPROFILESCREEN = "/edit-profile-screen";
+
   static String getInitial() => "$INITIAL";
   static String getPrayerDetailScreen() => "$PRAYERDETAIL";
   static String getProsperityScriptureScreen() => "$PROSPERITYSCRIPTURESCREEN";
@@ -43,6 +46,7 @@ class RouteServices {
   static String getwarfareScriptureScreen() => "$WARFARESCRIPTURESCREEN";
   static String gettestimonyDetailScreen() => "$TESTIMONYDETAILSCREEN";
   static String getcreateTestimonyScreen() => "$CREATETESTIMONYSCREEN";
+  static String geteditProfileScreen() => "$EDITPROFILESCREEN";
 
   static List<GetPage> routes = [
     GetPage(name: INITIAL, page: ()=> const MainPage()),
@@ -58,5 +62,6 @@ class RouteServices {
     GetPage(name: WARFARESCRIPTURESCREEN, page: ()=> const WarfareScreen(), transition: Transition.fadeIn),
     GetPage(name: TESTIMONYDETAILSCREEN, page: () => const TestimonyDetailPage(), transition: Transition.fadeIn),
     GetPage(name: CREATETESTIMONYSCREEN, page: () => const CreateTestimonyScreen(), transition: Transition.fadeIn),
+    GetPage(name: EDITPROFILESCREEN, page: () => const EditScreen(), transition: Transition.fadeIn),
   ];
 }
