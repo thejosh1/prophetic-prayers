@@ -161,6 +161,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   const SizedBox(height: 40),
                   TextFormField(
                     style: const TextStyle(),
+                    obscureText: true,
                     controller: _passwordController,
                     decoration: const InputDecoration(
                         hintText: 'password',
@@ -190,6 +191,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   const SizedBox(height: 23),
                   TextFormField(
                     style: const TextStyle(),
+                    obscureText: true,
                     controller: _confirmPasswordController,
                     decoration: const InputDecoration(
                         hintText: 'confirm password',
@@ -253,8 +255,8 @@ class _SignUpFormState extends State<SignUpForm> {
                       String value = await getDownload();
                       if(formKey.currentState!.validate()) {
                         AuthController.instance.register(_emailController.value.text.trim(),
-                            _passwordController.value.text.trim(),
-                            _nameController.value.text.trim(),
+                            _passwordController.text.trim(),
+                            _nameController.text.trim(),
                             value
                         );
                         Get.offAll(()=>const VerificationScreen());

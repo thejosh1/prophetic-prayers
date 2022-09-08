@@ -265,11 +265,13 @@ class _EditFormState extends State<EditForm> {
                             "check email for password", style: TextStyle(color: Colors.white),
                           )
                       );
-                      AuthController.instance.edit(_emailController.value.text.trim(),
-                          _nameController.value.text.trim(), value);
+                      AuthController.instance.edit(_emailController.text.trim(),
+                          _nameController.text.trim(), value);
                       if(newPassword.isNotEmpty) {
                         try {
-                          AuthController.instance.resetPassword();
+                          AuthController.instance.resetPassword(
+                            _emailController.text.trim()
+                          );
                           FirebaseAuth.instance.signOut();
                           Get.offAll(()=> const LoginScreen());
                           Get.snackbar("Password update", "check email for new password",

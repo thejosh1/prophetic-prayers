@@ -8,7 +8,7 @@ import 'package:prophetic_prayers/services/notify_services.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
-
+final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        navigatorKey: navigatorKey,
         title: 'Prophetic Prayers',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

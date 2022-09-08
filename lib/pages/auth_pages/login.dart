@@ -3,6 +3,8 @@ import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:prophetic_prayers/pages/auth_pages/sign_up.dart';
 import 'package:get/get.dart';
 
+import 'forgot_password_screen.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -36,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
             TextField(
               controller: _emailController,
               style: TextStyle(),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: UnderlineInputBorder(
                   borderSide: BorderSide(
                     width: 1,
@@ -59,7 +61,7 @@ class _LoginFormState extends State<LoginForm> {
               controller: _passwordController,
               style: TextStyle(),
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: UnderlineInputBorder(
                   borderSide: BorderSide(
                     width: 1,
@@ -101,11 +103,16 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             const SizedBox(height: 30),
-            Text(
-              'Forgot password?',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Color(0xffBEC2CE),
+            GestureDetector(
+              onTap: () {
+                Get.to(()=> const ForgotPasswordScreen());
+              },
+              child: const Text(
+                'Forgot password?',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xffBEC2CE),
+                ),
               ),
             ),
             const SizedBox(height: 30),
