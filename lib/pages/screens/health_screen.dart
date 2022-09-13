@@ -29,20 +29,20 @@ class _HealthScreenState extends State<HealthScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth10, right: Dimensions.prayerListScreenContainerWidth16, top: Dimensions.prayerListScreenContainerHeight44),
+              margin: EdgeInsets.only(left: Dimensions.Width10, right: Dimensions.Width16, top: Dimensions.Height44),
               child: Row(
                 children: [
                   IconButton(
                       onPressed: (){Get.back();},
                       icon: Icon(Icons.arrow_back,
-                        size: Dimensions.prayerListScreenContainerWidth18,
+                        size: Dimensions.Width18,
                         color: const Color(0xFF000000),
                       )
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: Dimensions.Height20),
                   Text("Prophetic Prayers For Health",
                     style: TextStyle(
-                        fontSize: Dimensions.prayerListScreenContainerWidth16,
+                        fontSize: Dimensions.Width16,
                         fontWeight: FontWeight.bold, color: const Color(0xFF1E2432)
                     ),
                   ),
@@ -51,19 +51,19 @@ class _HealthScreenState extends State<HealthScreen> {
               ),
             ),
             Divider(
-              height: Dimensions.prayerListScreenContainerHeight2,
+              height: Dimensions.Height2,
               color: const Color(0xFFEAECEF),
-              thickness: Dimensions.prayerListScreenContainerWidth2,
+              thickness: Dimensions.Width2,
             ),
             Container(
-                margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth20),
+                margin: EdgeInsets.only(left: Dimensions.Width20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SingleChildScrollView(
                       child: Container(
-                          height: 632,
-                          width: Dimensions.prayerListScreenContainerWidth335,
+                          height: Dimensions.Height632,
+                          width: Dimensions.Width335,
                           child: FutureBuilder(
                               future: ScriptureController.instance.readHealthJson(),
                               builder: (context, snapshot) {
@@ -74,7 +74,7 @@ class _HealthScreenState extends State<HealthScreen> {
 
                                   return buildScriptures(_scriptures);
                                 } else {
-                                  return Center(child: const Text("Loading"),);
+                                  return const Center(child: Text("Loading"),);
                                 }
                               }
                           )

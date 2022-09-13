@@ -34,6 +34,12 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool _isObscure = true;
+
+  @override
+  void initState() {
+    _isObscure;
+  }
 
   @override
   void dispose() {
@@ -87,6 +93,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
     return Scaffold(
         key: _scaffoldKey,
@@ -161,11 +168,11 @@ class _SignUpFormState extends State<SignUpForm> {
                   const SizedBox(height: 40),
                   TextFormField(
                     style: const TextStyle(),
-                    obscureText: true,
+                    obscureText: _isObscure,
                     controller: _passwordController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         hintText: 'password',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: Color(0xffBEC2CE),
                           fontSize: 16,
                         ),
@@ -173,7 +180,17 @@ class _SignUpFormState extends State<SignUpForm> {
                           Icons.lock,
                           color: Color(0xffBEC2CE),
                         ),
-                        border: UnderlineInputBorder(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isObscure ? Icons.visibility_off:Icons.visibility,
+                              color: Color(0xffBEC2CE)
+                          ), onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                        },
+                        ),
+                        border: const UnderlineInputBorder(
                           borderSide: BorderSide(
                               width: 1,
                               color: Color(0xffBEC2CE)
@@ -191,11 +208,11 @@ class _SignUpFormState extends State<SignUpForm> {
                   const SizedBox(height: 23),
                   TextFormField(
                     style: const TextStyle(),
-                    obscureText: true,
+                    obscureText: _isObscure,
                     controller: _confirmPasswordController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         hintText: 'confirm password',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: Color(0xffBEC2CE),
                           fontSize: 16,
                         ),
@@ -203,7 +220,17 @@ class _SignUpFormState extends State<SignUpForm> {
                           Icons.lock,
                           color: Color(0xffBEC2CE),
                         ),
-                        border: UnderlineInputBorder(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                              _isObscure ? Icons.visibility_off:Icons.visibility,
+                              color: Color(0xffBEC2CE)
+                          ), onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        },
+                        ),
+                        border: const UnderlineInputBorder(
                           borderSide: BorderSide(
                               width: 1,
                               color: Color(0xffBEC2CE)
@@ -259,7 +286,6 @@ class _SignUpFormState extends State<SignUpForm> {
                             _nameController.text.trim(),
                             value
                         );
-                        Get.offAll(()=>const VerificationScreen());
                       }
                     },
                     child: ClipRRect(
@@ -331,10 +357,7 @@ class _SignUpFormState extends State<SignUpForm> {
     File uploadedFile = File(photo!.path);
     return storage.ref("avatar/${uploadedFile.path}").getDownloadURL();
   }
-
-
 }
-
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);

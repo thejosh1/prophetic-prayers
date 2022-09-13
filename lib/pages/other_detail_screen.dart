@@ -10,15 +10,15 @@ import 'package:prophetic_prayers/utils/dimensions.dart';
 import '../services/notify_services.dart';
 
 
-class PrayerDetailScreen extends StatefulWidget {
+class OtherDetailScreen extends StatefulWidget {
   final String? payload;
-  const PrayerDetailScreen({Key? key, this.payload}) : super(key: key);
+  const OtherDetailScreen({Key? key, this.payload}) : super(key: key);
 
   @override
-  State<PrayerDetailScreen> createState() => _PrayerDetailScreenState();
+  State<OtherDetailScreen> createState() => _OtherDetailScreenState();
 }
 
-class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
+class _OtherDetailScreenState extends State<OtherDetailScreen> {
   var data = Get.arguments;
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
 
   void listenNotifications() =>
       NotifyServices.onNotifications.stream.listen(onClickedNotification);
-  void onClickedNotification(String? payload) => Get.to(() => const PrayerDetailScreen(), arguments: [payload]);
+  void onClickedNotification(String? payload) => Get.to(() => const OtherDetailScreen(), arguments: [payload]);
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +49,9 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
         print(_time);
         setState(() {
           NotifyServices.showNotification(
-            title: "Prayer reminder",
-            body: "Your reminder has been set to ${localizations.formatTimeOfDay(time)}",
-            payload: data[2]
+              title: "Prayer reminder",
+              body: "Your reminder has been set to ${localizations.formatTimeOfDay(time)}",
+              payload: data[2]
           );
         });
         int formattedtime = int.parse(_time.split(":")[0]);
@@ -219,7 +219,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                             GestureDetector(
                               onTap: (() {
                                 Get.to(()=> const CreateTestimonyScreen(), arguments: [
-                                 currname
+                                  currname
                                 ]);
                               }),
                               child: Column(

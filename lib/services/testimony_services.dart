@@ -14,7 +14,6 @@ class TestimonyServices {
     required String title,
     required String testimonies,
     required String useruid,
-    required String prayertype,
     required String timestamp,
 
   }) async {
@@ -25,7 +24,6 @@ class TestimonyServices {
       "title": title,
       "testimonies": testimonies,
       "useruid": useruid,
-      "prayerType": prayertype,
       "timestamp": timestamp
     };
     await documentReference.set(data).whenComplete(() => Get.snackbar(

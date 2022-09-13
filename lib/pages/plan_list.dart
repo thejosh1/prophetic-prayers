@@ -28,30 +28,30 @@ class _PlanListScreenState extends State<PlanListScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth10, right: Dimensions.prayerListScreenContainerWidth16, top: Dimensions.prayerListScreenContainerHeight44),
+              margin: EdgeInsets.only(left: Dimensions.Width10, right: Dimensions.Width16, top: Dimensions.Height44),
               child: Row(
                 children: [
-                  IconButton(onPressed: (){Get.back();}, icon: Icon(Icons.arrow_back, size: Dimensions.prayerListScreenContainerWidth18, color: Color(0xFF000000),)),
+                  IconButton(onPressed: (){Get.back();}, icon: Icon(Icons.arrow_back, size: Dimensions.Width18, color: Color(0xFF000000),)),
                   SizedBox(width: 20,),
-                  Text("Prayers For the Year", style: TextStyle(fontSize: Dimensions.prayerListScreenContainerWidth16, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
+                  Text("Prayers For the Year", style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
                   //   IconButton(onPressed: (){}, icon: Icon(Icons.more_vert, size: 20, color: Color(0xFF000000),))
                 ],
               ),
             ),
             Divider(
-              height: Dimensions.prayerListScreenContainerHeight2,
+              height: Dimensions.Height2,
               color: Color(0xFFEAECEF),
-              thickness: Dimensions.prayerListScreenContainerWidth2,
+              thickness: Dimensions.Width2,
             ),
             Container(
                 height: double.maxFinite,
-                margin: EdgeInsets.only(left: Dimensions.prayerListScreenContainerWidth20),
+                margin: EdgeInsets.only(left: Dimensions.Width20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                         height: 733,
-                        width: Dimensions.prayerListScreenContainerWidth335,
+                        width: Dimensions.Width335,
                         child: FutureBuilder(
                             future: ScriptureController.instance.readJson(),
                             builder: (context, snapshot) {

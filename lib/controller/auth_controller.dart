@@ -3,10 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/pages/auth_pages/verification_screen.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
 
 import '../main.dart';
 import '../pages/auth_pages/login.dart';
+import '../pages/auth_pages/sign_up.dart';
 import '../pages/splash_screen.dart';
 
 class AuthController extends GetxController {
@@ -24,7 +26,9 @@ class AuthController extends GetxController {
 
   _initialScreen (User? user) {
     if(user == null) {
-      Get.offAll(()=> const LoginScreen());
+      Get.offAll(()=> const SignUpScreen());
+    } else if(user != null && !user.emailVerified) {
+      Get.offAll(()=> const VerificationScreen());
     } else {
       Get.offAll(()=> const MainPage());
     }
@@ -37,6 +41,7 @@ class AuthController extends GetxController {
   void register(String email, String password, String name, String imagepath) async{
    showDialog(
        context: navigatorKey.currentContext!,
+       barrierDismissible: false,
        builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
    );
    try {
@@ -60,11 +65,11 @@ class AuthController extends GetxController {
      );
      print(e.toString());
    }
-   navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
   void resetPassword(String email) async {
     showDialog(
         context: navigatorKey.currentContext!,
+        barrierDismissible: false,
         builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
     );
     try {
@@ -92,23 +97,6 @@ class AuthController extends GetxController {
           )
       );
       navigatorKey.currentState!.pop();
-    }
-  }
-  void verifyEmail() async {
-    try {
-      User? user = FirebaseAuth.instance.currentUser;
-      user!.sendEmailVerification();
-    } on FirebaseAuthException catch(e) {
-      Get.snackbar("Error", "Error Message",
-          backgroundColor: Colors.black,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.TOP,
-          titleText: const Text("Error Message"),
-          messageText: Text(
-            e.message.toString(), style: TextStyle(color: Colors.white),
-          )
-      );
-      print(e.message.toString());
     }
   }
   void edit(String? email, String? name, String? imagepath) async {

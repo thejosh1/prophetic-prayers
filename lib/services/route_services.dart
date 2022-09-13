@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
-import 'package:prophetic_prayers/pages/edit_screen.dart';
+import 'package:prophetic_prayers/pages/auth_pages/edit_screen.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
+import 'package:prophetic_prayers/pages/other_detail_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/pages/screens/academy_screen.dart';
 import 'package:prophetic_prayers/pages/screens/blessings_screen.dart';
@@ -10,6 +11,7 @@ import 'package:prophetic_prayers/pages/screens/discipline_screen.dart';
 import 'package:prophetic_prayers/pages/screens/prosperity_screen.dart';
 import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
 
+import '../pages/about_screen.dart';
 import '../pages/screens/career_screen.dart';
 import '../pages/screens/health_screen.dart';
 import '../pages/screens/lifestyle_screen.dart';
@@ -31,6 +33,8 @@ class RouteServices {
   static const TESTIMONYDETAILSCREEN = "/testimony-detail-screen";
   static const CREATETESTIMONYSCREEN = "/create-testimony-screen";
   static const EDITPROFILESCREEN = "/edit-profile-screen";
+  static const OTHERDETAILSCREEN = "/other-detail-screen";
+  static const ABOUTSCREEN = "/about-screen";
 
   static String getInitial() => "$INITIAL";
   static String getPrayerDetailScreen() => "$PRAYERDETAIL";
@@ -47,6 +51,8 @@ class RouteServices {
   static String gettestimonyDetailScreen() => "$TESTIMONYDETAILSCREEN";
   static String getcreateTestimonyScreen() => "$CREATETESTIMONYSCREEN";
   static String geteditProfileScreen() => "$EDITPROFILESCREEN";
+  static String getotherDetailScreen() => "$OTHERDETAILSCREEN";
+  static String getaboutScreen() => "$ABOUTSCREEN";
 
   static List<GetPage> routes = [
     GetPage(name: INITIAL, page: ()=> const MainPage()),
@@ -63,5 +69,7 @@ class RouteServices {
     GetPage(name: TESTIMONYDETAILSCREEN, page: () => const TestimonyDetailPage(), transition: Transition.fadeIn),
     GetPage(name: CREATETESTIMONYSCREEN, page: () => const CreateTestimonyScreen(), transition: Transition.fadeIn),
     GetPage(name: EDITPROFILESCREEN, page: () => const EditScreen(), transition: Transition.fadeIn),
+    GetPage(name: OTHERDETAILSCREEN, page: () => const OtherDetailScreen(), transition: Transition.fadeIn),
+    GetPage(name: ABOUTSCREEN, page: () => const AboutScreen(), transition: Transition.fadeIn),
   ];
 }

@@ -153,7 +153,6 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                                           title: _titleController.text.trim(),
                                           testimonies: _noteController.text.trim(),
                                           useruid: AuthController.instance.auth.currentUser!.uid.toString(),
-                                          prayertype: data[0].toString(),
                                           timestamp: DateFormat.yMMMEd().format(DateTime.now()).toString()
                                       );
                                       Get.back();

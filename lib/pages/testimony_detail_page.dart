@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 
 class TestimonyDetailPage extends StatelessWidget {
@@ -37,7 +36,7 @@ class TestimonyDetailPage extends StatelessWidget {
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
+                      children: const [
                         Icon(
                           Icons.note_add,
                           color: Color(0xFF515BDE),

@@ -7,23 +7,16 @@ import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
-import 'package:prophetic_prayers/pages/screens/academy_screen.dart';
-import 'package:prophetic_prayers/pages/screens/blessings_screen.dart';
-import 'package:prophetic_prayers/pages/screens/calling_screen.dart';
-import 'package:prophetic_prayers/pages/screens/career_screen.dart';
-import 'package:prophetic_prayers/pages/screens/discipline_screen.dart';
-import 'package:prophetic_prayers/pages/screens/health_screen.dart';
-import 'package:prophetic_prayers/pages/screens/lifestyle_screen.dart';
 import 'package:prophetic_prayers/pages/screens/marriage_screen.dart';
 import 'package:prophetic_prayers/pages/screens/prosperity_screen.dart';
 import 'package:prophetic_prayers/pages/screens/warfare_screen.dart';
-import 'package:prophetic_prayers/pages/about_screen.dart';
+import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
 import '../services/notify_services.dart';
-import '../utils/shared_preferences.dart';
+import '../utils/dimensions.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -48,6 +41,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void listenNotifications() =>
       NotifyServices.onNotifications.stream.listen(onClickedNotification);
   void onClickedNotification(String? payload) => Get.to(() => const PrayerDetailScreen(), arguments: [payload]);
+  Future<void> readJson() async {
+    //read the json file
+    await DefaultAssetBundle.of(context)
+        .loadString("json/scriptures.json")
+        .then((jsonData) {
+      if(this.mounted) {
+        setState(() {
+          final list = json.decode(jsonData) as List<dynamic>;
+          scriptureList = list.map((e) => Scripture.fromJson(e)).toList();
+        });
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -55,17 +61,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     super.dispose();
   }
 
-  Future<void> readJson() async {
-    //read the json file
-    await DefaultAssetBundle.of(context)
-        .loadString("json/scriptures.json")
-        .then((jsonData) {
-      setState(() {
-        final list = json.decode(jsonData) as List<dynamic>;
-        scriptureList = list.map((e) => Scripture.fromJson(e)).toList();
-      });
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,25 +83,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 10,),
+                SizedBox(height: Dimensions.Height10,),
                 Container(
-                  height: 400,
+                  height: Dimensions.Height100*4,
                   width: size.width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(Dimensions.Width20+10),
                     color: Colors.white
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20,),
+                      SizedBox(height: Dimensions.Height20,),
                       Container(
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                        margin: EdgeInsets.only(left: Dimensions.Width20, right: Dimensions.Width20, top: Dimensions.Height20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("My Prayer For today", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Color(0xFF1E2432)),),
-                            Text(DateFormat.MMMEd().format(DateTime.now()), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),)
+                            Text("My Prayer For today", style: TextStyle(fontWeight: FontWeight.w600, fontSize: Dimensions.Width15+1, color: const Color(0xFF1E2432)),),
+                            Text(DateFormat.MMMEd().format(DateTime.now()), style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width15+1, color: const Color(0xFF1E2432)),)
                           ],
                         ),
                       ),
@@ -113,11 +109,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       //   padding: EdgeInsets.only(left: 20),
                       //   child: Text(prayertype, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
                       // ),
-                      SizedBox(height: 10,),
+                      SizedBox(height: Dimensions.Height10,),
                       InkWell(
                         splashColor: Colors.grey,
                         onTap: () {
-                          Get.to(()=> const PrayerDetailScreen(), arguments: [
+                          Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
                             scriptureList[getTodaysDay()-1].id,
                             scriptureList[getTodaysDay()-1].prayerPoint,
                             scriptureList[getTodaysDay()-1].title,
@@ -131,38 +127,38 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                                margin: EdgeInsets.only(left: 20),
-                                width: 300,
+                                margin: EdgeInsets.only(left: Dimensions.Width20),
+                                width: Dimensions.Width150*2,
                                 child: Text(
                                     scriptureList[getTodaysDay()-1].prayerPoint.toString(),
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xFF1E2432))
+                                    style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w800, color: const Color(0xFF1E2432))
                                 )
                             ),
-                            SizedBox(height: 20,),
+                            SizedBox(height: Dimensions.Height20,),
                             Padding(
-                              padding: const EdgeInsets.only(left: 20),
+                              padding: EdgeInsets.only(left: Dimensions.Width20),
                               child: Text(scriptureList[getTodaysDay()-1].title.toString(),
-                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Color(0xFF1E2432)),
+                                style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w800, color: const Color(0xFF1E2432)),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: Dimensions.Height20,),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
+                        padding: EdgeInsets.only(left: Dimensions.Width20),
                         child: Row(
-                          children: const [
-                            Icon(Icons.list_sharp),
-                            SizedBox(width: 10),
-                            Text("Prayers for the rest of the week", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
+                          children: [
+                            const Icon(Icons.list_sharp),
+                            SizedBox(width: Dimensions.Width10),
+                            Text("Prayers for the rest of the week", style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w600, color: const Color(0xFF1E2432)),),
                           ],
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: Dimensions.Height20,),
                       SingleChildScrollView(
                         child: Container(
-                          height: 100,
+                          height: Dimensions.Height100,
                           child: ListView.builder(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
@@ -170,9 +166,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             itemBuilder: (context, index) {
                               return Row(
                                 children: [
-                                  SizedBox(width: 20,),
+                                  SizedBox(width: Dimensions.Width20,),
                                   Container(
-                                    height: 100,
+                                    height: Dimensions.Height100,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       shrinkWrap: true,
@@ -182,7 +178,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                            children: [
                                              InkWell(
                                                onTap: () {
-                                                 Get.to(() => PrayerDetailScreen(), arguments: [
+                                                 Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
                                                    scriptureList[daysInsWeek[index]].id,
                                                    scriptureList[daysInsWeek[index]].prayerPoint,
                                                    scriptureList[daysInsWeek[index]].title,
@@ -193,18 +189,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                  ]);
                                                },
                                                child: Container(
-                                                  height: 90,
-                                                  width: 150,
+                                                  height: Dimensions.Height100-10,
+                                                  width: Dimensions.Width150,
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(20),
+                                                    borderRadius: BorderRadius.circular(Dimensions.Width20),
                                                     color: colorList[index]
                                                   ),
                                                   child: Center(
                                                     child: Container(
-                                                      height: 60,
-                                                      width: 60,
+                                                      height: Dimensions.Height60,
+                                                      width: Dimensions.Width90-30,
                                                       decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.white, width: 5),
+                                                        border: Border.all(color: Colors.white, width: Dimensions.Width3+2),
                                                         shape: BoxShape.circle
                                                       ),
                                                       child: Container(
@@ -220,7 +216,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                 ),
                                              ),
-                                             SizedBox(width: 10)
+                                             SizedBox(width: Dimensions.Width10)
                                            ],
                                          );
                                         }
@@ -232,48 +228,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20,),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 20,),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       InkWell(
-                      //         onTap: () {},
-                      //         child: Row(
-                      //           children: const [
-                      //             Icon(Icons.notifications, color: Color(0xFF1E2432),),
-                      //             SizedBox(width: 5,),
-                      //             Text("Add Reminder", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),)
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // )
+                      SizedBox(height: Dimensions.Height20,),
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: Dimensions.Height20,),
                 Container(
-                  height: 240,
+                  height: Dimensions.Height270-30,
                   width: size.width,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(Dimensions.Width30),
                       color: Colors.white
                   ),
                   child: Container(
-                    margin: EdgeInsets.only(top: 40),
+                    margin: EdgeInsets.only(top: Dimensions.Height40),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 20.0),
-                          child: Text("Featured Plans", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1E2432)),),
+                        Padding(
+                          padding: EdgeInsets.only(left: Dimensions.Width20),
+                          child: Text("Featured Plans", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20-4, color: const Color(0xFF1E2432)),),
                         ),
                         SingleChildScrollView(
                           child: Container(
-                            height: 120,
+                            height: Dimensions.Height100+20,
                             child: ListView.builder(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
@@ -281,9 +259,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 itemBuilder: (context, index) {
                                   return Row(
                                     children: [
-                                      SizedBox(width: 20,),
+                                      SizedBox(width: Dimensions.Width20,),
                                       Container(
-                                        height: 120,
+                                        height: Dimensions.Height100+20,
                                         child: ListView(
                                           scrollDirection: Axis.horizontal,
                                           shrinkWrap: true,
@@ -297,10 +275,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[0]),
@@ -310,25 +288,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[0], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[0], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const AcademyScreen(), arguments: [planNames[1], images[1]]);
+                                                Get.toNamed(RouteServices.ACADEMYSCRIPTURESCREEN, arguments: [planNames[1], images[1]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[1]),
@@ -338,25 +316,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[1], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[1], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const BlessingsScreen(), arguments: [planNames[2],images[2]]);
+                                                Get.toNamed(RouteServices.BLESSINGSCRIPTURESCREEN, arguments: [planNames[2], images[2]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[2]),
@@ -366,25 +344,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[2], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[2], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const CallingScreen(), arguments: [planNames[3],images[3]]);
+                                                Get.toNamed(RouteServices.CALLINGSCRIPTURESCREEN, arguments: [planNames[3], images[3]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[3]),
@@ -394,25 +372,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[3], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[3], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const CareerScreen(), arguments: [planNames[4],images[4]]);
+                                                Get.toNamed(RouteServices.CAREERSCRIPTURESCREEN, arguments: [planNames[4], images[4]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[4]),
@@ -422,25 +400,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[4], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[4], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const DisciplineScreen(), arguments: [planNames[5],images[5]]);
+                                                Get.toNamed(RouteServices.DISCIPLINESCRIPTURESCREEN, arguments: [planNames[5], images[5]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[5]),
@@ -450,25 +428,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[5], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[5], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const HealthScreen(), arguments: [planNames[6],images[6]]);
+                                                Get.toNamed(RouteServices.HEALTHSCRIPTURESCREEN, arguments: [planNames[6], images[6]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[6]),
@@ -478,25 +456,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[6], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[6], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const LifeStyleScreen(), arguments: [planNames[7],images[7]]);
+                                                Get.toNamed(RouteServices.LIFESTYLESCRIPTURESCREEN, arguments: [planNames[7], images[7]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[7]),
@@ -506,12 +484,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[7], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[7], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                             GestureDetector(
                                               onTap: (){
                                                 Get.to(()=> const MarriageScreen(), arguments: [planNames[8],images[8]]);
@@ -521,10 +499,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[8]),
@@ -534,12 +512,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[8], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[8], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                             GestureDetector(
                                               onTap: (){
                                                 Get.to(()=> const WarfareScreen(), arguments: [planNames[9],images[9]]);
@@ -549,10 +527,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                 alignment: Alignment.bottomCenter,
                                                 children: [
                                                   Container(
-                                                    height: 100,
-                                                    width: 100,
+                                                    height: Dimensions.Height100,
+                                                    width: Dimensions.Width90+10,
                                                     decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
+                                                        borderRadius: BorderRadius.circular(Dimensions.Width10),
                                                         color: Colors.grey,
                                                         image: DecorationImage(
                                                             image: AssetImage(images[9]),
@@ -562,53 +540,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ),
                                                   Positioned(
                                                       bottom: 0,
-                                                      child: Text(planNames[9], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
+                                                      child: Text(planNames[9], style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white),)
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(width: 10),
+                                            SizedBox(width: Dimensions.Width10),
                                           ],
                                         ),
-                                        // ListView.builder(
-                                        //     scrollDirection: Axis.horizontal,
-                                        //     shrinkWrap: true,
-                                        //     itemCount: planNames.length,
-                                        //     itemBuilder: (_, index) {
-                                        //       return Row(
-                                        //         children: [
-                                        //           GestureDetector(
-                                        //             onTap: (){
-                                        //               Get.to(()=> const PrayerScreen());
-                                        //               setState(() {});
-                                        //             },
-                                        //             child: Stack(
-                                        //               alignment: Alignment.bottomCenter,
-                                        //               children: [
-                                        //                 Container(
-                                        //                   height: 100,
-                                        //                   width: 100,
-                                        //                   decoration: BoxDecoration(
-                                        //                       borderRadius: BorderRadius.circular(10),
-                                        //                       color: Colors.grey,
-                                        //                       image: DecorationImage(
-                                        //                           image: AssetImage(images[index]),
-                                        //                           fit: BoxFit.cover
-                                        //                       )
-                                        //                   ),
-                                        //                 ),
-                                        //                 Positioned(
-                                        //                     bottom: 0,
-                                        //                     child: Text(planNames[index], style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),)
-                                        //                 )
-                                        //               ],
-                                        //             ),
-                                        //           ),
-                                        //           SizedBox(width: 10)
-                                        //         ],
-                                        //       );
-                                        //     }
-                                        // ),
                                       ),
                                     ],
                                   );
@@ -620,35 +559,35 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: Dimensions.Height20,),
                 InkWell(
                   onTap: () {
                     Get.to(()=> const CreateTestimonyScreen(), arguments: ["Prophetic Prayers For Children"]);
                   },
                   child: Container(
-                    height: 370,
+                    height: Dimensions.Height270+100,
                     width: size.width,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(Dimensions.Width30),
                       color: Colors.white
                     ),
                     child: Container(
-                      margin: EdgeInsets.only(left: 20, top: 20, right: 20),
+                      margin: EdgeInsets.only(left: Dimensions.Width20, top: Dimensions.Height20, right: Dimensions.Width20),
                       child: Column(
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Tesify", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFF1E2432)),),
+                              Text("Tesify", style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.w600, color: const Color(0xFF1E2432)),),
                               IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_outlined, color: Colors.grey,))
                             ],
                           ),
-                          SizedBox(height: 20,),
+                          SizedBox(height: Dimensions.Height20,),
                           Container(
-                            height: 200,
-                            width: 300,
+                            height: Dimensions.Height100*2,
+                            width: Dimensions.Width150*2,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(Dimensions.Width20),
                               color: Colors.grey.withOpacity(0.4)
                             ),
                             child: Center(
@@ -659,10 +598,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     alignment: Alignment.topCenter,
                                     children: [
                                       Container(
-                                        height: 150,
-                                        width: 90,
+                                        height: Dimensions.Height100+50,
+                                        width: Dimensions.Width90,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(Dimensions.Width10),
                                           color: Colors.white,
                                           boxShadow: const [
                                             BoxShadow(
@@ -681,29 +620,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     ],
                                   ),
                                   Container(
-                                    height: 150,
-                                    width: 90,
+                                    height: Dimensions.Height100+50,
+                                    width: Dimensions.Width90,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        const Text("Do you have a testimony",
+                                        Text("Do you have a testimony",
                                           style:
-                                          TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.black54),
+                                          TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.w300, color: Colors.black54),
                                         ),
-                                        SizedBox(height: 20,),
-                                        const Text("Start thanking God",
-                                          style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12, color: Color(0xFF1E2432)),
+                                        SizedBox(height: Dimensions.Height20,),
+                                        Text("Start thanking God",
+                                          style: TextStyle(fontWeight: FontWeight.w300, fontSize: Dimensions.Width10+2, color: const Color(0xFF1E2432)),
                                         ),
-                                        SizedBox(height: 20,),
+                                        SizedBox(height: Dimensions.Height20,),
                                         Container(
-                                          height: 40,
-                                          width: 80,
+                                          height: Dimensions.Height40,
+                                          width: Dimensions.Width90-10,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(40),
+                                            borderRadius: BorderRadius.circular(Dimensions.Width90-10),
                                             color: Colors.grey
                                           ),
-                                          child: const Center(
-                                            child: Text("Testify Now", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
+                                          child: Center(
+                                            child: Text("Testify Now", style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
                                           ),
                                         )
                                       ],
@@ -713,24 +652,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               )
                             ),
                           ),
-                          SizedBox(height: 20,),
+                          SizedBox(height: Dimensions.Height20,),
 
                         ],
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: Dimensions.Height20,),
                 //social media
                 Container(
-                  height: 220,
+                  height: Dimensions.Height270-50,
                   width: size.width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(Dimensions.Width30),
                     color: _randomColor
                   ),
                   child: Container(
-                    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                    margin: EdgeInsets.only(left: Dimensions.Width20, right: Dimensions.Width20, top: Dimensions.Height20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -739,34 +678,34 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                Get.to(() => const AboutScreen());
+                                Get.toNamed(RouteServices.ABOUTSCREEN);
                               },
                               child: Container(
-                                  height: 150,
-                                  width: 90,
+                                  height: Dimensions.Height100+50,
+                                  width: Dimensions.Width90,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(Dimensions.Width10),
                                       color: Colors.white,
                                   )
                               ),
                             ),
-                            const Positioned(
-                              bottom: 50,
-                              child: Icon(Icons.follow_the_signs_sharp, color: Colors.grey, size: 18,),
+                            Positioned(
+                              bottom: Dimensions.Height40+10,
+                              child: Icon(Icons.follow_the_signs_sharp, color: Colors.grey, size: Dimensions.Width15+3,),
                             )
                           ],
                         ),
                         Container(
-                          width: 150,
-                          height: 150,
+                          width: Dimensions.Width150,
+                          height: Dimensions.Height100+50,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text("Want to know more about us", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),),
-                              SizedBox(height: 20,),
-                              const Text("Follow us on all our socials", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
-                              SizedBox(height: 10),
+                              Text("Want to know more about us", style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.bold, color: Colors.white),),
+                              SizedBox(height: Dimensions.Height20,),
+                              Text("Follow us on all our socials", style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.bold, color: Colors.white)),
+                              SizedBox(height: Dimensions.Height10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -783,8 +722,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
                                     },
                                     child: Container(
-                                      height: 20,
-                                      width: 20,
+                                      height: Dimensions.Height20,
+                                      width: Dimensions.Width20,
                                       decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
@@ -796,7 +735,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 40),
+                                  SizedBox(width: Dimensions.Width20*2),
                                   GestureDetector(
                                     onTap: () async{
                                       //link to social media app or website
@@ -809,8 +748,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       }
                                     },
                                     child: Container(
-                                      height: 20,
-                                      width: 20,
+                                      height: Dimensions.Height20,
+                                      width: Dimensions.Width20,
                                       decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
@@ -822,7 +761,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 40),
+                                  SizedBox(width: Dimensions.Width20*2),
                                   GestureDetector(
                                     onTap: () async{
                                       //link to social media app or website
@@ -835,8 +774,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                         }
                                     },
                                     child: Container(
-                                      height: 20,
-                                      width: 20,
+                                      height: Dimensions.Height20,
+                                      width: Dimensions.Width20,
                                       decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
@@ -901,7 +840,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = AuthController.instance.auth.currentUser;
     // TODO: implement build
     return Container(
-      height: 100,
+      height: Dimensions.Height100,
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -913,7 +852,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           )
         ]
       ),
-      padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
+      padding: EdgeInsets.only(left: Dimensions.Width20+4, right: Dimensions.Width20+4, top: Dimensions.Height40+6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -922,12 +861,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
               builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if(snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                  return Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),);
                 } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                  return Text("Welcome ${data["name"]}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
+                  return Text("Welcome ${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width15+3),);
                 }
-                return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
+                return Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width15+3),);
               }
           ),
           FutureBuilder(
@@ -935,8 +874,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if(snapshot.connectionState == ConnectionState.waiting) {
                   return Container(
-                    height: 30,
-                    width: 30,
+                    height: Dimensions.Height20+10,
+                    width: Dimensions.Width30,
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
@@ -947,8 +886,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                   return Container(
-                    height: 30,
-                    width: 30,
+                    height: Dimensions.Height20+10,
+                    width: Dimensions.Width30,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
@@ -959,8 +898,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   );
                 }
                 return Container(
-                  height: 30,
-                  width: 30,
+                  height: Dimensions.Height20+10,
+                  width: Dimensions.Width30,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
@@ -977,5 +916,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(126);
+  Size get preferredSize => Size.fromHeight(Dimensions.Height100+26);
 }

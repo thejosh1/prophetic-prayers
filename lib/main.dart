@@ -14,7 +14,7 @@ Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await NotifyServices.init(initScheduled: true);
   await Firebase.initializeApp().then((value) => Get.put(AuthController()));
-  AuthController.instance.Logout();
+  //AuthController.instance.Logout();
   NotifyServices.showScheduledDailyNotification(
       title: "Reminder",
       body: "Prophetic Prayers for children live",
