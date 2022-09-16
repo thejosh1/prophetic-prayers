@@ -46,24 +46,21 @@ class TestimonyServices {
     return testimonyCollection.snapshots();
   }
 
-  static Future<void> updateTestimony({
-  required String title,
-  required String testimonies,
-  required String docId,
-}) async {
-    DocumentReference documentReference = _dbRef.doc(Useruid).collection("testimonies").doc(docId);
+//   static Future<void> updateTestimony({
+//   required String title,
+//   required String testimonies,
+//   required String docId,
+// }) async {
+//     DocumentReference documentReference = _dbRef.doc(Useruid).collection("testimonies").doc(docId);
+//
+//     Map<String, dynamic> data = <String, dynamic> {
+//       "title": title,
+//       "testimonies": testimonies
+//     };
+//
+//     await documentReference.update(data).whenComplete(() => print("testimony updated successfully")).catchError((e) => print(e));
+//   }
 
-    Map<String, dynamic> data = <String, dynamic> {
-      "title": title,
-      "testimonies": testimonies
-    };
 
-    await documentReference.update(data).whenComplete(() => print("testimony updated successfully")).catchError((e) => print(e));
-  }
 
-  static Future<void> deleteTestimony({required String docId}) async {
-    DocumentReference documentReference = _dbRef.doc(Useruid).collection("testimonies").doc(docId);
-
-    await documentReference.delete().whenComplete(() => print("successfully deleted testimony")).catchError((e) => print(e));
-  }
 }

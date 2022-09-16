@@ -71,7 +71,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
 
                                return buildScriptures(_scriptures);
                              } else {
-                               return Center(child: const Text("Loading"),);
+                               return const Center(child: Text("Loading"),);
                              }
                            }
                          )

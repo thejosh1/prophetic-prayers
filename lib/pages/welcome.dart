@@ -67,7 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List daysofWeek = ["M", "T", "W", "T", "F", "S", "S"];
-    List images = ["images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/alex-kotliarskyi.jpg", "images/ibrahim-boran.jpg", "images/adrianna-geo.jpg", "images/diana-simum.jpg", "images/child(40).jpg", "images/child(41).jpg", "images/child(42).jpg"];
+    List images = ["images/ibrahim-boran.jpg", "images/child(42).jpg", "images/istockphoto.jpg", "images/diana-simum.jpg", "images/alex-kotliarskyi.jpg", "images/jack-sharp.jpg", "images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/marriage.jpg", "images/child(40).jpg", "images/adrianna-geo.jpg", "images/child(41).jpg", ];
     List daysInsWeek = [getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5];
     List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange];
     String currname = "Children";
@@ -864,7 +864,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   return Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),);
                 } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                  return Text("Welcome ${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width15+3),);
+                  return Container(
+                      width: 250,
+                      child: Text("Welcome ${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width15+3), overflow: TextOverflow.ellipsis,));
                 }
                 return Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width15+3),);
               }

@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
-import 'package:prophetic_prayers/pages/prayer_list_screen.dart';
 
 import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
+import '../services/route_services.dart';
 
 class PrayerCategoryScreen extends StatefulWidget {
   const PrayerCategoryScreen({Key? key}) : super(key: key);
@@ -44,7 +44,6 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
     List monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
     List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent,];
     final user = AuthController.instance.auth.currentUser;
-    DateTime now = DateTime.now();
     RxString currname = "January".obs;
     RxBool isTapped = false.obs;
     Size size = MediaQuery.of(context).size;
@@ -144,7 +143,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.to(()=> PrayerListScreen(), arguments: [
+                                Get.toNamed(RouteServices.PRAYERLISTSCREEN, arguments: [
                                   monthNames[index],
                                   colorList[index],
                                   "Children"

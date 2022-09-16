@@ -12,6 +12,7 @@ import 'package:prophetic_prayers/pages/screens/prosperity_screen.dart';
 import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
 
 import '../pages/about_screen.dart';
+import '../pages/prayer_list_screen.dart';
 import '../pages/screens/career_screen.dart';
 import '../pages/screens/health_screen.dart';
 import '../pages/screens/lifestyle_screen.dart';
@@ -35,6 +36,7 @@ class RouteServices {
   static const EDITPROFILESCREEN = "/edit-profile-screen";
   static const OTHERDETAILSCREEN = "/other-detail-screen";
   static const ABOUTSCREEN = "/about-screen";
+  static const PRAYERLISTSCREEN = "/prayer-list-screen";
 
   static String getInitial() => "$INITIAL";
   static String getPrayerDetailScreen() => "$PRAYERDETAIL";
@@ -53,6 +55,7 @@ class RouteServices {
   static String geteditProfileScreen() => "$EDITPROFILESCREEN";
   static String getotherDetailScreen() => "$OTHERDETAILSCREEN";
   static String getaboutScreen() => "$ABOUTSCREEN";
+  static String getprayerListScreen() => "$PRAYERLISTSCREEN";
 
   static List<GetPage> routes = [
     GetPage(name: INITIAL, page: ()=> const MainPage()),
@@ -71,5 +74,6 @@ class RouteServices {
     GetPage(name: EDITPROFILESCREEN, page: () => const EditScreen(), transition: Transition.fadeIn),
     GetPage(name: OTHERDETAILSCREEN, page: () => const OtherDetailScreen(), transition: Transition.fadeIn),
     GetPage(name: ABOUTSCREEN, page: () => const AboutScreen(), transition: Transition.fadeIn),
+    GetPage(name: PRAYERLISTSCREEN, page: () => const PrayerListScreen(), transition: Transition.fadeIn),
   ];
 }

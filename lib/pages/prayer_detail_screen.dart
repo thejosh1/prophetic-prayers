@@ -79,9 +79,9 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                 child: Container(
                   height: 440,
                   width: double.maxFinite,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(data[6]),
+                          image: AssetImage("images/ibrahim-boran.jpg"),
                           fit: BoxFit.cover)),
                 )
             ),
@@ -97,7 +97,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                         onTap: (){
                           Get.back();
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_back,
                           color: Colors.white,
                         ),
