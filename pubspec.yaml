@@ -99,37 +99,15 @@ flutter:
     - images/propheticpicture2.jpeg
     - images/welcome-one.png
     - images/mountain.jpeg
-    - images/logo.jpg
     - images/lonely_man.jpg
-    - images/Icon-48.png
+    - images/logo.jpeg
     - images/gracious-adebayo.jpg
     - images/diana-simum.jpg
     - images/ismael-paramo.jpg
     - images/patrick-fore.jpg
     - images/jon-tyson.jpg
     - images/adrianna-geo.jpg
-    - images/child(44).jpg
-    - images/child(43).jpg
-    - images/child(42).jpg
-    - images/child(41).jpg
-    - images/child(40).jpg
-    - images/child(39).jpg
-    - images/child(38).jpg
-    - images/child(37).jpg
-    - images/child(36).jpg
-    - images/child(35).jpg
-    - images/child(34).jpg
-    - images/child(33).jpg
-    - images/child(32).jpg
-    - images/child(31).jpg
-    - images/child(30).jpg
-    - images/child(29).jpg
-    - images/child(28).jpg
-    - images/child(27).jpg
-    - images/child(26).jpg
     - images/sean-pollock.jpg
-    - images/ben-white.jpg
-    - images/alex-kotliarskyi.jpg
     - images/ibrahim-boran.jpg
     - images/facebook-logo.png
     - images/instagrams-logo.png
@@ -137,9 +115,28 @@ flutter:
     - images/welcome-one.png
     - images/welcome-two.png
     - images/welcome-three.png
-    - images/istockphoto.jpg
-    - images/marriage.jpg
-    - images/jack-sharp.jpg
+    - images/Cartoon_marriages.jpg
+    - images/discipline.jpg
+    - images/office.jfif
+    - images/school.jfif
+    - images/warfare.webp
+    - images/health.png
+    - images/bible.jpg
+    - images/lifestyle.jpg
+    - images/calling.jpg
+    - images/famimages.jfif
+    - images/child(40).jpg
+    - images/children.png
+    - images/boy.jfif
+    - images/famimages2.jfif
+    - images/image1.jpg
+    - images/jesusimages.jfif
+    - images/smiling_children.jfif
+    - images/multiple_children.jfif
+    - images/welcomeImages.jfif
+    - images/money.jfif
+    - images/blessings.jpg
+    - images/myimages.jfif
 
   fonts:
     - family: Poppins

@@ -67,7 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List daysofWeek = ["M", "T", "W", "T", "F", "S", "S"];
-    List images = ["images/ibrahim-boran.jpg", "images/child(42).jpg", "images/istockphoto.jpg", "images/diana-simum.jpg", "images/alex-kotliarskyi.jpg", "images/jack-sharp.jpg", "images/child(36).jpg", "images/ben-white.jpg", "images/sean-pollock.jpg", "images/marriage.jpg", "images/child(40).jpg", "images/adrianna-geo.jpg", "images/child(41).jpg", ];
+    List images = ["images/money.jfif", "images/school.jfif", "images/blessings.jpg", "images/calling.jpg", "images/office.jfif", "images/myimages.jfif", "images/famimages2.jfif", "images/jesusimages.jfif", "images/Cartoon_marriages.jpg", "images/warfare.webp", "images/adrianna-geo.jpg" ];
     List daysInsWeek = [getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5];
     List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange];
     String currname = "Children";
@@ -149,7 +149,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         padding: EdgeInsets.only(left: Dimensions.Width20),
                         child: Row(
                           children: [
-                            const Icon(Icons.list_sharp),
+                            // const Icon(Icons.list_sharp),
+                            Container(
+                              height: Dimensions.Height20+8,
+                              width: Dimensions.Width20+8,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("images/bible.jpg"),
+                                  fit: BoxFit.cover
+                                ),
+                                color: Colors.grey
+                              ),
+                            ),
                             SizedBox(width: Dimensions.Width10),
                             Text("Prayers for the rest of the week", style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w600, color: const Color(0xFF1E2432)),),
                           ],

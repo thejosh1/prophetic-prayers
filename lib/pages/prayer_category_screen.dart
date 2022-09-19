@@ -42,7 +42,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
   Widget build(BuildContext context) {
     PageController pageController = PageController(viewportFraction: 0.8 );
     List monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-    List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent,];
+    List imageList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent,];
+    List colorList = ["images/image1.jpg", "images/famimages2.jfif", "images/famimages.jfif", "images/calling.jpg", "images/office_work.jpg", "images/discipline.jpg", "images/health.png", "images/bible.jpg", "images/jesusimages.jfif", "images/children.png", "images/smiling_children.jfif", "images/welcomeImages.jfif",];
     final user = AuthController.instance.auth.currentUser;
     RxString currname = "January".obs;
     RxBool isTapped = false.obs;
@@ -145,7 +146,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                               onTap: () {
                                 Get.toNamed(RouteServices.PRAYERLISTSCREEN, arguments: [
                                   monthNames[index],
-                                  colorList[index],
+                                  imageList[index],
                                   "Children"
                                 ]);
                               },
@@ -154,19 +155,19 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                 width: 280,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: colorList[index],
-                                  // image: DecorationImage(
-                                  //   image: AssetImage(planImages[index]),
-                                  //   fit: BoxFit.cover
-                                  // )
+                                  color: Colors.grey,
+                                  image: DecorationImage(
+                                    image: AssetImage(colorList[index]),
+                                    fit: BoxFit.cover
+                                  )
                                 ),
-                                child: Center(
-                                  child: Text(monthNames[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white),),
-                                )
+                                // child: Center(
+                                //   child: Text(monthNames[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white),),
+                                // )
                               ),
                             ),
                             SizedBox(height: 20,),
-                            Text(monthNames[index])
+                            Text(monthNames[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)
                           ],
                         ),
 
