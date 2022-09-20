@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/pages/screens/marriage_screen.dart';
-import 'package:prophetic_prayers/pages/screens/prosperity_screen.dart';
+import 'package:prophetic_prayers/pages/screens/prayer_screen.dart';
 import 'package:prophetic_prayers/pages/screens/warfare_screen.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -67,7 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List daysofWeek = ["M", "T", "W", "T", "F", "S", "S"];
-    List images = ["images/money.jfif", "images/school.jfif", "images/blessings.jpg", "images/calling.jpg", "images/office.jfif", "images/myimages.jfif", "images/famimages2.jfif", "images/jesusimages.jfif", "images/Cartoon_marriages.jpg", "images/warfare.webp", "images/adrianna-geo.jpg" ];
+    List images = ["images/money.jfif", "images/school.jfif", "images/group-wild.jpg", "images/priest.jpg", "images/office.jfif", "images/basketball.jpg", "images/famimages2.jfif", "images/summer-seascape.jpg", "images/Cartoon_marriages.jpg", "images/warfare.webp", "images/adrianna-geo.jpg" ];
     List daysInsWeek = [getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5];
     List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange];
     String currname = "Children";
@@ -151,11 +151,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           children: [
                             // const Icon(Icons.list_sharp),
                             Container(
-                              height: Dimensions.Height20+8,
-                              width: Dimensions.Width20+8,
+                              height: Dimensions.Height60,
+                              width: Dimensions.Width20+10,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage("images/bible.jpg"),
+                                  image: AssetImage("images/boy_white.jfif"),
                                   fit: BoxFit.cover
                                 ),
                                 color: Colors.grey
@@ -279,7 +279,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           children: [
                                             GestureDetector(
                                               onTap: (){
-                                                Get.to(()=> const PrayerScreen(), arguments: [planNames[0], images[1]]);
+                                                Get.toNamed(RouteServices.PROSPERITYSCRIPTURESCREEN, arguments: [planNames[0], images[1]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -590,7 +590,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Tesify", style: TextStyle(fontSize: Dimensions.Width10+2, fontWeight: FontWeight.w600, color: const Color(0xFF1E2432)),),
-                              IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz_outlined, color: Colors.grey,))
                             ],
                           ),
                           SizedBox(height: Dimensions.Height20,),
@@ -723,14 +722,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   GestureDetector(
                                     onTap: () async{
                                       //link to social media app or website
-                                      final url = Uri.parse("https://facebook.com");
-
-                                      if(await canLaunchUrl(url)) {
-                                        launchUrl(url);
-                                      } else {
-                                        print("cannot launch");
+                                      showDialog(
+                                          context: context,
+                                          barrierDismissible: true,
+                                          builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
+                                      );
+                                      try {
+                                        final url = Uri.parse("https://www.facebook.com/thearmyofdavidministries");
+                                        if(await canLaunchUrl(url)) {
+                                          launchUrl(url);
+                                        }
+                                      } catch(e) {
+                                        print("No network");
+                                        Get.snackbar("Connection error", "Please Connect to the internet",
+                                        snackPosition: SnackPosition.TOP
+                                        );
                                       }
-
+                                      if(mounted) {
+                                        Navigator.popUntil(context, (route) => route.isFirst);
+                                      }
                                     },
                                     child: Container(
                                       height: Dimensions.Height20,
@@ -750,12 +760,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   GestureDetector(
                                     onTap: () async{
                                       //link to social media app or website
-                                      final url = Uri.parse("https://instagram.com");
-
-                                      if(await canLaunchUrl(url)) {
-                                      launchUrl(url,);
-                                      } else {
-                                      print("cannot launch");
+                                      showDialog(
+                                          context: context,
+                                          barrierDismissible: true,
+                                          builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
+                                      );
+                                      try {
+                                        final url = Uri.parse("https://www.instagram.com/thearmyofdavidministries");
+                                        if(await canLaunchUrl(url)) {
+                                          launchUrl(url);
+                                        }
+                                      } catch(e) {
+                                        print("No network");
+                                        Get.snackbar("Connection error", "Please Connect to the internet",
+                                            snackPosition: SnackPosition.TOP
+                                        );
+                                      }
+                                      if(mounted) {
+                                        Navigator.popUntil(context, (route) => route.isFirst);
                                       }
                                     },
                                     child: Container(
@@ -776,13 +798,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   GestureDetector(
                                     onTap: () async{
                                       //link to social media app or website
-                                      final url = Uri.parse("https://twitter.com");
-
+                                      showDialog(
+                                          context: context,
+                                          barrierDismissible: true,
+                                          builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
+                                      );
+                                      try {
+                                        final url = Uri.parse("https://twitter.com/the_ArmyofDavid");
                                         if(await canLaunchUrl(url)) {
-                                          launchUrl(url,);
-                                        } else {
-                                          print("cannot launch");
+                                          launchUrl(url);
                                         }
+                                      } catch(e) {
+                                        print("No network");
+                                        Get.snackbar("Connection error", "Please Connect to the internet",
+                                            snackPosition: SnackPosition.TOP
+                                        );
+                                      }
+                                      if(mounted) {
+                                        Navigator.popUntil(context, (route) => route.isFirst);
+                                      }
                                     },
                                     child: Container(
                                       height: Dimensions.Height20,

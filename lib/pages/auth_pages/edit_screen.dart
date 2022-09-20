@@ -8,10 +8,6 @@ import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../utils/dimensions.dart';
-import '../../utils/dimensions.dart';
-import '../../utils/dimensions.dart';
-import '../../utils/dimensions.dart';
-import '../../utils/dimensions.dart';
 
 class EditScreen extends StatelessWidget {
   const EditScreen({Key? key}) : super(key: key);
@@ -405,12 +401,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Icon(Icons.arrow_back_outlined),
-            ],
-          ),
+          GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(Icons.arrow_back_outlined)),
           SizedBox(height: Dimensions.height22-1),
           Text(
             'Edit Profile',

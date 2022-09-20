@@ -130,13 +130,18 @@ flutter:
     - images/boy.jfif
     - images/famimages2.jfif
     - images/image1.jpg
-    - images/jesusimages.jfif
-    - images/smiling_children.jfif
+    - images/summer-seascape.jpg
+    - images/cute-boy.jpg
     - images/multiple_children.jfif
     - images/welcomeImages.jfif
     - images/money.jfif
     - images/blessings.jpg
-    - images/myimages.jfif
+    - images/basketball.jpg
+    - images/group-wild.jpg
+    - images/pastor-conducts.jpg
+    - images/priest.jpg
+    - images/boy_white.jfif
+    - images/army_of_david.jpeg
 
   fonts:
     - family: Poppins

@@ -43,7 +43,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
     PageController pageController = PageController(viewportFraction: 0.8 );
     List monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
     List imageList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent,];
-    List colorList = ["images/image1.jpg", "images/famimages2.jfif", "images/famimages.jfif", "images/calling.jpg", "images/office_work.jpg", "images/discipline.jpg", "images/health.png", "images/bible.jpg", "images/jesusimages.jfif", "images/children.png", "images/smiling_children.jfif", "images/welcomeImages.jfif",];
+    List colorList = ["images/image1.jpg", "images/famimages2.jfif", "images/famimages.jfif", "images/pastor-conducts.jpg", "images/office.jfif", "images/discipline.jpg", "images/health.png", "images/bible.jpg", "images/summer-seascape.jpg", "images/children.png", "images/cute-boy.jpg", "images/welcomeImages.jfif",];
     final user = AuthController.instance.auth.currentUser;
     RxString currname = "January".obs;
     RxBool isTapped = false.obs;

@@ -35,7 +35,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = MaterialLocalizations.of(context);
-    String currname = data[5].toString();
+    String currname = data[4].toString();
     Future<void> _openTimePicker(BuildContext context) async {
       final TimeOfDay? time = await showTimePicker(
           context: context,
@@ -59,8 +59,8 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
         setState(() {
           NotifyServices.showScheduledNotification(
             title: "It's time to pray",
-            body: data[2],
-            payload: data[2],
+            body: data[1],
+            payload: data[1],
             //to implement this subtract the time the user chooses from the current time and pass it as a duration in datetime.add
             scheduledDate: DateTime(int.parse(_time)),
           );
@@ -79,9 +79,9 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                 child: Container(
                   height: 440,
                   width: double.maxFinite,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(data[6]),
+                          image: AssetImage("images/pastor-conducts.jpg"),
                           fit: BoxFit.cover)),
                 )
             ),
@@ -97,7 +97,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                         onTap: (){
                           Get.back();
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_back,
                           color: Colors.white,
                         ),
@@ -120,198 +120,175 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                           topLeft: Radius.circular(Dimensions.Height20),
                           topRight: Radius.circular(Dimensions.Height20)),
                       color: Colors.white),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.calendar_today,
-                                  color: Color(0xFFBEC2CE),
-                                  size: Dimensions.Width15,
-                                ),
-                                SizedBox(width: Dimensions.Width6-1,),
-                                Text(
-                                  //prayer id
-                                  data[0],
-                                  style: TextStyle(
-                                      fontSize: Dimensions.Width14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFFBEC2CE)),
-                                )
-                              ],
-                            ),
-                            Icon(
-                              Icons.bookmark,
-                              color: Color(0xFF1E2432),
-                              size: Dimensions.Width19,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: Dimensions.Height7,
-                        ),
-                        Text(data[5], style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-                        Text(
-                          //title
-                          data[2],
-                          style: TextStyle(
-                              color: Color(0xFF1E2432),
-                              fontSize: Dimensions.Width28,
-                              fontWeight: FontWeight.w900),
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(height: Dimensions.Height10*2),
-                        // Row(
-                        //   children: [
-                        //     Icon(Icons.bolt, color: Colors.amberAccent, size: Dimensions.prayerListScreenContainerWidth18,),
-                        //     SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
-                        //     Text("streak 2", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.prayerListScreenContainerWidth18, fontWeight: FontWeight.bold),),
-                        //     SizedBox(width: Dimensions.prayerListScreenContainerWidth6,),
-                        //     Icon(Icons.sunny, size: Dimensions.prayerListScreenContainerWidth18, color: Colors.amberAccent,),
-                        //     SizedBox(width: Dimensions.prayerListScreenContainerWidth6-3,),
-                        //     Text("weeks 32", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.prayerListScreenContainerWidth18, fontWeight: FontWeight.bold),)
-                        //   ],
-                        // ),
-                        SizedBox(
-                          height: Dimensions.Height18,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: (){
-                                    _openTimePicker(context);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        Icons.notifications,
-                                        size: Dimensions.Height29,
-                                        color: Color(0xFFD1D1D6),
-                                      ),
-                                      SizedBox(
-                                        height: Dimensions.Height8,
-                                      ),
-                                      Text(
-                                        "Reminders",
-                                        style:TextStyle(
-                                            fontSize: Dimensions.Width14,
-                                            fontWeight: FontWeight.w200,
-                                            color: Color(0xFF1E2432)),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              width: Dimensions.Width6+2,
-                            ),
-                            GestureDetector(
-                              onTap: (() {
-                                Get.to(()=> const CreateTestimonyScreen(), arguments: [
-                                  currname
-                                ]);
-                              }),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
                                 children: [
-                                  Column(
-                                    children: [
-                                      Icon(
-                                        Icons.edit,
-                                        size: Dimensions.Height29,
-                                        color: Color(0xFFD1D1D6),
-                                      ),
-                                      SizedBox(
-                                        height: Dimensions.Height8,
-                                      ),
-                                      Text(
-                                        "Testify",
-                                        style:TextStyle(
-                                            fontSize: Dimensions.Width14,
-                                            fontWeight: FontWeight.w200,
-                                            color: Color(0xFF1E2432)),
-                                      ),
-                                    ],
+                                  Icon(
+                                    Icons.calendar_today,
+                                    color: Color(0xFFBEC2CE),
+                                    size: Dimensions.Width15,
+                                  ),
+                                  SizedBox(width: Dimensions.Width6-1,),
+                                  Text(
+                                    //prayer id
+                                    data[0],
+                                    style: TextStyle(
+                                        fontSize: Dimensions.Width14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFBEC2CE)),
                                   )
                                 ],
                               ),
-                            ),
-                            SizedBox(
-                              width: Dimensions.Width6+2,
-                            ),
-                            Column(
-                              children: [
-                                Icon(
-                                  Icons.list,
-                                  size: Dimensions.Height29,
-                                  color: Color(0xFFD1D1D6),
-                                ),
-                                SizedBox(
-                                  height: Dimensions.Height8,
-                                ),
-                                Text(
-                                  "prayers",
-                                  style: TextStyle(
-                                      fontSize: Dimensions.Width14,
-                                      fontWeight: FontWeight.w200,
-                                      color: Color(0xFF1E2432)),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: Dimensions.pageScreenSizedBoxHeight12,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: Dimensions.Height10*2,
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Verse", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
-                                Text(
-                                  //scripture verse
-                                  data[3],
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: Dimensions.Width16,
-                                      fontWeight: FontWeight.w200,
-                                      color: Color(0xFF1E2432)
-                                  ),
-                                ),
-                                SizedBox(height: Dimensions.Height10*2,),
-                                Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
-                                Text(
-                                  //prayer point
-                                  data[1],
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: Dimensions.Width16,
-                                      fontWeight: FontWeight.w200,
-                                      color: Color(0xFF1E2432)
-                                  ),
-                                ),
-
-                              ],
-                            ),
+                              Icon(
+                                Icons.bookmark,
+                                color: Color(0xFF1E2432),
+                                size: Dimensions.Width19,
+                              )
+                            ],
                           ),
-                        ),
-                        SizedBox(height: Dimensions.Height10,),
-                      ],
+                          SizedBox(
+                            height: Dimensions.Height7,
+                          ),
+                          Text(data[4], style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                          Text(
+                            //title
+                            data[1],
+                            style: TextStyle(
+                                color: Color(0xFF1E2432),
+                                fontSize: Dimensions.Width28,
+                                fontWeight: FontWeight.w900),
+                            textAlign: TextAlign.start,
+                          ),
+                          SizedBox(height: Dimensions.Height10*2),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: (){
+                                      _openTimePicker(context);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Icon(
+                                          Icons.notifications,
+                                          size: Dimensions.Height29,
+                                          color: Color(0xFFD1D1D6),
+                                        ),
+                                        SizedBox(
+                                          height: Dimensions.Height8,
+                                        ),
+                                        Text(
+                                          "Reminders",
+                                          style:TextStyle(
+                                              fontSize: Dimensions.Width14,
+                                              fontWeight: FontWeight.w200,
+                                              color: Color(0xFF1E2432)),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                width: Dimensions.Width6+2,
+                              ),
+                              GestureDetector(
+                                onTap: (() {
+                                  Get.to(()=> const CreateTestimonyScreen(), arguments: [
+                                    currname
+                                  ]);
+                                }),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Icon(
+                                          Icons.edit,
+                                          size: Dimensions.Height29,
+                                          color: Color(0xFFD1D1D6),
+                                        ),
+                                        SizedBox(
+                                          height: Dimensions.Height8,
+                                        ),
+                                        Text(
+                                          "Testify",
+                                          style:TextStyle(
+                                              fontSize: Dimensions.Width14,
+                                              fontWeight: FontWeight.w200,
+                                              color: Color(0xFF1E2432)),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: Dimensions.Width6+2,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.list,
+                                      size: Dimensions.Height29,
+                                      color: Color(0xFFD1D1D6),
+                                    ),
+                                    SizedBox(
+                                      height: Dimensions.Height8,
+                                    ),
+                                    Text(
+                                      "prayers",
+                                      style: TextStyle(
+                                          fontSize: Dimensions.Width14,
+                                          fontWeight: FontWeight.w200,
+                                          color: Color(0xFF1E2432)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: Dimensions.pageScreenSizedBoxHeight12,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: Dimensions.Height10*2,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Verse", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
+                              Text(
+                                //scripture verse
+                                data[2],
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: Dimensions.Width16,
+                                    fontWeight: FontWeight.w200,
+                                    color: Color(0xFF1E2432)
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: Dimensions.Height10,),
+                        ],
+                      ),
                     ),
                   ),
                 )

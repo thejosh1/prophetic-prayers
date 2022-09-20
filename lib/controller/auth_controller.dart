@@ -30,7 +30,7 @@ class AuthController extends GetxController {
     } else if(user != null && !user.emailVerified) {
       Get.offAll(()=> const VerificationScreen());
     } else {
-      Get.offAll(()=> const MainPage());
+      Get.offAll(()=> const SplashScreen());
     }
   }
 

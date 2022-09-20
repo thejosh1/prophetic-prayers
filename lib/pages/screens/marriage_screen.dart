@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/controller/scripture_controller.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/models/marriage.dart';
+import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
 import '../prayer_detail_screen.dart';
@@ -101,9 +102,8 @@ class _MarriageScreenState extends State<MarriageScreen> {
               InkWell(
                 splashColor: Colors.grey,
                 onTap: (){
-                  Get.to(()=> const PrayerDetailScreen(), arguments: [
+                  Get.to(RouteServices.OTHERDETAILSCREEN, arguments: [
                     scriptureList[index].id,
-                    scriptureList[index].prayerPoint,
                     scriptureList[index].title,
                     scriptureList[index].verse,
                     scriptureList[index].date,

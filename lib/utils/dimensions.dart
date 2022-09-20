@@ -62,4 +62,6 @@ class Dimensions {
   static double Height270 = screenHeight/2.7;
 
   static double Height632 = screenHeight/1.16;
+
+  static double splashimg = screenHeight/2.93;
 }

@@ -1,45 +1,58 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class SplashScreen extends StatelessWidget {
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controller/auth_controller.dart';
+import '../controller/scripture_controller.dart';
+import '../services/route_services.dart';
+import '../utils/dimensions.dart';
+
+class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin{
+  late Animation<double> animation;
+  late AnimationController controller;
+
+  Future<void> _loadResources() async{
+    await Get.put(ScriptureController());
+    await Get.find<ScriptureController>().readJson();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadResources();
+    controller = AnimationController(vsync: this, duration: const Duration(seconds: 3))..forward();
+    animation = CurvedAnimation(parent: controller, curve: Curves.linear);
+    Timer(
+      const Duration(seconds: 4),
+          ()=>Get.offNamed(RouteServices.INITIAL),
+    );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-        width: size.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 80),
-            Image.asset(
-              'images/welcome.png',
-              width: size.width,
-            ),
-            SizedBox(height: 57),
-            const Text(
-              'It has survived not only five centuries, but also',
-              style: TextStyle(
-                fontSize: 24,
-
-                fontWeight: FontWeight.w800,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 24),
-            const Text(
-              ''' It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-              It was popularised in the 1960s with the release of Letraset sheets co''',
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xffBEC2CE),
-              ),
-
-              textAlign: TextAlign.center,
-            )
-          ],
-        ),
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ScaleTransition(scale: animation,
+              child: Center(child: Image.asset("images/army_of_david.jpeg", width: Dimensions.splashimg,))),
+        ],
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/controller/scripture_controller.dart';
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 import '../../models/prosperity.dart';
 import '../prayer_detail_screen.dart';
@@ -99,9 +100,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
               InkWell(
                 splashColor: Colors.grey,
                 onTap: (){
-                  Get.to(()=> const PrayerDetailScreen(), arguments: [
+                  Get.toNamed(RouteServices.OTHERDETAILSCREEN, arguments: [
                     scriptureList[index].id,
-                    scriptureList[index].prayerPoint,
                     scriptureList[index].title,
                     scriptureList[index].verse,
                     scriptureList[index].date,
@@ -112,7 +112,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                 child: Row(
                   children: [
                     Container(
-                      height: Dimensions.Height20+20,
+                      height: Dimensions.Height60+20,
                       width: Dimensions.Width90-10,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(Dimensions.Width20),
