@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/utils/dimensions.dart';
 
 import '../controller/auth_controller.dart';
 import '../models/prayers.dart';
@@ -525,7 +526,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 80,
+                                   height: Dimensions.Height40*2,
                                    child: Padding(
                                      padding: const EdgeInsets.only(left: 10),
                                      child: Column(
@@ -533,11 +534,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()+1].title.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()+1].date.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Row(
                                            children: [
                                              Wrap(children:
@@ -752,6 +753,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
   int numOfWeeks(int year) {
     DateTime dec28 = DateTime(year, 12, 28);
     int dayOfDec28 = int.parse(DateFormat("D").format(dec28));
+
     return ((dayOfDec28 - dec28.weekday + 10) / 7).floor();
   }
   /// Calculates week number from a date as per https://en.wikipedia.org/wiki/ISO_week_date#Calculation

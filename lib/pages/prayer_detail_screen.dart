@@ -1,13 +1,19 @@
+import 'dart:io';
+
 import "package:flutter/material.dart";
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:http/http.dart' as http;
 
 
 
 import '../services/notify_services.dart';
+import '../services/route_services.dart';
 
 
 class PrayerDetailScreen extends StatefulWidget {
@@ -68,50 +74,50 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
       }
     }
     return Scaffold(
-      body: Container(
-        height: double.maxFinite,
-        width: double.maxFinite,
-        child: Stack(
-          children: [
-            Positioned(
-                left: 0,
-                right: 0,
-                child: Container(
-                  height: 440,
-                  width: double.maxFinite,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("images/ibrahim-boran.jpg"),
-                          fit: BoxFit.cover)),
-                )
-            ),
-            Positioned(
-                left: 0,
-                right: 0,
-                child: Container(
-                  margin: EdgeInsets.only(left: Dimensions.Width20, top: Dimensions.Height60, right: Dimensions.Width20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: (){
-                          Get.back();
-                        },
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      ),
-                      // Icon(
-                      //   Icons.more_vert,
-                      //   color: Colors.white,
-                      // )
-                    ],
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: Dimensions.Height40*2,
+            title: Container(
+              margin: EdgeInsets.only(left: Dimensions.Width10, right: Dimensions.Width10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Icon(Icons.arrow_back_ios),
                   ),
-                )),
-            Positioned(
-                top: Dimensions.Height270,
-                child: Container(
+                ],
+              ),
+            ),
+            pinned: true,
+            backgroundColor: Colors.white,
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(20),
+              child: Container(
+                width: double.maxFinite,
+                padding: EdgeInsets.only(top: 5, bottom: 10),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(Dimensions.Width20), topLeft: Radius.circular(Dimensions.Width20))
+                ),
+                child: Center(child: Text("Prophetic Prayers For Children", style: TextStyle(fontSize: Dimensions.Width10+8, fontWeight: FontWeight.bold),)),
+              ),
+            ),
+            expandedHeight: Dimensions.Height100*3,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Image.asset("images/banner.jpeg",
+                width: double.maxFinite,
+                fit: BoxFit.cover,),
+            )
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Container(
                   padding: EdgeInsets.only(left: Dimensions.Width20+2, right: Dimensions.Width20, top: Dimensions.Height20),
                   width: MediaQuery.of(context).size.width,
                   height: Dimensions.Height500,
@@ -122,204 +128,200 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                       color: Colors.white),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.calendar_today,
-                                  color: Color(0xFFBEC2CE),
-                                  size: Dimensions.Width15,
-                                ),
-                                SizedBox(width: Dimensions.Width6-1,),
-                                Text(
-                                  //prayer id
-                                  data[0],
-                                  style: TextStyle(
-                                      fontSize: Dimensions.Width14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFFBEC2CE)),
-                                )
-                              ],
-                            ),
-                            Icon(
-                              Icons.bookmark,
-                              color: Color(0xFF1E2432),
-                              size: Dimensions.Width19,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: Dimensions.Height7,
-                        ),
-                        Text(data[5], style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-                        Text(
-                          //title
-                          data[2],
-                          style: TextStyle(
-                              color: Color(0xFF1E2432),
-                              fontSize: Dimensions.Width28,
-                              fontWeight: FontWeight.w900),
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(height: Dimensions.Height10*2),
-                        // Row(
-                        //   children: [
-                        //     Icon(Icons.bolt, color: Colors.amberAccent, size: Dimensions.prayerListScreenContainerWidth18,),
-                        //     SizedBox(width: Dimensions.prayerListStackPositionedContainerWidth3,),
-                        //     Text("streak 2", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.prayerListScreenContainerWidth18, fontWeight: FontWeight.bold),),
-                        //     SizedBox(width: Dimensions.prayerListScreenContainerWidth6,),
-                        //     Icon(Icons.sunny, size: Dimensions.prayerListScreenContainerWidth18, color: Colors.amberAccent,),
-                        //     SizedBox(width: Dimensions.prayerListScreenContainerWidth6-3,),
-                        //     Text("weeks 32", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.prayerListScreenContainerWidth18, fontWeight: FontWeight.bold),)
-                        //   ],
-                        // ),
-                        SizedBox(
-                          height: Dimensions.Height18,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: (){
-                                    _openTimePicker(context);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        Icons.notifications,
-                                        size: Dimensions.Height29,
-                                        color: Color(0xFFD1D1D6),
-                                      ),
-                                      SizedBox(
-                                        height: Dimensions.Height8,
-                                      ),
-                                      Text(
-                                        "Reminders",
-                                        style:TextStyle(
-                                            fontSize: Dimensions.Width14,
-                                            fontWeight: FontWeight.w200,
-                                            color: Color(0xFF1E2432)),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              width: Dimensions.Width6+2,
-                            ),
-                            GestureDetector(
-                              onTap: (() {
-                                Get.to(()=> const CreateTestimonyScreen(), arguments: [
-                                 currname
-                                ]);
-                              }),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                    child: SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
                                 children: [
-                                  Column(
-                                    children: [
-                                      Icon(
-                                        Icons.edit,
-                                        size: Dimensions.Height29,
-                                        color: Color(0xFFD1D1D6),
-                                      ),
-                                      SizedBox(
-                                        height: Dimensions.Height8,
-                                      ),
-                                      Text(
-                                        "Testify",
-                                        style:TextStyle(
-                                            fontSize: Dimensions.Width14,
-                                            fontWeight: FontWeight.w200,
-                                            color: Color(0xFF1E2432)),
-                                      ),
-                                    ],
+                                  Icon(
+                                    Icons.calendar_today,
+                                    color: Color(0xFFBEC2CE),
+                                    size: Dimensions.Width15,
+                                  ),
+                                  SizedBox(width: Dimensions.Width6-1,),
+                                  Text(
+                                    //prayer id
+                                    data[0],
+                                    style: TextStyle(
+                                        fontSize: Dimensions.Width14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFBEC2CE)),
                                   )
                                 ],
                               ),
-                            ),
-                            SizedBox(
-                              width: Dimensions.Width6+2,
-                            ),
-                            Column(
-                              children: [
-                                Icon(
-                                  Icons.list,
-                                  size: Dimensions.Height29,
-                                  color: Color(0xFFD1D1D6),
-                                ),
-                                SizedBox(
-                                  height: Dimensions.Height8,
-                                ),
-                                Text(
-                                  "prayers",
-                                  style: TextStyle(
-                                      fontSize: Dimensions.Width14,
-                                      fontWeight: FontWeight.w200,
-                                      color: Color(0xFF1E2432)),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: Dimensions.pageScreenSizedBoxHeight12,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: Dimensions.Height10*2,
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Verse", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
-                                Text(
-                                  //scripture verse
-                                  data[3],
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: Dimensions.Width16,
-                                      fontWeight: FontWeight.w200,
-                                      color: Color(0xFF1E2432)
-                                  ),
-                                ),
-                                SizedBox(height: Dimensions.Height10*2,),
-                                Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
-                                Text(
-                                  //prayer point
-                                  data[1],
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: Dimensions.Width16,
-                                      fontWeight: FontWeight.w200,
-                                      color: Color(0xFF1E2432)
-                                  ),
-                                ),
-
-                              ],
-                            ),
+                              Icon(
+                                Icons.bookmark,
+                                color: Color(0xFF1E2432),
+                                size: Dimensions.Width19,
+                              )
+                            ],
                           ),
-                        ),
-                        SizedBox(height: Dimensions.Height10,),
-                      ],
+                          SizedBox(
+                            height: Dimensions.Height7,
+                          ),
+                          Text(data[5], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                          Text(
+                            //title
+                            data[2],
+                            style: TextStyle(
+                                color: const Color(0xFF1E2432),
+                                fontSize: Dimensions.Width28,
+                                fontWeight: FontWeight.w900),
+                            textAlign: TextAlign.start,
+                          ),
+                          SizedBox(height: Dimensions.Height10*2),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: () async{
+                                     ByteData imagebyte = await rootBundle.load("images/banner.jpeg");
+
+                                      final temp = await getTemporaryDirectory();
+                                      final path = '${temp.path}/banner.jpeg';
+                                      File(path).writeAsBytesSync(imagebyte.buffer.asUint8List());
+
+                                      await Share.shareFiles([path], text: "${data[2]}\n ${data[1]}",);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Icon(
+                                          Icons.share_outlined,
+                                          size: Dimensions.Height29,
+                                          color: Color(0xFFD1D1D6),
+                                        ),
+                                        SizedBox(
+                                          height: Dimensions.Height8,
+                                        ),
+                                        Text(
+                                          "Share",
+                                          style:TextStyle(
+                                              fontSize: Dimensions.Width14,
+                                              fontWeight: FontWeight.w200,
+                                              color: Color(0xFF1E2432)),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                width: Dimensions.Width6+2,
+                              ),
+                              GestureDetector(
+                                onTap: (() {
+                                  Get.toNamed(RouteServices.CREATETESTIMONYSCREEN, arguments: [
+                                    currname
+                                  ]);
+                                }),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Icon(
+                                          Icons.edit,
+                                          size: Dimensions.Height29,
+                                          color: const Color(0xFFD1D1D6),
+                                        ),
+                                        SizedBox(
+                                          height: Dimensions.Height8,
+                                        ),
+                                        Text(
+                                          "Testify",
+                                          style:TextStyle(
+                                              fontSize: Dimensions.Width14,
+                                              fontWeight: FontWeight.w200,
+                                              color: Color(0xFF1E2432)),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: Dimensions.Width6+2,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(RouteServices.PLANLISTSCREEN);
+                                },
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.list,
+                                      size: Dimensions.Height29,
+                                      color: Color(0xFFD1D1D6),
+                                    ),
+                                    SizedBox(
+                                      height: Dimensions.Height8,
+                                    ),
+                                    Text(
+                                      "prayers",
+                                      style: TextStyle(
+                                          fontSize: Dimensions.Width14,
+                                          fontWeight: FontWeight.w200,
+                                          color: const Color(0xFF1E2432)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: Dimensions.pageScreenSizedBoxHeight12,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: Dimensions.Height10*2,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Verse", style: TextStyle(color: const Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
+                              Text(
+                                //scripture verse
+                                data[3],
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: Dimensions.Width16,
+                                    fontWeight: FontWeight.w200,
+                                    color: const Color(0xFF1E2432)
+                                ),
+                              ),
+                              SizedBox(height: Dimensions.Height10*2,),
+                              Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
+                              Text(
+                                //prayer point
+                                data[1],
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: Dimensions.Width16,
+                                    fontWeight: FontWeight.w200,
+                                    color: Color(0xFF1E2432)
+                                ),
+                              ),
+
+                            ],
+                          ),
+                          SizedBox(height: Dimensions.Height10,),
+                        ],
+                      ),
                     ),
                   ),
-                )
-            )
-          ],
-        ),
-      ),
+                ),
+              ],
+            ),
+          )
+        ],
+      )
     );
   }
-
 }

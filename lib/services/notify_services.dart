@@ -25,12 +25,12 @@ class NotifyServices {
 
     return const NotificationDetails(
       android: AndroidNotificationDetails(
-        'channel id',
-        'channel name',
-        channelDescription: 'channel description',
-        importance: Importance.max,
-        // styleInformation: styleInformation,
-        priority: Priority.high
+          'channel id',
+          'channel name',
+          channelDescription: 'channel description',
+          importance: Importance.max,
+          // styleInformation: styleInformation,
+          priority: Priority.high
       ),
       iOS: IOSNotificationDetails(),
     );
@@ -77,14 +77,14 @@ class NotifyServices {
         String? payload,
         required DateTime scheduledDate,
       }) async => _notification.zonedSchedule(
-      id,
-      title,
-      body,
-      tz.TZDateTime.from(scheduledDate, tz.local),
-      await _notificationDetails(),
-      payload: payload,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
+    id,
+    title,
+    body,
+    tz.TZDateTime.from(scheduledDate, tz.local),
+    await _notificationDetails(),
+    payload: payload,
+    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+    androidAllowWhileIdle: true,
 
   );
 
@@ -97,15 +97,15 @@ class NotifyServices {
         String? payload,
         required scheduledDate,
       }) async => _notification.zonedSchedule(
-    id,
-    title,
-    body,
-    _scheduledDailyNotification(const Time(08, 59)),
-    await _notificationDetails(),
-    payload: payload,
-    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-    androidAllowWhileIdle: true,
-    matchDateTimeComponents: DateTimeComponents.time
+      id,
+      title,
+      body,
+      _scheduledDailyNotification(const Time(08, 59)),
+      await _notificationDetails(),
+      payload: payload,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      matchDateTimeComponents: DateTimeComponents.time
   );
 
   static tz.TZDateTime _scheduledDailyNotification(Time time) {
@@ -142,6 +142,6 @@ class NotifyServices {
     }
 
     return scheduledDate;
-      }
+  }
 
 }

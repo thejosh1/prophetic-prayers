@@ -68,50 +68,50 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
       }
     }
     return Scaffold(
-      body: Container(
-        height: double.maxFinite,
-        width: double.maxFinite,
-        child: Stack(
-          children: [
-            Positioned(
-                left: 0,
-                right: 0,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+              automaticallyImplyLeading: false,
+              toolbarHeight: Dimensions.Height40*2,
+              title: Container(
+                margin: EdgeInsets.only(left: Dimensions.Width10, right: Dimensions.Width10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Icon(Icons.arrow_back_ios),
+                    ),
+                  ],
+                ),
+              ),
+              pinned: true,
+              backgroundColor: Colors.white,
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(20),
                 child: Container(
-                  height: 440,
                   width: double.maxFinite,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("images/pastor-conducts.jpg"),
-                          fit: BoxFit.cover)),
-                )
-            ),
-            Positioned(
-                left: 0,
-                right: 0,
-                child: Container(
-                  margin: EdgeInsets.only(left: Dimensions.Width20, top: Dimensions.Height60, right: Dimensions.Width20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: (){
-                          Get.back();
-                        },
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      ),
-                      // Icon(
-                      //   Icons.more_vert,
-                      //   color: Colors.white,
-                      // )
-                    ],
+                  padding: EdgeInsets.only(top: 5, bottom: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(topRight: Radius.circular(Dimensions.Width20), topLeft: Radius.circular(Dimensions.Width20))
                   ),
-                )),
-            Positioned(
-                top: Dimensions.Height270,
-                child: Container(
+                  child: Center(child: Text("Prophetic Prayers For Children", style: TextStyle(fontSize: Dimensions.Width10+8, fontWeight: FontWeight.bold),)),
+                ),
+              ),
+              expandedHeight: Dimensions.Height100*3,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Image.asset("images/banner.jpeg",
+                  width: double.maxFinite,
+                  fit: BoxFit.cover,),
+              )
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Container(
                   padding: EdgeInsets.only(left: Dimensions.Width20+2, right: Dimensions.Width20, top: Dimensions.Height20),
                   width: MediaQuery.of(context).size.width,
                   height: Dimensions.Height500,
@@ -178,7 +178,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                                   InkWell(
                                     onTap: (){
                                       _openTimePicker(context);
-                                    },
+                                      },
                                     child: Column(
                                       children: [
                                         Icon(
@@ -191,8 +191,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                                         ),
                                         Text(
                                           "Reminders",
-                                          style:TextStyle(
-                                              fontSize: Dimensions.Width14,
+                                          style:TextStyle(fontSize: Dimensions.Width14,
                                               fontWeight: FontWeight.w200,
                                               color: Color(0xFF1E2432)),
                                         ),
@@ -206,9 +205,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                               ),
                               GestureDetector(
                                 onTap: (() {
-                                  Get.to(()=> const CreateTestimonyScreen(), arguments: [
-                                    currname
-                                  ]);
+                                  Get.to(()=> const CreateTestimonyScreen(), arguments: [currname]);
                                 }),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -241,7 +238,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                               GestureDetector(
                                 onTap: () {
                                   Get.back();
-                                },
+                                  },
                                 child: Column(
                                   children: [
                                     Icon(
@@ -251,8 +248,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                                     ),
                                     SizedBox(
                                       height: Dimensions.Height8,
-                                    ),
-                                    Text(
+                                    ), Text(
                                       "prayers",
                                       style: TextStyle(
                                           fontSize: Dimensions.Width14,
@@ -292,11 +288,11 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                     ),
                   ),
                 )
-            )
-          ],
-        ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
-
 }

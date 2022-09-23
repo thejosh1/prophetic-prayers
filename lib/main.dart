@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             fontFamily: 'Poppins',
         ),
-        initialRoute: RouteServices.SPLASHSCREEN,
+        initialRoute: RouteServices.INITIAL,
         getPages: RouteServices.routes
     );
   }

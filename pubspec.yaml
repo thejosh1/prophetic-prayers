@@ -40,7 +40,7 @@ dependencies:
   intl: ^0.17.0
   flutter_native_timezone: ^2.0.0
   shared_preferences:
-  share_plus: ^0.0.1
+  share_plus: ^4.4.0
   sqflite:
   path_provider: ^2.0.11
   timezone: ^0.8.0
@@ -55,7 +55,7 @@ dependencies:
   flutter_svg: ^1.1.1+1
   font_awesome_flutter: ^10.1.0
   url_launcher: ^6.1.5
-
+  http:
 
 dev_dependencies:
   flutter_test:
@@ -142,6 +142,7 @@ flutter:
     - images/priest.jpg
     - images/boy_white.jfif
     - images/army_of_david.jpeg
+    - images/banner.jpeg
 
   fonts:
     - family: Poppins

@@ -7,7 +7,6 @@ import 'package:prophetic_prayers/pages/auth_pages/verification_screen.dart';
 import 'package:prophetic_prayers/pages/main_page.dart';
 
 import '../main.dart';
-import '../pages/auth_pages/login.dart';
 import '../pages/auth_pages/sign_up.dart';
 import '../pages/splash_screen.dart';
 

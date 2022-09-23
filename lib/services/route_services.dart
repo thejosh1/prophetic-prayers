@@ -39,6 +39,7 @@ class RouteServices {
   static const OTHERDETAILSCREEN = "/other-detail-screen";
   static const ABOUTSCREEN = "/about-screen";
   static const PRAYERLISTSCREEN = "/prayer-list-screen";
+  static const PLANLISTSCREEN = "/plan-list-screen";
 
   static String getSplashScreen() => "$SPLASHSCREEN";
   static String getInitial() => "$INITIAL";
@@ -59,6 +60,7 @@ class RouteServices {
   static String getotherDetailScreen() => "$OTHERDETAILSCREEN";
   static String getaboutScreen() => "$ABOUTSCREEN";
   static String getprayerListScreen() => "$PRAYERLISTSCREEN";
+  static String getplanListScreen()=> "$PLANLISTSCREEN";
 
   static List<GetPage> routes = [
     GetPage(name: SPLASHSCREEN, page: ()=>const SplashScreen()),
@@ -79,5 +81,6 @@ class RouteServices {
     GetPage(name: OTHERDETAILSCREEN, page: () => const OtherDetailScreen(), transition: Transition.fadeIn),
     GetPage(name: ABOUTSCREEN, page: () => const AboutScreen(), transition: Transition.fadeIn),
     GetPage(name: PRAYERLISTSCREEN, page: () => const PrayerListScreen(), transition: Transition.fadeIn),
+    GetPage(name: PLANLISTSCREEN, page:  () => const PrayerListScreen(), transition: Transition.fadeIn),
   ];
 }
