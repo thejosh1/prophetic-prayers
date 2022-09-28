@@ -8,9 +8,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:http/http.dart' as http;
-
-
 
 import '../services/notify_services.dart';
 import '../services/route_services.dart';
@@ -88,7 +85,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                     onTap: () {
                       Get.back();
                     },
-                    child: Icon(Icons.arrow_back_ios),
+                    child: const Icon(Icons.arrow_back_ios, color: Colors.black,),
                   ),
                 ],
               ),
@@ -96,10 +93,10 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
             pinned: true,
             backgroundColor: Colors.white,
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(20),
+              preferredSize: Size.fromHeight(Dimensions.Height20),
               child: Container(
                 width: double.maxFinite,
-                padding: EdgeInsets.only(top: 5, bottom: 10),
+                padding: EdgeInsets.only(top: Dimensions.Height7-2, bottom: Dimensions.Height10),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(topRight: Radius.circular(Dimensions.Width20), topLeft: Radius.circular(Dimensions.Width20))
@@ -109,9 +106,9 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
             ),
             expandedHeight: Dimensions.Height100*3,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset("images/banner.jpeg",
+              background: Image.asset("images/logo.jpeg",
                 width: double.maxFinite,
-                fit: BoxFit.cover,),
+                fit: BoxFit.contain,),
             )
           ),
           SliverToBoxAdapter(
@@ -156,7 +153,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                               ),
                               Icon(
                                 Icons.bookmark,
-                                color: Color(0xFF1E2432),
+                                color: const Color(0xFF1E2432),
                                 size: Dimensions.Width19,
                               )
                             ],
@@ -164,7 +161,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           SizedBox(
                             height: Dimensions.Height7,
                           ),
-                          Text(data[5], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                          Text(data[5], style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
                           Text(
                             //title
                             data[2],
@@ -196,7 +193,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                         Icon(
                                           Icons.share_outlined,
                                           size: Dimensions.Height29,
-                                          color: Color(0xFFD1D1D6),
+                                          color: const Color(0xFFD1D1D6),
                                         ),
                                         SizedBox(
                                           height: Dimensions.Height8,
@@ -206,7 +203,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                           style:TextStyle(
                                               fontSize: Dimensions.Width14,
                                               fontWeight: FontWeight.w200,
-                                              color: Color(0xFF1E2432)),
+                                              color: const Color(0xFF1E2432)),
                                         ),
                                       ],
                                     ),
@@ -240,7 +237,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                           style:TextStyle(
                                               fontSize: Dimensions.Width14,
                                               fontWeight: FontWeight.w200,
-                                              color: Color(0xFF1E2432)),
+                                              color: const Color(0xFF1E2432)),
                                         ),
                                       ],
                                     )
@@ -259,7 +256,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                     Icon(
                                       Icons.list,
                                       size: Dimensions.Height29,
-                                      color: Color(0xFFD1D1D6),
+                                      color: const Color(0xFFD1D1D6),
                                     ),
                                     SizedBox(
                                       height: Dimensions.Height8,
@@ -297,7 +294,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                 ),
                               ),
                               SizedBox(height: Dimensions.Height10*2,),
-                              Text("Prayer Point", style: TextStyle(color: Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
+                              Text("Prayer Point", style: TextStyle(color: const Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
                               Text(
                                 //prayer point
                                 data[1],
@@ -305,7 +302,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                     fontFamily: 'Poppins',
                                     fontSize: Dimensions.Width16,
                                     fontWeight: FontWeight.w200,
-                                    color: Color(0xFF1E2432)
+                                    color: const Color(0xFF1E2432)
                                 ),
                               ),
 

@@ -12,6 +12,7 @@ import 'package:prophetic_prayers/pages/screens/prayer_screen.dart';
 import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
 
 import '../pages/about_screen.dart';
+import '../pages/plan_list.dart';
 import '../pages/prayer_list_screen.dart';
 import '../pages/screens/career_screen.dart';
 import '../pages/screens/health_screen.dart';
@@ -81,6 +82,6 @@ class RouteServices {
     GetPage(name: OTHERDETAILSCREEN, page: () => const OtherDetailScreen(), transition: Transition.fadeIn),
     GetPage(name: ABOUTSCREEN, page: () => const AboutScreen(), transition: Transition.fadeIn),
     GetPage(name: PRAYERLISTSCREEN, page: () => const PrayerListScreen(), transition: Transition.fadeIn),
-    GetPage(name: PLANLISTSCREEN, page:  () => const PrayerListScreen(), transition: Transition.fadeIn),
+    GetPage(name: PLANLISTSCREEN, page:  () => const PlanListScreen(), transition: Transition.fadeIn),
   ];
 }

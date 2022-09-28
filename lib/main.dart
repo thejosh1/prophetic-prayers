@@ -8,6 +8,7 @@ import 'package:prophetic_prayers/services/notify_services.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
+
 final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async{
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             fontFamily: 'Poppins',
         ),
-        initialRoute: RouteServices.INITIAL,
+        initialRoute: RouteServices.SPLASHSCREEN,
         getPages: RouteServices.routes
     );
   }

@@ -56,7 +56,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 100,
+              height: Dimensions.Height100,
               decoration: const BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -64,11 +64,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                         blurRadius: 0.5,
                         spreadRadius: 0.5,
                         offset: Offset(0, 3),
-                        color: Colors.transparent
+                        color: Colors.transparent,
                     )
                   ]
               ),
-              padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
+              padding: EdgeInsets.only(left: Dimensions.Width20+4, right: Dimensions.Width20+4, top: Dimensions.Height40+6),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,8 +90,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if(snapshot.connectionState == ConnectionState.waiting) {
                           return Container(
-                            height: 30,
-                            width: 30,
+                            height: Dimensions.Height20+10,
+                            width: Dimensions.Width20+10,
                             decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
@@ -102,8 +102,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                         } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                           return Container(
-                            height: 30,
-                            width: 30,
+                            height: Dimensions.Height20+10,
+                            width: Dimensions.Width20+10,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
@@ -114,8 +114,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                           );
                         }
                         return Container(
-                          height: 30,
-                          width: 30,
+                          height: Dimensions.Height20+10,
+                          width: Dimensions.Width20+10,
                           decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
@@ -128,10 +128,10 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: Dimensions.Height20,),
             //pageview builder
             Container(
-              height: 250,
+              height: Dimensions.Height270-20,
               color: Colors.white,
               child: PageView.builder(
                   controller: pageController,
@@ -152,10 +152,10 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                 ]);
                               },
                               child: Container(
-                                height: 200,
-                                width: 280,
+                                height: Dimensions.Height100*2,
+                                width: Dimensions.Width170+110,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(Dimensions.Width20),
                                   color: Colors.grey,
                                   image: DecorationImage(
                                     image: AssetImage(colorList[index]),
@@ -167,8 +167,8 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                 // )
                               ),
                             ),
-                            SizedBox(height: 20,),
-                            Text(monthNames[index], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),)
+                            SizedBox(height: Dimensions.Height20,),
+                            Text(monthNames[index], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width16+2),)
                           ],
                         ),
 
@@ -176,17 +176,17 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                     );
               }),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: Dimensions.Height7-2,),
             Container(
-              margin: EdgeInsets.only(left: 24, right: 10),
+              margin: EdgeInsets.only(left: Dimensions.Width20+4, right: Dimensions.Width10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20,),
+                  SizedBox(height: Dimensions.Height20,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(DateFormat.MMMEd().format(DateTime.now()), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                      Text(DateFormat.MMMEd().format(DateTime.now()), style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width16+2),),
                       GestureDetector(
                         onTap: () {
                           isTapped.value = !isTapped.value;
@@ -194,15 +194,15 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                         },
                         child: Row(
                           children: [
-                            const Text("Expand", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                            SizedBox(width: 10,),
-                            Obx(()=>  isTapped.value == false ? const Icon(Icons.arrow_forward_ios_outlined, size: 18,): const Icon(Icons.arrow_drop_down, size: 18,))
+                            Text("Expand", style: TextStyle(fontSize: Dimensions.Width16+2, fontWeight: FontWeight.bold),),
+                            SizedBox(width: Dimensions.Width10,),
+                            Obx(()=>  isTapped.value == false ? Icon(Icons.arrow_forward_ios_outlined, size: Dimensions.Width16+2,): Icon(Icons.arrow_drop_down, size: Dimensions.Width16+2,))
                           ],
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(height: Dimensions.Height20,),
                    Obx(()=> isTapped.value == false ? Column(
                      children: [
                        InkWell(
@@ -221,36 +221,36 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                          child: Row(
                            children: [
                              Container(
-                               height: 80,
-                               width: 80,
+                               height: Dimensions.Height60+20,
+                               width: Dimensions.Width90-10,
                                decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(20),
-                                   border: Border.all(color: Colors.grey, width: 2),
+                                   borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                   border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()-1].verse.toString()[0], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24))
+                                   child: Text(scriptureList[getTodaysDay()-1].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4))
                                ),
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 80,
+                                   height: Dimensions.Height60+20,
                                    child: Padding(
-                                     padding: const EdgeInsets.only(left: 10),
+                                     padding: EdgeInsets.only(left: Dimensions.Width10),
                                      child: Column(
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()-1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()-1].title.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()-1].date.toString()),
-                                         SizedBox(height: 3),
+                                         SizedBox(height: Dimensions.Height2+1),
                                          Row(
                                            children: [
                                              Wrap(children:
-                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             List.generate(5, (index) => Icon(Icons.star, color: Colors.amberAccent, size: Dimensions.Width16-1,))
                                              ),
                                            ],
                                          ),
@@ -262,7 +262,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            ],
                          ),
                        ),
-                       SizedBox(height: 20,),
+                       SizedBox(height: Dimensions.Height20,),
                        InkWell(
                          splashColor: Colors.grey,
                          onTap: () {
@@ -279,36 +279,36 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                          child: Row(
                            children: [
                              Container(
-                               height: 80,
-                               width: 80,
+                               height: Dimensions.Height60+20,
+                               width: Dimensions.Width90-10,
                                decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(20),
-                                   border: Border.all(color: Colors.grey, width: 2),
+                                   borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                   border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()].verse.toString()[0], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24))
+                                   child: Text(scriptureList[getTodaysDay()].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4))
                                ),
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 80,
+                                   height: Dimensions.Height60+20,
                                    child: Padding(
-                                     padding: const EdgeInsets.only(left: 10),
+                                     padding: EdgeInsets.only(left: Dimensions.Width10),
                                      child: Column(
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()].title.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()].date.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Row(
                                            children: [
                                              Wrap(children:
-                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             List.generate(5, (index) => Icon(Icons.star, color: Colors.amberAccent, size: Dimensions.Width16-1,))
                                              ),
                                            ],
                                          ),
@@ -320,7 +320,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            ],
                          ),
                        ),
-                       SizedBox(height: 20,),
+                       SizedBox(height: Dimensions.Height20,),
                        InkWell(
                          splashColor: Colors.grey,
                          onTap: (){
@@ -337,36 +337,36 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                          child: Row(
                            children: [
                              Container(
-                               height: 80,
-                               width: 80,
+                               height: Dimensions.Height60+20,
+                               width: Dimensions.Width90-10,
                                decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(20),
-                                   border: Border.all(color: Colors.grey, width: 2),
+                                   borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                   border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()+1].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                                   child: Text(scriptureList[getTodaysDay()+1].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
                                ),
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 80,
+                                   height: Dimensions.Height60+20,
                                    child: Padding(
-                                     padding: const EdgeInsets.only(left: 10),
+                                     padding: EdgeInsets.only(left: Dimensions.Width10),
                                      child: Column(
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()+1].title.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()+1].date.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Row(
                                            children: [
                                              Wrap(children:
-                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             List.generate(5, (index) => Icon(Icons.star, color: Colors.amberAccent, size: Dimensions.Width16-1,))
                                              ),
                                            ],
                                          ),
@@ -397,11 +397,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            child: Row(
                            children: [
                              Container(
-                               height: 80,
-                               width: 80,
+                               height: Dimensions.Height60+20,
+                               width: Dimensions.Width90-10,
                                decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(20),
-                                   border: Border.all(color: Colors.grey, width: 2),
+                                   borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                   border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
@@ -410,23 +410,23 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 80,
+                                   height: Dimensions.Height60+20,
                                    child: Padding(
-                                     padding: const EdgeInsets.only(left: 10),
+                                     padding: EdgeInsets.only(left: Dimensions.Width10),
                                      child: Column(
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()-1].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()-1].title.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1),
                                          Text(scriptureList[getTodaysDay()-1].date.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1),
                                          Row(
                                            children: [
                                              Wrap(children:
-                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             List.generate(5, (index) => Icon(Icons.star, color: Colors.amberAccent, size: Dimensions.Width16-1,))
                                              ),
                                            ],
                                          ),
@@ -438,7 +438,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            ],
                        ),
                          ),
-                         SizedBox(height: 20,),
+                         SizedBox(height: Dimensions.Height20,),
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: () {
@@ -455,36 +455,36 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            child: Row(
                            children: [
                              Container(
-                               height: 80,
-                               width: 80,
+                               height: Dimensions.Height60+20,
+                               width: Dimensions.Width90-10,
                                decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(20),
-                                   border: Border.all(color: Colors.grey, width: 2),
+                                   borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                   border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()].verse.toString()[0], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24))
+                                   child: Text(scriptureList[getTodaysDay()].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4))
                                ),
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 80,
+                                   height: Dimensions.Height60+20,
                                    child: Padding(
-                                     padding: const EdgeInsets.only(left: 10),
+                                     padding: EdgeInsets.only(left: Dimensions.Width10),
                                      child: Column(
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()].title.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()].date.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Row(
                                            children: [
                                              Wrap(children:
-                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             List.generate(5, (index) => Icon(Icons.star, color: Colors.amberAccent, size: Dimensions.Width16-1,))
                                              ),
                                            ],
                                          ),
@@ -496,7 +496,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            ],
                        ),
                          ),
-                         SizedBox(height: 20,),
+                         SizedBox(height: Dimensions.Height20,),
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: () {
@@ -513,22 +513,22 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            child: Row(
                            children: [
                              Container(
-                               height: 80,
-                               width: 80,
+                               height: Dimensions.Height60+20,
+                               width: Dimensions.Width90-10,
                                decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(20),
-                                   border: Border.all(color: Colors.grey, width: 2),
+                                   borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                   border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()+1].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                                   child: Text(scriptureList[getTodaysDay()+1].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
                                ),
                              ),
                              Expanded(
                                  child: Container(
                                    height: Dimensions.Height40*2,
                                    child: Padding(
-                                     padding: const EdgeInsets.only(left: 10),
+                                     padding: EdgeInsets.only(left: Dimensions.Width10),
                                      child: Column(
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
@@ -542,7 +542,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                          Row(
                                            children: [
                                              Wrap(children:
-                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             List.generate(5, (index) => Icon(Icons.star, color: Colors.amberAccent, size: Dimensions.Width16-1,))
                                              ),
                                            ],
                                          ),
@@ -554,7 +554,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            ],
                        ),
                          ),
-                         SizedBox(height: 20,),
+                         SizedBox(height: Dimensions.Height20,),
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: (){
@@ -571,36 +571,36 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            child: Row(
                            children: [
                              Container(
-                               height: 80,
-                               width: 80,
+                               height: Dimensions.Height60+20,
+                               width: Dimensions.Width90-10,
                                decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(20),
-                                   border: Border.all(color: Colors.grey, width: 2),
+                                   borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                   border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()+2].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                                   child: Text(scriptureList[getTodaysDay()+2].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
                                ),
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 80,
+                                   height: Dimensions.Height60+20,
                                    child: Padding(
-                                     padding: const EdgeInsets.only(left: 10),
+                                     padding: EdgeInsets.only(left: Dimensions.Width10),
                                      child: Column(
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+2].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()+2].title.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()+2].date.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Row(
                                            children: [
                                              Wrap(children:
-                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             List.generate(5, (index) => Icon(Icons.star, color: Colors.amberAccent, size: Dimensions.Width16-1,))
                                              ),
                                            ],
                                          ),
@@ -612,7 +612,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            ],
                        ),
                          ),
-                         SizedBox(height: 20,),
+                         SizedBox(height: Dimensions.Height20,),
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: () {
@@ -629,36 +629,36 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            child: Row(
                            children: [
                              Container(
-                               height: 80,
-                               width: 80,
+                               height: Dimensions.Height60+20,
+                               width: Dimensions.Width90-10,
                                decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(20),
-                                   border: Border.all(color: Colors.grey, width: 2),
+                                   borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                   border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()+3].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                                   child: Text(scriptureList[getTodaysDay()+3].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
                                ),
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 80,
+                                   height: Dimensions.Height60+20,
                                    child: Padding(
-                                     padding: const EdgeInsets.only(left: 10),
+                                     padding: EdgeInsets.only(left: Dimensions.Width10),
                                      child: Column(
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+3].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()+3].title.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Text(scriptureList[getTodaysDay()+3].date.toString()),
-                                         SizedBox(height: 3,),
+                                         SizedBox(height: Dimensions.Height2+1,),
                                          Row(
                                            children: [
                                              Wrap(children:
-                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             List.generate(5, (index) => Icon(Icons.star, color: Colors.amberAccent, size: Dimensions.Width16-1,))
                                              ),
                                            ],
                                          ),
@@ -670,7 +670,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            ],
                        ),
                          ),
-                         SizedBox(height: 20,),
+                         SizedBox(height: Dimensions.Height20,),
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: () {
@@ -687,36 +687,36 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            child: Row(
                            children: [
                              Container(
-                               height: 80,
-                               width: 80,
+                               height: Dimensions.Height60+20,
+                               width: Dimensions.Width90-10,
                                decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(20),
-                                   border: Border.all(color: Colors.grey, width: 2),
+                                   borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                   border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()+4].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                                   child: Text(scriptureList[getTodaysDay()+4].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
                                ),
                              ),
                              Expanded(
                                  child: Container(
-                                   height: 90,
+                                   height: Dimensions.Height100-10,
                                    child: Padding(
-                                     padding: const EdgeInsets.only(left: 10),
+                                     padding: EdgeInsets.only(left: Dimensions.Width10),
                                      child: Column(
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
                                          Text(scriptureList[getTodaysDay()+4].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                         SizedBox(height: 4,),
+                                         SizedBox(height: Dimensions.Height2*2,),
                                          Text(scriptureList[getTodaysDay()+4].title.toString()),
-                                         SizedBox(height: 4,),
+                                         SizedBox(height: Dimensions.Height2*2,),
                                          Text(scriptureList[getTodaysDay()+4].date.toString()),
-                                         SizedBox(height: 4,),
+                                         SizedBox(height: Dimensions.Height2*2,),
                                          Row(
                                            children: [
                                              Wrap(children:
-                                             List.generate(5, (index) => const Icon(Icons.star, color: Colors.amberAccent, size: 15,))
+                                             List.generate(5, (index) => Icon(Icons.star, color: Colors.amberAccent, size: Dimensions.Width16-1,))
                                              ),
                                            ],
                                          ),
@@ -728,10 +728,10 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                            ],
                        ),
                          ),
-                         SizedBox(height: 20,),
+                         SizedBox(height: Dimensions.Height20,),
                        ])
                    ),
-                  SizedBox(height: 20,)
+                  SizedBox(height: Dimensions.Height20,)
                 ],
               ),
             )

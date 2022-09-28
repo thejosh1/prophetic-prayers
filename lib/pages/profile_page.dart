@@ -235,28 +235,33 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 SizedBox(
                                                   width: Dimensions.Width6 + 2,
                                                 ),
-                                                Column(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.list,
-                                                      size: Dimensions.Height29,
-                                                      color: Color(0xFFD1D1D6),
-                                                    ),
-                                                    SizedBox(
-                                                      height:
-                                                          Dimensions.Height8,
-                                                    ),
-                                                    Text(
-                                                      "prayers",
-                                                      style: TextStyle(
-                                                          fontSize: Dimensions
-                                                              .Width14,
-                                                          fontWeight:
-                                                              FontWeight.w200,
-                                                          color: Color(
-                                                              0xFF1E2432)),
-                                                    ),
-                                                  ],
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Get.toNamed(RouteServices.PLANLISTSCREEN);
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.list,
+                                                        size: Dimensions.Height29,
+                                                        color: Color(0xFFD1D1D6),
+                                                      ),
+                                                      SizedBox(
+                                                        height:
+                                                            Dimensions.Height8,
+                                                      ),
+                                                      Text(
+                                                        "prayers",
+                                                        style: TextStyle(
+                                                            fontSize: Dimensions
+                                                                .Width14,
+                                                            fontWeight:
+                                                                FontWeight.w200,
+                                                            color: Color(
+                                                                0xFF1E2432)),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                                 SizedBox(
                                                   height: Dimensions
