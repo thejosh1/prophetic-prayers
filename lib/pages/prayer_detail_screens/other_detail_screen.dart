@@ -12,8 +12,8 @@ import 'package:share_plus/share_plus.dart';
 
 
 
-import '../services/notify_services.dart';
-import '../services/route_services.dart';
+import '../../services/notify_services.dart';
+import '../../services/route_services.dart';
 
 
 class OtherDetailScreen extends StatefulWidget {
@@ -40,39 +40,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = MaterialLocalizations.of(context);
     String currname = data[4].toString();
-    Future<void> _openTimePicker(BuildContext context) async {
-      final TimeOfDay? time = await showTimePicker(
-          context: context,
-          // initialEntryMode:
-          // TimePickerEntryMode.input,
-          initialTime: TimeOfDay.now()
-      );
-      if(time !=null) {
-        //set a scheduled notification based on the time
-        final _time = localizations.formatTimeOfDay(time).split(" ")[0];
-        print(_time);
-        setState(() {
-          NotifyServices.showNotification(
-              title: "Prayer reminder",
-              body: "Your reminder has been set to ${localizations.formatTimeOfDay(time)}",
-              payload: data[2]
-          );
-        });
-        int formattedtime = int.parse(_time.split(":")[0]);
-        print(formattedtime);
-        setState(() {
-          NotifyServices.showScheduledNotification(
-            title: "It's time to pray",
-            body: data[1],
-            payload: data[1],
-            //to implement this subtract the time the user chooses from the current time and pass it as a duration in datetime.add
-            scheduledDate: DateTime(int.parse(_time)),
-          );
-        });
-      }
-    }
     return  Scaffold(
         body: CustomScrollView(
           slivers: [
@@ -140,7 +108,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                                   children: [
                                     Icon(
                                       Icons.calendar_today,
-                                      color: Color(0xFFBEC2CE),
+                                      color: const Color(0xFFBEC2CE),
                                       size: Dimensions.Width15,
                                     ),
                                     SizedBox(width: Dimensions.Width6-1,),
@@ -150,13 +118,13 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                                       style: TextStyle(
                                           fontSize: Dimensions.Width14,
                                           fontWeight: FontWeight.bold,
-                                          color: Color(0xFFBEC2CE)),
+                                          color: const Color(0xFFBEC2CE)),
                                     )
                                   ],
                                 ),
                                 Icon(
                                   Icons.bookmark,
-                                  color: Color(0xFF1E2432),
+                                  color: const Color(0xFF1E2432),
                                   size: Dimensions.Width19,
                                 )
                               ],
@@ -164,7 +132,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                             SizedBox(
                               height: Dimensions.Height7,
                             ),
-                            Text(data[5], style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
+                            Text(data[4], style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
                             Text(
                               //title
                               data[1],
@@ -184,12 +152,12 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                                     InkWell(
                                       onTap: () async{
                                         ByteData imagebyte = await rootBundle.load("images/banner.jpeg");
+                                        const urlLink = "https://propheticprayers.page.link/muUh";
 
                                         final temp = await getTemporaryDirectory();
                                         final path = '${temp.path}/banner.jpeg';
                                         File(path).writeAsBytesSync(imagebyte.buffer.asUint8List());
-
-                                        await Share.shareFiles([path], text: "${data[2]}\n ${data[1]}",);
+                                        await Share.shareFiles([path], text: "${data[2]}\n ${data[1]}}\n $urlLink",);
                                       },
                                       child: Column(
                                         children: [

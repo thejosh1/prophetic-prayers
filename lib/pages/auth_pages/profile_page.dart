@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/services/testimony_services.dart';
 
-import '../controller/auth_controller.dart';
-import '../utils/dimensions.dart';
+import '../../controller/auth_controller.dart';
+import '../../utils/dimensions.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
-import '../controller/auth_controller.dart';
+import '../../controller/auth_controller.dart';
+import '../../utils/dimensions.dart';
 
 class TestimoniesScreen extends StatefulWidget {
   const TestimoniesScreen({Key? key}) : super(key: key);
@@ -17,8 +17,8 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color(0xffF7F8FA),
-      appBar: MyAppBar(),
+      backgroundColor: const Color(0xffF7F8FA),
+      appBar: const MyAppBar(),
       body:  SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -29,10 +29,10 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 20,
+                height: Dimensions.Height20,
               ),
               Container(
-                margin: EdgeInsets.only(left: 20, right: 6),
+                margin: EdgeInsets.only(left: Dimensions.Width20, right: Dimensions.Width6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -53,29 +53,29 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        const Text(
+                                        Text(
                                           "Testimonies",
                                           style: TextStyle(
-                                              fontSize: 14,
+                                              fontSize: Dimensions.Width16-2,
                                               fontWeight: FontWeight.w800,
-                                              color: Color(0xFF1E2432)),
+                                              color: const Color(0xFF1E2432)),
                                         ),
                                         SizedBox(
-                                          width: 2,
+                                          width: Dimensions.Width2,
                                         ),
                                         Container(
-                                          height: 27,
-                                          width: 27,
+                                          height: Dimensions.Height20+7,
+                                          width: Dimensions.Width20+7,
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(8),
-                                              color: Color(0xFFE2952A)),
+                                              borderRadius: BorderRadius.circular(Dimensions.Width6+2),
+                                              color: const Color(0xFFE2952A)),
                                           child: Center(
                                             child: Text(
                                               "${int.parse(snapdata.length.toString())}",
                                               style: TextStyle(
-                                                  fontSize: 14,
+                                                  fontSize: Dimensions.Width16-2,
                                                   fontWeight: FontWeight.w800,
-                                                  color: Color(0xFF1E2432)),
+                                                  color: const Color(0xFF1E2432)),
                                             ),
                                           ),
                                         )
@@ -84,18 +84,17 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                     GestureDetector(
                                       onTap: () {
                                         Get.toNamed(RouteServices.CREATETESTIMONYSCREEN);
-
                                       },
                                       child: Container(
-                                        width: 154,
-                                        height: 28,
+                                        width: Dimensions.Width150+4,
+                                        height: Dimensions.Height20+8,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
-                                          border: Border.all(color: Color(0xFF515BDE)),
+                                          borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                          border: Border.all(color: const Color(0xFF515BDE)),
                                         ),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
+                                          children: const [
                                             Icon(
                                               Icons.edit,
                                               color: Color(0xFF515BDE),
@@ -107,9 +106,9 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                     )
                                   ],
                                 ),
-                                SizedBox(height: 30,),
+                                SizedBox(height: Dimensions.Height20+10,),
                                 Container(
-                                  height: 600,
+                                  height: Dimensions.Height632-32,
                                   width: size.width,
                                   child: ListView.builder(
                                       physics: const BouncingScrollPhysics(),
@@ -130,11 +129,11 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                                 child: Row(
                                                   children: [
                                                     Container(
-                                                      height: 80,
-                                                      width: 80,
+                                                      height: Dimensions.Height60+20,
+                                                      width: Dimensions.Width90-10,
                                                       decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(20),
-                                                          border: Border.all(color: Colors.grey, width: 2),
+                                                          borderRadius: BorderRadius.circular(Dimensions.Width20),
+                                                          border: Border.all(color: Colors.grey, width: Dimensions.Width2),
                                                           color: Colors.grey
                                                         //color: data[1]
                                                       ),
@@ -147,8 +146,8 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                                           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                                                           return Center(
                                                               child: Text("${data["name"]}"[0].toUpperCase(),
-                                                                  style: const TextStyle(
-                                                                      fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white))
+                                                                  style: TextStyle(
+                                                                      fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4, color: Colors.white))
                                                           );
                                                         },
                                                       ),
@@ -156,9 +155,9 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                                     ),
                                                     Expanded(
                                                         child: Container(
-                                                          height: 100,
+                                                          height: Dimensions.Height100,
                                                           child: Padding(
-                                                            padding: const EdgeInsets.only(left: 10),
+                                                            padding: EdgeInsets.only(left: Dimensions.Width10),
                                                             child: Column(
                                                               mainAxisAlignment: MainAxisAlignment.start,
                                                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,17 +165,17 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                                                 Text("${snapdata[index]["title"]}",
                                                                   maxLines: 1,
                                                                   overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.bold),),
-                                                                SizedBox(height: 3,),
+                                                                SizedBox(height: Dimensions.Height2+1,),
                                                                 Text("${snapdata[index]["testimonies"]}", maxLines: 2, overflow: TextOverflow.ellipsis,),
-                                                                SizedBox(height: 3,),
+                                                                SizedBox(height: Dimensions.Height2+1,),
                                                                 Text("${snapdata[index]["timestamp"]}"),
-                                                                SizedBox(height: 3,),
+                                                                SizedBox(height: Dimensions.Height2+1,),
                                                                 Row(
                                                                   children: [
                                                                     Wrap(children:
-                                                                    List.generate(5, (index) => const Icon(
+                                                                    List.generate(5, (index) => Icon(
                                                                       Icons.star, color: Colors.amberAccent,
-                                                                      size: 15,))
+                                                                      size: Dimensions.Width16-1,))
                                                                     ),
                                                                   ],
                                                                 ),
@@ -188,7 +187,7 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                                   ],
                                                 ),
                                               ),
-                                              SizedBox(height: 20,),
+                                              SizedBox(height: Dimensions.Height20,),
                                             ]
                                         );
                                       }),
@@ -218,7 +217,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = AuthController.instance.auth.currentUser;
     // TODO: implement build
     return Container(
-      height: 100,
+      height: Dimensions.Height100,
       decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -230,7 +229,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           ]
       ),
-      padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
+      padding: EdgeInsets.only(left: Dimensions.Width20+4, right: Dimensions.Width20+4, top: Dimensions.Height40+6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -239,12 +238,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
               builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if(snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),);
+                  return Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4,));
                 } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                  return Text("Welcome ${data["name"]}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
+                  return Text("Welcome ${data["name"]}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width16+2),);
                 }
-                return const Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),);
+                return Text("Welcome", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width16+2),);
               }
           ),
           FutureBuilder(
@@ -252,8 +251,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if(snapshot.connectionState == ConnectionState.waiting) {
                   return Container(
-                    height: 30,
-                    width: 30,
+                    height: Dimensions.Height20+10,
+                    width: Dimensions.Width30,
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
@@ -264,8 +263,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 } else if(snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.exists) {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                   return Container(
-                    height: 30,
-                    width: 30,
+                    height: Dimensions.Height20+10,
+                    width: Dimensions.Width30,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
@@ -276,8 +275,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   );
                 }
                 return Container(
-                  height: 30,
-                  width: 30,
+                  height: Dimensions.Height20+10,
+                  width: Dimensions.Width30,
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
@@ -294,5 +293,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(126);
+  Size get preferredSize => Size.fromHeight(Dimensions.Height100+26);
 }

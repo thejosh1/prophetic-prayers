@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 
-import '../utils/dimensions.dart';
+import '../../utils/dimensions.dart';
 
 class TestimonyDetailPage extends StatelessWidget {
   const TestimonyDetailPage({Key? key}) : super(key: key);
@@ -53,7 +53,7 @@ class TestimonyDetailPage extends StatelessWidget {
             SizedBox(height: Dimensions.Height20+5,),
             Text(data[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),),
             Text(data[1],textAlign: TextAlign.left,
-            style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),)
+            style:  TextStyle(fontWeight: FontWeight.w400, fontSize: Dimensions.Width16),)
         ],
           ),
       ),
@@ -86,7 +86,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           SizedBox(height: Dimensions.Height20+1),
           Text(
-            'Testimony',
+            'testimony_screen',
             style: TextStyle(
               fontSize: Dimensions.Width30+4,
               fontWeight: FontWeight.w800,
@@ -99,5 +99,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(126);
+  Size get preferredSize => Size.fromHeight(Dimensions.Height100+26);
 }

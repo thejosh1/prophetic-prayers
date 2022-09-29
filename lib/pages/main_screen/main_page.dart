@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:prophetic_prayers/pages/prayer_category_screen.dart';
-import 'package:prophetic_prayers/pages/profile_page.dart';
-import 'package:prophetic_prayers/pages/testimonies_screen.dart';
-import 'package:prophetic_prayers/pages/welcome.dart';
+import 'package:prophetic_prayers/pages/main_screen/prayer_category_screen.dart';
+import 'package:prophetic_prayers/pages/auth_pages/profile_page.dart';
+import 'package:prophetic_prayers/pages/testimony_screen/testimonies_screen.dart';
+import 'package:prophetic_prayers/pages/main_screen/welcome.dart';
 
-import '../widgets/scroll_to_hide_widget.dart';
+import '../../widgets/scroll_to_hide_widget.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);

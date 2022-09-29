@@ -29,8 +29,8 @@ class TestimonyServices {
     await documentReference.set(data).whenComplete(() => Get.snackbar(
       "Testimonies",
       "Your testimony has been successfully added",
-      titleText: Text("Testimony", style: TextStyle(color: Colors.white)),
-      messageText: const Text("Your Testimony has been added successfully", style: TextStyle(color: Colors.white),),
+      titleText: Text("testimony_screen", style: TextStyle(color: Colors.white)),
+      messageText: const Text("Your testimony_screen has been added successfully", style: TextStyle(color: Colors.white),),
       backgroundColor: const Color(0xff515BDE),
       colorText: Colors.white
     )).catchError((e) => Get.snackbar("Error", e,

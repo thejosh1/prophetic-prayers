@@ -56,7 +56,8 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   url_launcher: ^6.1.5
   http:
-  firebase_dynamic_links: ^4.3.8
+  firebase_dynamic_links: ^2.0.9
+
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.10.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/app_logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -144,6 +151,7 @@ flutter:
     - images/boy_white.jfif
     - images/army_of_david.jpeg
     - images/banner.jpeg
+    - images/app_logo.png
 
   fonts:
     - family: Poppins

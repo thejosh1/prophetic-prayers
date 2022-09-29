@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/pages/prayer_detail_screens/prayer_detail_screen.dart';
 
-import '../controller/scripture_controller.dart';
-import '../models/prayers.dart';
-import '../utils/dimensions.dart';
+import '../../controller/scripture_controller.dart';
+import '../../models/prayers.dart';
+import '../../utils/dimensions.dart';
 import 'package:get/get.dart';
 
 class PlanListScreen extends StatefulWidget {

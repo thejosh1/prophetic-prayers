@@ -5,18 +5,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
-import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/pages/testimony_screen/create_testimony_screen.dart';
+import 'package:prophetic_prayers/pages/prayer_detail_screens/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/pages/screens/marriage_screen.dart';
-import 'package:prophetic_prayers/pages/screens/prayer_screen.dart';
 import 'package:prophetic_prayers/pages/screens/warfare_screen.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../controller/auth_controller.dart';
-import '../models/prayers.dart';
-import '../services/notify_services.dart';
-import '../utils/dimensions.dart';
+import '../../controller/auth_controller.dart';
+import '../../models/prayers.dart';
+import '../../services/notify_services.dart';
+import '../../utils/dimensions.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controller/auth_controller.dart';
-import '../controller/scripture_controller.dart';
-import '../services/route_services.dart';
-import '../utils/dimensions.dart';
+import '../../controller/auth_controller.dart';
+import '../../controller/scripture_controller.dart';
+import '../../services/route_services.dart';
+import '../../utils/dimensions.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

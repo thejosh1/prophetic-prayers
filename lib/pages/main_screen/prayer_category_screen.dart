@@ -4,12 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/pages/prayer_detail_screens/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
-import '../controller/auth_controller.dart';
-import '../models/prayers.dart';
-import '../services/route_services.dart';
+import '../../controller/auth_controller.dart';
+import '../../models/prayers.dart';
+import '../../services/route_services.dart';
 
 class PrayerCategoryScreen extends StatefulWidget {
   const PrayerCategoryScreen({Key? key}) : super(key: key);

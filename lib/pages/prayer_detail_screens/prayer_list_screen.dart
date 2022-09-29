@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/controller/scripture_controller.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/pages/prayer_detail_screens/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
-import '../models/prayers.dart';
-import '../services/route_services.dart';
+import '../../models/prayers.dart';
+import '../../services/route_services.dart';
 
 class PrayerListScreen extends StatefulWidget {
   const PrayerListScreen({Key? key}) : super(key: key);

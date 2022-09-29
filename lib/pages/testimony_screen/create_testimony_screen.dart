@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
-import 'package:prophetic_prayers/pages/main_page.dart';
 import 'package:prophetic_prayers/services/testimony_services.dart';
 
-import '../widgets/big_text.dart';
+import '../../services/route_services.dart';
+import '../../utils/dimensions.dart';
+import '../../widgets/big_text.dart';
 
 class CreateTestimonyScreen extends StatelessWidget {
   const CreateTestimonyScreen({Key? key}) : super(key: key);
@@ -45,10 +45,10 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
               left: 0,
               right: 0,
               child: Container(
-                height: 440,
+                height: Dimensions.Height44*10,
                 width: double.maxFinite,
                 decoration: const BoxDecoration(
-                  color: const Color(0xff515BDE)
+                  color: Color(0xff515BDE)
                 ),
               ),
             ),
@@ -56,7 +56,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
               left: 0,
               right: 0,
               child: Container(
-                margin: EdgeInsets.only(left: 20, right: 20, top: 50),
+                margin: EdgeInsets.only(left: Dimensions.Width20, right: Dimensions.Width20, top: Dimensions.Height40+10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -66,23 +66,23 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                       },
                       child: const Icon(Icons.clear, color: Colors.white,),
                     ),
-                    const Text("Create Testimony", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
+                    Text("Create testimony_screen", style: TextStyle(fontSize: Dimensions.Width16+2, fontWeight: FontWeight.bold, color: Colors.white),),
                     GestureDetector(
                       onTap: () {
-                        Get.offAll(()=> const MainPage());
+                        Get.offAll(RouteServices.INITIAL);
                       },
                       child: Container(
-                        height: 30,
-                        width: 65,
+                        height: Dimensions.Height20+10,
+                        width: Dimensions.Width90-25,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40),
+                          borderRadius: BorderRadius.circular(Dimensions.Width30+10),
                           color: Colors.white
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(Icons.home, size: 16,),
-                            Text("Home")
+                          children: [
+                            Icon(Icons.home, size: Dimensions.Width16,),
+                            const Text("Home")
                           ],
                         ),
                       ),
@@ -95,87 +95,103 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
               top: 100,
               child: Container(
                 child: Container(
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                  padding: EdgeInsets.only(left: Dimensions.Width20, right: Dimensions.Width20, top: Dimensions.Height20),
                   width: MediaQuery.of(context).size.width,
-                  height: 700,
-                  decoration: const BoxDecoration(
+                  height: Dimensions.Height500+200,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(Dimensions.Width20+10),
+                      topRight: Radius.circular(Dimensions.Width20+10),
                     ),
                     color: Colors.white
                   ),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 300,
+                    height: Dimensions.Height500-200,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 20,),
+                        SizedBox(height: Dimensions.Height20,),
                         Form(
+                          key: _formKey,
                             child: Column(
                                 children: [
                                   TextFormField(
-                                    decoration: const InputDecoration.collapsed(
+                                    decoration: InputDecoration.collapsed(
                                       hintText: "Title here",
-                                      hintStyle: TextStyle(color: Colors.blueGrey, fontSize: 24, fontWeight: FontWeight.w600)
+                                      hintStyle: TextStyle(color: Colors.blueGrey, fontSize: Dimensions.Width20+4, fontWeight: FontWeight.w600)
                                     ),
                                     controller: _titleController,
-                                    style: const TextStyle(
-                                        fontSize: 24.0,
+                                    style: TextStyle(
+                                        fontSize: Dimensions.Width20+4,
                                         fontWeight: FontWeight.bold,
                                       color: Colors.black
                                     ),
+                                      validator: (value) {
+                                        if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                                          return "please enter a text";
+                                        } else {
+                                          return null;
+                                        }
+                                      }
                                   ),
-                                  SizedBox(height: 20,),
+                                  SizedBox(height: Dimensions.Height20,),
                                   Container(
-                                    width: 320,
+                                    width: Dimensions.Width335-15,
                                     child: TextFormField(
                                       maxLines: null,
                                       keyboardType: TextInputType.multiline,
                                       controller: _noteController,
-                                      decoration: const InputDecoration.collapsed(
-                                          hintText: "Testimony here",
-                                          hintStyle: TextStyle(color: Colors.blueGrey, fontSize: 24, fontWeight: FontWeight.w600)
+                                      decoration: InputDecoration.collapsed(
+                                          hintText: "testimony_screen here",
+                                          hintStyle: TextStyle(color: Colors.blueGrey, fontSize: Dimensions.Width20+4, fontWeight: FontWeight.w600)
                                       ),
-                                      style: const TextStyle(
-                                          fontSize: 18.0,
+                                      style: TextStyle(
+                                          fontSize: Dimensions.Width16+2,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.black
                                       ),
+                                        validator: (value) {
+                                          if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                                            return "please enter a text";
+                                          } else {
+                                            return null;
+                                          }
+                                        }
                                     ),
                                   ),
-                                  SizedBox(height: 200),
+                                  SizedBox(height: Dimensions.Height270-70),
                                   GestureDetector(
                                     onTap: () async{
-                                      _formKey.currentState?.save();
-                                      TestimonyServices.addItem(
-                                          title: _titleController.text.trim(),
-                                          testimonies: _noteController.text.trim(),
-                                          useruid: AuthController.instance.auth.currentUser!.uid.toString(),
-                                          timestamp: DateFormat.yMMMEd().format(DateTime.now()).toString()
-                                      );
+                                      if(_formKey.currentState!.validate()) {
+                                        TestimonyServices.addItem(
+                                            title: _titleController.text.trim(),
+                                            testimonies: _noteController.text.trim(),
+                                            useruid: AuthController.instance.auth.currentUser!.uid.toString(),
+                                            timestamp: DateFormat.yMMMEd().format(DateTime.now()).toString()
+                                        );
+                                      }
                                       Get.back();
                                       },
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(Dimensions.Width16-4),
                                       child: Container(
                                         width: double.infinity,
-                                        height: 50,
+                                        height: Dimensions.Height44+8,
                                         color: const Color(0xff515BDE),
                                         alignment: Alignment.center,
-                                        child: const Text(
+                                        child: Text(
                                           'Submit',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 18,
+                                            fontSize: Dimensions.Width16+2,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 30),
+                                  SizedBox(height: Dimensions.Height20+10),
                                 ]
                             )
                         )
@@ -212,7 +228,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
       //               TextFormField(
       //                 controller: _noteController,
       //                 decoration: const InputDecoration.collapsed(
-      //                   hintText: "Testimony",
+      //                   hintText: "testimony_screen",
       //                 ),
       //                 style: TextStyle(
       //                     fontSize: 18.0,
@@ -280,7 +296,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = AuthController.instance.auth.currentUser;
     // TODO: implement build
     return Container(
-      height: 100,
+      height: Dimensions.Height100,
       decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -292,13 +308,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           ]
       ),
-      padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
+      padding: EdgeInsets.only(left: Dimensions.Width20+4, right: Dimensions.Width20+4, top: 46),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          Icon(Icons.arrow_back, size: 24,),
-          SizedBox(width: 20,),
-          BigText(text: "Testimony")
+        children: [
+          Icon(Icons.arrow_back, size: Dimensions.Width20+4,),
+          SizedBox(width: Dimensions.Width20,),
+          const BigText(text: "testimony_screen")
         ],
       ),
     );
@@ -306,5 +322,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(126);
+  Size get preferredSize => Size.fromHeight(Dimensions.Height100+26);
 }

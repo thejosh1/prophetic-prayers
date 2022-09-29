@@ -1,24 +1,24 @@
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/pages/create_testimony_screen.dart';
+import 'package:prophetic_prayers/pages/testimony_screen/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/auth_pages/edit_screen.dart';
-import 'package:prophetic_prayers/pages/main_page.dart';
-import 'package:prophetic_prayers/pages/other_detail_screen.dart';
-import 'package:prophetic_prayers/pages/prayer_detail_screen.dart';
+import 'package:prophetic_prayers/pages/main_screen/main_page.dart';
+import 'package:prophetic_prayers/pages/prayer_detail_screens/other_detail_screen.dart';
+import 'package:prophetic_prayers/pages/prayer_detail_screens/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/pages/screens/academy_screen.dart';
 import 'package:prophetic_prayers/pages/screens/blessings_screen.dart';
 import 'package:prophetic_prayers/pages/screens/calling_screen.dart';
 import 'package:prophetic_prayers/pages/screens/discipline_screen.dart';
 import 'package:prophetic_prayers/pages/screens/prayer_screen.dart';
-import 'package:prophetic_prayers/pages/testimony_detail_page.dart';
+import 'package:prophetic_prayers/pages/testimony_screen/testimony_detail_page.dart';
 
-import '../pages/about_screen.dart';
-import '../pages/plan_list.dart';
-import '../pages/prayer_list_screen.dart';
+import '../pages/main_screen/about_screen.dart';
+import '../pages/prayer_detail_screens/plan_list.dart';
+import '../pages/prayer_detail_screens/prayer_list_screen.dart';
 import '../pages/screens/career_screen.dart';
 import '../pages/screens/health_screen.dart';
 import '../pages/screens/lifestyle_screen.dart';
 import '../pages/screens/warfare_screen.dart';
-import '../pages/splash_screen.dart';
+import '../pages/main_screen/splash_screen.dart';
 
 class RouteServices {
   static const SPLASHSCREEN = "/splash-screen";

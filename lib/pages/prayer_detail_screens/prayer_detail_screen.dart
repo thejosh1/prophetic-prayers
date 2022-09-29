@@ -9,8 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../services/notify_services.dart';
-import '../services/route_services.dart';
+import '../../services/notify_services.dart';
+import '../../services/route_services.dart';
 
 
 class PrayerDetailScreen extends StatefulWidget {
@@ -37,39 +37,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = MaterialLocalizations.of(context);
     String currname = data[5].toString();
-    Future<void> _openTimePicker(BuildContext context) async {
-      final TimeOfDay? time = await showTimePicker(
-          context: context,
-          // initialEntryMode:
-          // TimePickerEntryMode.input,
-          initialTime: TimeOfDay.now()
-      );
-      if(time !=null) {
-        //set a scheduled notification based on the time
-        final _time = localizations.formatTimeOfDay(time).split(" ")[0];
-        print(_time);
-        setState(() {
-          NotifyServices.showNotification(
-            title: "Prayer reminder",
-            body: "Your reminder has been set to ${localizations.formatTimeOfDay(time)}",
-            payload: data[2]
-          );
-        });
-        int formattedtime = int.parse(_time.split(":")[0]);
-        print(formattedtime);
-        setState(() {
-          NotifyServices.showScheduledNotification(
-            title: "It's time to pray",
-            body: data[2],
-            payload: data[2],
-            //to implement this subtract the time the user chooses from the current time and pass it as a duration in datetime.add
-            scheduledDate: DateTime(int.parse(_time)),
-          );
-        });
-      }
-    }
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -164,7 +132,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           Text(data[5], style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
                           Text(
                             //title
-                            data[2],
+                            data[1],
                             style: TextStyle(
                                 color: const Color(0xFF1E2432),
                                 fontSize: Dimensions.Width28,
@@ -181,12 +149,12 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                   InkWell(
                                     onTap: () async{
                                      ByteData imagebyte = await rootBundle.load("images/banner.jpeg");
+                                     const urlLink = "https://propheticprayers.page.link/muUh";
 
                                       final temp = await getTemporaryDirectory();
                                       final path = '${temp.path}/banner.jpeg';
                                       File(path).writeAsBytesSync(imagebyte.buffer.asUint8List());
-
-                                      await Share.shareFiles([path], text: "${data[2]}\n ${data[1]}",);
+                                      await Share.shareFiles([path], text: "${data[1]}\n ${data[2]}}\n $urlLink",);
                                     },
                                     child: Column(
                                       children: [
@@ -285,7 +253,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                               Text("Verse", style: TextStyle(color: const Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
                               Text(
                                 //scripture verse
-                                data[3],
+                                data[2],
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: Dimensions.Width16,
@@ -294,10 +262,10 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                 ),
                               ),
                               SizedBox(height: Dimensions.Height10*2,),
-                              Text("Prayer Point", style: TextStyle(color: const Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
+                              //Text("Prayer Point", style: TextStyle(color: const Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),),
                               Text(
                                 //prayer point
-                                data[1],
+                                data[3],
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: Dimensions.Width16,

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:get/get.dart';
 
-import '../main_page.dart';
+import '../../utils/dimensions.dart';
+import '../main_screen/main_page.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({Key? key}) : super(key: key);
@@ -29,9 +30,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
             backgroundColor: Colors.black,
             colorText: Colors.white,
             snackPosition: SnackPosition.TOP,
-            titleText: Text("Profile Update Failed"),
+            titleText: const Text("Profile Update Failed"),
             messageText: Text(
-              e.message.toString(), style: TextStyle(color: Colors.white),
+              e.message.toString(), style: const TextStyle(color: Colors.white),
             )
         );
         print(e.message.toString());
@@ -84,11 +85,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
 
   @override
-  Widget build(BuildContext context) => _isEmailVerified ? const MainPage() : const Scaffold(
-    backgroundColor: Color(0xffF7F8FA),
+  Widget build(BuildContext context) => _isEmailVerified ? const MainPage() : Scaffold(
+    backgroundColor: const Color(0xffF7F8FA),
     body: Center(
       child: Text("Please Click the link in your email to verify your account", textAlign: TextAlign.center, style: TextStyle(
-        fontWeight: FontWeight.w400, fontSize: 24, color: Colors.black45
+        fontWeight: FontWeight.w400, fontSize: Dimensions.Width20+4, color: Colors.black45
       ),)
     ),
   );

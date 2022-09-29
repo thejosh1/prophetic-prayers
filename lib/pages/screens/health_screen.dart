@@ -5,7 +5,7 @@ import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
 import '../../models/health.dart';
-import '../prayer_detail_screen.dart';
+import '../prayer_detail_screens/prayer_detail_screen.dart';
 
 class HealthScreen extends StatefulWidget {
   const HealthScreen({Key? key}) : super(key: key);

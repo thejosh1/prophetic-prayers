@@ -5,7 +5,7 @@ import 'package:prophetic_prayers/models/lifestyle.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
-import '../prayer_detail_screen.dart';
+import '../prayer_detail_screens/prayer_detail_screen.dart';
 
 
 class LifeStyleScreen extends StatefulWidget {
