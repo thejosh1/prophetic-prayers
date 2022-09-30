@@ -40,7 +40,7 @@ class _PlanListScreenState extends State<PlanListScreen> {
             ),
             Divider(
               height: Dimensions.Height2,
-              color: Color(0xFFEAECEF),
+              color: const Color(0xFFEAECEF),
               thickness: Dimensions.Width2,
             ),
             Container(

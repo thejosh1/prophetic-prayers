@@ -132,7 +132,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                             SizedBox(
                               height: Dimensions.Height7,
                             ),
-                            Text(data[4], style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
+                            Text("Prayers For Today", style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
                             Text(
                               //title
                               data[1],

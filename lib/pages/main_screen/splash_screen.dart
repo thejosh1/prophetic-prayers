@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/auth_controller.dart';
 import '../../controller/scripture_controller.dart';
 import '../../services/route_services.dart';
 import '../../utils/dimensions.dart';

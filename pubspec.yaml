@@ -57,6 +57,7 @@ dependencies:
   url_launcher: ^6.1.5
   http:
   firebase_dynamic_links: ^2.0.9
+  rename: ^2.0.1
 
 
 dev_dependencies:
@@ -152,6 +153,7 @@ flutter:
     - images/army_of_david.jpeg
     - images/banner.jpeg
     - images/app_logo.png
+    - images/about_image.jpeg
 
   fonts:
     - family: Poppins

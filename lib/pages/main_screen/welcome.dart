@@ -770,7 +770,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           launchUrl(url);
                                         }
                                       } catch(e) {
-                                        print("No network");
                                         Get.snackbar("Connection error", "Please Connect to the internet",
                                             snackPosition: SnackPosition.TOP
                                         );
@@ -808,7 +807,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           launchUrl(url);
                                         }
                                       } catch(e) {
-                                        print("No network");
                                         Get.snackbar("Connection error", "Please Connect to the internet",
                                             snackPosition: SnackPosition.TOP
                                         );
@@ -846,7 +844,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ],
       ): SizedBox(
         width: size.width,
-        child: Center(
+        child: const Center(
           child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black54),),),
       )
     );
@@ -925,7 +923,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: AssetImage("images/Icon-48.png")
+                            image: AssetImage("images/app_logo.png")
                         )
                     ),
                   );
@@ -949,7 +947,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: AssetImage("images/Icon-48.png")
+                      image: AssetImage("images/app_logo.png")
                     )
                   ),
                 );

@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
             primarySwatch: Colors.blue,
             fontFamily: 'Poppins',
         ),
-         initialRoute: RouteServices.INITIAL,
+         //initialRoute: RouteServices.SPLASHSCREEN,
         getPages: RouteServices.routes
     );
   }

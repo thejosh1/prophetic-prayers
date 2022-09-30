@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../utils/dimensions.dart';
+
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -17,12 +19,12 @@ class _AboutScreenState extends State<AboutScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(top: 40),
+          margin: EdgeInsets.only(top: Dimensions.Height40),
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(left: 20),
-                height: 50,
+                margin: EdgeInsets.only(left: Dimensions.Width20),
+                height: Dimensions.Height40+10,
                 width: size.width,
                 child: Row(
                   children: [

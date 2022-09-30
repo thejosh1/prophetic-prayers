@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator()
                 );
               } else if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData &&

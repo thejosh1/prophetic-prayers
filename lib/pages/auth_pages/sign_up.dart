@@ -62,26 +62,27 @@ class _SignUpFormState extends State<SignUpForm> {
                   onPressed: () async{
                    upload(true);
                    setState(() {});
-                   Navigator.of(context, rootNavigator: true).pop(
-                     Get.snackbar(
-                       "success",
-                       "picture has been added successfully click the signup button to complete your signup",
-                       titleText: const Text("success", style: TextStyle(color: Colors.white),),
-                       messageText: const Text("picture has been added successfully click the signup button to complete your signup",
-                           style: TextStyle(color: Colors.white)),
-                       backgroundColor: const Color(0xff515BDE),
-                       colorText: Colors.white
-                     )
-                   );
+                   Navigator.of(context, rootNavigator: true).pop();
 
-                    },
-                  child: const Text("browse gallery")
+                 },
+                 child: const Text("browse gallery")
               ),
               TextButton(
                   onPressed: () async{
                     upload(false);
                     setState(() {});
-                    Navigator.of(context).pop();
+                    Navigator.of(context, rootNavigator: true).pop(
+                      Get.snackbar(
+                          "success",
+                          "picture has been added successfully click the signup button to complete your signup",
+                          titleText: const Text("success", style: TextStyle(color: Colors.white),),
+                          messageText: const Text("picture has been added successfully click the signup button to complete your signup",
+                              style: TextStyle(color: Colors.white)),
+                          backgroundColor: const Color(0xff515BDE),
+                          colorText: Colors.white
+                      )
+                    );
+
                   },
                   child: const Text("Take selfie")
               )
@@ -333,6 +334,7 @@ class _SignUpFormState extends State<SignUpForm> {
     if (gallery) {
       photo =
       await picker.pickImage(source: ImageSource.gallery);
+
       setState(() {});
     } else {
       photo =
@@ -346,7 +348,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
     try {
       await storage.ref("avatar/${uploadFile.path}").putFile(
-        uploadFile != null ? uploadFile : File("images/adrianna-geo.png"));
+        uploadFile != null ? uploadFile : File("images/app_logo.png"));
     } on FirebaseException catch(e) {
       print(e);
     }

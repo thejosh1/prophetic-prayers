@@ -9,6 +9,7 @@ import 'package:prophetic_prayers/pages/main_screen/main_page.dart';
 import '../main.dart';
 import '../pages/auth_pages/sign_up.dart';
 import '../pages/main_screen/splash_screen.dart';
+import '../services/route_services.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -29,7 +30,7 @@ class AuthController extends GetxController {
     } else if(user != null && !user.emailVerified) {
       Get.offAll(()=> const VerificationScreen());
     } else {
-      Get.offAll(()=> const SplashScreen());
+      Get.offAllNamed(RouteServices.SPLASHSCREEN);
     }
   }
 

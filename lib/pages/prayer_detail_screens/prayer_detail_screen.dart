@@ -129,7 +129,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                           SizedBox(
                             height: Dimensions.Height7,
                           ),
-                          Text(data[5], style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
+                          Text("Prayers For Today", style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
                           Text(
                             //title
                             data[1],

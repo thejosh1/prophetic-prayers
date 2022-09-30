@@ -92,7 +92,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
               )
             ),
             Positioned(
-              top: 100,
+              top: Dimensions.Height100,
               child: Container(
                 child: Container(
                   padding: EdgeInsets.only(left: Dimensions.Width20, right: Dimensions.Width20, top: Dimensions.Height20),
@@ -164,14 +164,15 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                                   GestureDetector(
                                     onTap: () async{
                                       if(_formKey.currentState!.validate()) {
-                                        TestimonyServices.addItem(
+                                       TestimonyServices.addItem(
                                             title: _titleController.text.trim(),
                                             testimonies: _noteController.text.trim(),
                                             useruid: AuthController.instance.auth.currentUser!.uid.toString(),
                                             timestamp: DateFormat.yMMMEd().format(DateTime.now()).toString()
                                         );
+                                        Get.back();
                                       }
-                                      Get.back();
+
                                       },
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(Dimensions.Width16-4),
@@ -204,79 +205,6 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
           ],
         ),
       )
-      // SingleChildScrollView(
-      //   child: Container(
-      //     padding: const EdgeInsets.symmetric(horizontal: 22),
-      //     child: Column(
-      //       children: [
-      //         SizedBox(height: 20),
-      //         Form(
-      //           child: Column(
-      //             children: [
-      //               TextFormField(
-      //                 decoration: const InputDecoration.collapsed(
-      //                   hintText: "Title",
-      //                 ),
-      //                 controller: _titleController,
-      //                 style: TextStyle(
-      //                     fontSize: 16.0,
-      //                     fontWeight: FontWeight.bold
-      //                 ),
-      //               ),
-      //               const Divider(),
-      //               SizedBox(height: 23),
-      //               TextFormField(
-      //                 controller: _noteController,
-      //                 decoration: const InputDecoration.collapsed(
-      //                   hintText: "testimony_screen",
-      //                 ),
-      //                 style: TextStyle(
-      //                     fontSize: 18.0,
-      //                     fontWeight: FontWeight.bold
-      //                 ),
-      //               )
-      //             ],
-      //           ),
-      //         ),
-      //         SizedBox(height: 300),
-      //         GestureDetector(
-      //           onTap: () async{
-      //             _formKey.currentState?.save();
-      //             TestimonyServices.addItem(
-      //                 title: _titleController.text.trim(),
-      //                 testimonies: _noteController.text.trim(),
-      //                 useruid: AuthController.instance.auth.currentUser!.uid.toString(),
-      //                 prayertype: data[0].toString(),
-      //                 timestamp: DateFormat.yMMMEd().format(DateTime.now()).toString()
-      //             );
-      //             print("a text" + _titleController.text.trim());
-      //             print("a text" + _noteController.text.trim());
-      //             print("a text " + AuthController.instance.auth.currentUser!.uid.toString());
-      //             Get.back();
-      //           },
-      //           child: ClipRRect(
-      //             borderRadius: BorderRadius.circular(12),
-      //             child: Container(
-      //               width: double.infinity,
-      //               height: 50,
-      //               color: const Color(0xff515BDE),
-      //               alignment: Alignment.center,
-      //               child: const Text(
-      //                 'Submit',
-      //                 style: TextStyle(
-      //                   color: Colors.white,
-      //                   fontSize: 18,
-      //                   fontWeight: FontWeight.w700,
-      //                 ),
-      //               ),
-      //             ),
-      //           ),
-      //         ),
-      //         SizedBox(height: 30),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 
