@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../services/route_services.dart';
 import '../../utils/dimensions.dart';
 
 class EditScreen extends StatelessWidget {
@@ -111,14 +113,14 @@ class _EditFormState extends State<EditForm> {
             key: formKey,
             child:  Column(
               children: [
-                SizedBox(height: 40),
+                SizedBox(height: Dimensions.Height40),
                 TextFormField(
                   style: const TextStyle(),
                   controller: _nameController,
                   decoration: InputDecoration(
                       hintText: 'Name',
                       hintStyle: TextStyle(
-                        color: Color(0xffBEC2CE),
+                        color: const Color(0xffBEC2CE),
                         fontSize: Dimensions.Width16,
                       ),
                       prefixIcon: const Icon(
@@ -170,90 +172,6 @@ class _EditFormState extends State<EditForm> {
                   },
                 ),
                 SizedBox(height: Dimensions.Height44-4),
-                // TextFormField(
-                //   style: const TextStyle(),
-                //   controller: _passwordController,
-                //   obscureText: _isObscure,
-                //   decoration: InputDecoration(
-                //       hintText: 'password',
-                //       hintStyle: TextStyle(
-                //         color: Color(0xffBEC2CE),
-                //         fontSize: Dimensions.Width16,
-                //       ),
-                //       prefixIcon: const Icon(
-                //         Icons.lock,
-                //         color: Color(0xffBEC2CE),
-                //       ),
-                //       suffixIcon: IconButton(
-                //         icon: Icon(
-                //             _isObscure ? Icons.visibility_off:Icons.visibility,
-                //             color: Color(0xffBEC2CE)
-                //         ), onPressed: () {
-                //         setState(() {
-                //           _isObscure = !_isObscure;
-                //         });
-                //       },
-                //       ),
-                //       border: const UnderlineInputBorder(
-                //         borderSide: BorderSide(
-                //             width: 1,
-                //             color: Color(0xffBEC2CE)
-                //         ),
-                //       )
-                //   ),
-                //   validator: (value) {
-                //     if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
-                //       return "please password should contain 1 Upper case, 1 lowercase, 1 Numeric Number, 1 Special Character";
-                //     } else {
-                //       return null;
-                //     }
-                //   },
-                // ),
-                // SizedBox(height: Dimensions.height22+1),
-                // TextFormField(
-                //   style: const TextStyle(),
-                //   controller: _confirmPasswordController,
-                //   obscureText: _isObscure,
-                //   decoration: InputDecoration(
-                //       hintText: 'confirm password',
-                //       hintStyle: TextStyle(
-                //         color: const Color(0xffBEC2CE),
-                //         fontSize: Dimensions.Width16,
-                //       ),
-                //       prefixIcon: const Icon(
-                //         Icons.lock,
-                //         color: Color(0xffBEC2CE),
-                //       ),
-                //       suffixIcon: IconButton(
-                //         icon: Icon(
-                //             _isObscure ? Icons.visibility_off:Icons.visibility,
-                //             color: Color(0xffBEC2CE)
-                //         ), onPressed: () {
-                //         setState(() {
-                //           _isObscure = !_isObscure;
-                //         });
-                //       },
-                //       ),
-                //       border: const UnderlineInputBorder(
-                //         borderSide: BorderSide(
-                //             width: 1,
-                //             color: Color(0xffBEC2CE)
-                //         ),
-                //       )
-                //   ),
-                //   validator: (value) {
-                //     if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
-                //       return "please password should contain 1 Upper case, 1 lowercase, 1 Numeric Number, 1 Special Character";
-                //     } else if(value != _passwordController.text) {
-                //       return "passwords does not match";
-                //     }
-                //     else {
-                //       newPassword = value;
-                //       return null;
-                //     }
-                //   },
-                // ),
-                //  SizedBox(height: Dimensions.height22+1),
                 GestureDetector(
                   onTap: (() {
                     showInformationDialogue(context);
@@ -286,42 +204,18 @@ class _EditFormState extends State<EditForm> {
                     await uploadPfp().then((value) {});
                     String value = await getDownload();
                     if(formKey.currentState!.validate()) {
-                      AuthController.instance.edit(_emailController.text.trim(),
-                          _nameController.text.trim(), value);
-                      AuthController.instance.Logout();                      // if(newPassword.isNotEmpty) {
-                      //   try {
-                      //     AuthController.instance.resetPassword(
-                      //       _emailController.text.trim()
-                      //     );
-                      //     FirebaseAuth.instance.signOut();
-                      //     Get.snackbar("Password update", "check email for new password",
-                      //         backgroundColor: Colors.black,
-                      //         colorText: Colors.white,
-                      //         snackPosition: SnackPosition.BOTTOM,
-                      //         titleText: const Text("Password update"),
-                      //         messageText: const Text(
-                      //           "check email for new password", style: TextStyle(color: Colors.white),
-                      //         )
-                      //     );
-                      //   } catch(e) {
-                      //     Get.snackbar("Error", e.toString(),
-                      //         backgroundColor: Colors.black,
-                      //         colorText: Colors.white,
-                      //         snackPosition: SnackPosition.BOTTOM,
-                      //         titleText: const Text("Error"),
-                      //         messageText: Text(
-                      //           e.toString(), style: const TextStyle(color: Colors.white),
-                      //         )
-                      //     );
-                      //   }
-                      // }
+                      AuthController.instance.edit(_emailController.value.text.trim(),
+                          _nameController.text.trim(),
+                          value
+                      );
+                      AuthController.instance.Logout();
                     }
                   },
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(Dimensions.Width16-4),
                     child: Container(
                       width: double.infinity,
-                      height: Dimensions.Height10*5,
+                      height: Dimensions.Height40+10,
                       color: const Color(0xff515BDE),
                       alignment: Alignment.center,
                       child: Text(
@@ -336,16 +230,33 @@ class _EditFormState extends State<EditForm> {
                   ),
                 ),
                 SizedBox(height: Dimensions.Height60/2),
-                GestureDetector(
-                  onTap: ((){
-                    AuthController.instance.Logout();
-                  }),
-                  child: const Text(
-                    'LogOut',
-                    style: TextStyle(
-                      color: Color(0xffBEC2CE),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: (() {
+                        var auth = FirebaseAuth.instance.currentUser?.email;
+                        AuthController.instance.resetPassword(auth!);
+                      }),
+                      child: const Text(
+                        'Reset Password',
+                        style: TextStyle(
+                          color: Color(0xffBEC2CE),
+                        ),
+                      ),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: ((){
+                        AuthController.instance.Logout();
+                      }),
+                      child: const Text(
+                        'LogOut',
+                        style: TextStyle(
+                          color: Color(0xffBEC2CE),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),

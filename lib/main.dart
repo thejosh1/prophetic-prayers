@@ -17,9 +17,9 @@ Future<void> main() async{
   await NotifyServices.init(initScheduled: true);
   await Firebase.initializeApp().then((value) => Get.put(AuthController()));
   //AuthController.instance.Logout();
-  NotifyServices.showScheduledDailyNotification(
+  NotifyServices.showScheduledWeeklyNotification2(
       title: "Reminder",
-      body: "Prophetic Prayers for children live",
+      body: "",
       payload: "$WelcomeScreen",
       scheduledDate: DateTime.now());
   NotifyServices.showScheduledWeeklyNotification(

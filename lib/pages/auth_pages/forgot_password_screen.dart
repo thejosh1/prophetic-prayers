@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:prophetic_prayers/pages/auth_pages/login.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -113,69 +112,6 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                         ),
                       ),
                     ),
-                    // TextFormField(
-                    //   style: const TextStyle(),
-                    //   obscureText: true,
-                    //   controller: _passwordController,
-                    //   decoration: const InputDecoration(
-                    //       hintText: 'password',
-                    //       hintStyle: TextStyle(
-                    //         color: Color(0xffBEC2CE),
-                    //         fontSize: 16,
-                    //       ),
-                    //       prefixIcon: Icon(
-                    //         Icons.lock,
-                    //         color: Color(0xffBEC2CE),
-                    //       ),
-                    //       border: UnderlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //             width: 1,
-                    //             color: Color(0xffBEC2CE)
-                    //         ),
-                    //       )
-                    //   ),
-                    //   validator: (value) {
-                    //     if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
-                    //       return "please password should contain 1 Upper case, 1 lowercase, 1 Numeric Number, 1 Special Character";
-                    //     } else {
-                    //       return null;
-                    //     }
-                    //   },
-                    // ),
-                    // const SizedBox(height: 23),
-                    // TextFormField(
-                    //   style: const TextStyle(),
-                    //   obscureText: true,
-                    //   controller: _confirmPasswordController,
-                    //   decoration: const InputDecoration(
-                    //       hintText: 'confirm password',
-                    //       hintStyle: TextStyle(
-                    //         color: Color(0xffBEC2CE),
-                    //         fontSize: 16,
-                    //       ),
-                    //       prefixIcon: Icon(
-                    //         Icons.lock,
-                    //         color: Color(0xffBEC2CE),
-                    //       ),
-                    //       border: UnderlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //             width: 1,
-                    //             color: Color(0xffBEC2CE)
-                    //         ),
-                    //       )
-                    //   ),
-                    //   validator: (value) {
-                    //     if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
-                    //       return "please password should contain 1 Upper case, 1 lowercase, 1 Numeric Number, 1 Special Character";
-                    //     } else if(value != _passwordController.text) {
-                    //       return "passwords does not match";
-                    //     }
-                    //     else {
-                    //       return null;
-                    //     }
-                    //   },
-                    // ),
-                    // const SizedBox(height: 23),
                   ]
               ),
             ),

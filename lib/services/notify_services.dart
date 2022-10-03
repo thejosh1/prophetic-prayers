@@ -100,7 +100,7 @@ class NotifyServices {
       id,
       title,
       body,
-      _scheduledDailyNotification(const Time(08, 59)),
+      _scheduledDailyNotification(const Time(20, 01)),
       await _notificationDetails(),
       payload: payload,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
@@ -135,6 +135,35 @@ class NotifyServices {
   );
 
   static tz.TZDateTime _scheduledWeeklyNotification(Time time, {required List<int> days}) {
+    tz.TZDateTime scheduledDate = _scheduledDailyNotification(time);
+
+    while (!days.contains(scheduledDate.weekday)) {
+      scheduledDate = scheduledDate.add(Duration(days: 1));
+    }
+
+    return scheduledDate;
+  }
+
+  static Future showScheduledWeeklyNotification2 (
+      {
+        int id = 0,
+        String? title,
+        String? body,
+        String? payload,
+        required scheduledDate,
+      }) async => _notification.zonedSchedule(
+      id,
+      title,
+      body,
+      _scheduledWeeklyNotification2(const Time(8, 00), days: [DateTime.monday, DateTime.tuesday, DateTime.wednesday, DateTime.thursday,DateTime.friday, DateTime.friday, DateTime.saturday, DateTime.sunday]),
+      await _notificationDetails(),
+      payload: payload,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime
+  );
+
+  static tz.TZDateTime _scheduledWeeklyNotification2(Time time, {required List<int> days}) {
     tz.TZDateTime scheduledDate = _scheduledDailyNotification(time);
 
     while (!days.contains(scheduledDate.weekday)) {

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.prophetic_prayers">
+    package="com.zirite.prophetic_prayers">
    <application
         android:requestLegacyExternalStorage="true"
         android:label="Prophetic Prayers For Children"

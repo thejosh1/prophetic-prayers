@@ -95,7 +95,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                             decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
-                                    image: AssetImage("images/Icon-48.png")
+                                    image: AssetImage("images/app_logo.png")
                                 )
                             ),
                           );
@@ -119,7 +119,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                           decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                  image: AssetImage("images/Icon-48.png")
+                                  image: AssetImage("images/app_logo.png")
                               )
                           ),
                         );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
 
 import '../../utils/dimensions.dart';
 
@@ -19,58 +18,15 @@ class _AboutScreenState extends State<AboutScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(top: Dimensions.Height40),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(left: Dimensions.Width20),
-                height: Dimensions.Height40+10,
-                width: size.width,
-                child: Row(
-                  children: [
-                    IconButton(onPressed: (){
-                      Get.back();
-                    }, icon: Icon(Icons.arrow_back_ios)),
-                    SizedBox(width: 20,),
-                    const Text("Prophetic prayers for children", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                  ],
-                ),
-              ),
-              const Divider(),
-              Container(
-                margin: EdgeInsets.only( top: 10, right: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      child: const Text(
-                          """This prayer journal is designed for parents to raise a daily prayer altar for their children. The new method of worship is a design that also originated from the home of the Wesley’s. Another great source of inspiration for him were the Winans who produced great women of God like Dede and Cece Winans through discipline and prayers. The songs they wrote often originated from the rule of going over sermon notes after service.""",
-                        style: TextStyle(fontWeight: FontWeight.bold, height: 1.5, fontSize: 24),
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: const Text("The author received major inspiration from people like Susana Wesley who by consistency in prayer produced great men like Charles and John Wesley, founders of Methodist Church. The new method of worship is a design that also originated from the home of the Wesley’s.",
-                          style: TextStyle(fontWeight: FontWeight.bold, height: 1.5, fontSize: 24),
-                        )
-                    ),
-                    SizedBox(height: 20,),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      child: const Text("Another great source of inspiration for him were the Winans who produced great women of God like Dede and Cece Winans through discipline and prayers. The songs they wrote often originated from the rule of going over sermon notes after service.",
-                          style: TextStyle(fontWeight: FontWeight.bold, height: 1.5, fontSize: 24)
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Divider(),
-                  ],
-                ),
+          height: size.height,
+          width: size.height,
+          margin: EdgeInsets.only(top: Dimensions.height22),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    "images/about_image.jpeg",
+                  ), fit: BoxFit.cover
               )
-            ],
           ),
         ),
       )

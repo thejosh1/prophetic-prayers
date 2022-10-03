@@ -11,6 +11,7 @@ import 'package:prophetic_prayers/pages/screens/discipline_screen.dart';
 import 'package:prophetic_prayers/pages/screens/prayer_screen.dart';
 import 'package:prophetic_prayers/pages/testimony_screen/testimony_detail_page.dart';
 
+import '../pages/auth_pages/forgot_password_screen.dart';
 import '../pages/main_screen/about_screen.dart';
 import '../pages/prayer_detail_screens/plan_list.dart';
 import '../pages/prayer_detail_screens/prayer_list_screen.dart';
@@ -41,6 +42,7 @@ class RouteServices {
   static const ABOUTSCREEN = "/about-screen";
   static const PRAYERLISTSCREEN = "/prayer-list-screen";
   static const PLANLISTSCREEN = "/plan-list-screen";
+  static const FORGOTPASSWORDSCREEN = "/forgot-password-screen";
 
   static String getSplashScreen() => "$SPLASHSCREEN";
   static String getInitial() => "$INITIAL";
@@ -62,6 +64,7 @@ class RouteServices {
   static String getaboutScreen() => "$ABOUTSCREEN";
   static String getprayerListScreen() => "$PRAYERLISTSCREEN";
   static String getplanListScreen()=> "$PLANLISTSCREEN";
+  static String getforgotPasswordScreen()=> "$FORGOTPASSWORDSCREEN";
 
   static List<GetPage> routes = [
     GetPage(name: SPLASHSCREEN, page: ()=>const SplashScreen()),
@@ -83,5 +86,6 @@ class RouteServices {
     GetPage(name: ABOUTSCREEN, page: () => const AboutScreen(), transition: Transition.fadeIn),
     GetPage(name: PRAYERLISTSCREEN, page: () => const PrayerListScreen(), transition: Transition.fadeIn),
     GetPage(name: PLANLISTSCREEN, page:  () => const PlanListScreen(), transition: Transition.fadeIn),
+    GetPage(name: FORGOTPASSWORDSCREEN, page: () => const ForgotPasswordScreen(), transition: Transition.fadeIn)
   ];
 }

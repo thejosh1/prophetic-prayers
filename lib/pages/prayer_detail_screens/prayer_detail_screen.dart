@@ -33,7 +33,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
 
   void listenNotifications() =>
       NotifyServices.onNotifications.stream.listen(onClickedNotification);
-  void onClickedNotification(String? payload) => Get.to(() => const PrayerDetailScreen(), arguments: [payload]);
+  void onClickedNotification(String? payload) => Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [payload]);
 
   @override
   Widget build(BuildContext context) {

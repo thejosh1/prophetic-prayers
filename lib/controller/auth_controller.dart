@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/pages/auth_pages/verification_screen.dart';
-import 'package:prophetic_prayers/pages/main_screen/main_page.dart';
 
 import '../main.dart';
 import '../pages/auth_pages/sign_up.dart';
-import '../pages/main_screen/splash_screen.dart';
 import '../services/route_services.dart';
 
 class AuthController extends GetxController {

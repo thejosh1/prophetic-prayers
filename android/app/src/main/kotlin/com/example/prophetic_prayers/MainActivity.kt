@@ -1,4 +1,4 @@
-package com.example.prophetic_prayers
+package com.zirite.prophetic_prayers
 
 import io.flutter.embedding.android.FlutterActivity
 

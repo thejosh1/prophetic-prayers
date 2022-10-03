@@ -40,7 +40,7 @@ class TestimonyDetailPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const [
                         Icon(
-                          Icons.note_add,
+                          Icons.edit,
                           color: Color(0xFF515BDE),
                         ),
                         Text("Have a testimony?")
@@ -51,7 +51,7 @@ class TestimonyDetailPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: Dimensions.Height20+5,),
-            Text(data[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),),
+            //Text(data[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),),
             Text(data[1],textAlign: TextAlign.left,
             style:  TextStyle(fontWeight: FontWeight.w400, fontSize: Dimensions.Width16),)
         ],
@@ -66,6 +66,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    var data = Get.arguments;
     // TODO: implement build
     return Container(
       color: const Color(0xffF7F8FA),
@@ -73,20 +74,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                  onTap: (){
-                    Get.back();
-                  },
-                  child: const Icon(Icons.arrow_back_outlined)),
-              const Icon(Icons.more_vert),
-            ],
-          ),
+          GestureDetector(
+              onTap: (){
+                Get.back();
+              },
+              child: const Icon(Icons.arrow_back_outlined)),
           SizedBox(height: Dimensions.Height20+1),
           Text(
-            'testimony_screen',
+            data[0],
             style: TextStyle(
               fontSize: Dimensions.Width30+4,
               fontWeight: FontWeight.w800,
