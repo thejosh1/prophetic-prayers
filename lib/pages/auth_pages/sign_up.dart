@@ -36,6 +36,8 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool _isObscure = true;
+  var image;
+  var value;
 
   @override
   void initState() {
@@ -280,13 +282,25 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
                   GestureDetector(
                     onTap: () async{
-                      await uploadPfp().then((value) {});
-                      String value = await getDownload();
-                      if(formKey.currentState!.validate()) {
-                        AuthController.instance.register(_emailController.value.text.trim(),
-                            _passwordController.text.trim(),
-                            _nameController.text.trim(),
-                            value
+                      if(image != null) {
+                        await uploadPfp().then((value) {});
+                        value = await getDownload();
+                        if(formKey.currentState!.validate()) {
+                          AuthController.instance.edit(_emailController.value.text.trim(),
+                              _nameController.text.trim(),
+                              value
+                          );
+                          AuthController.instance.Logout();
+                        }
+                      } else if(image == null) {
+                        Get.snackbar("Profile Picture", "Profile Picture not set",
+                            backgroundColor: Colors.black,
+                            colorText: Colors.white,
+                            snackPosition: SnackPosition.TOP,
+                            titleText: const Text("Profile Picture not set"),
+                            messageText: const Text(
+                              "You need to choose a profile picture", style: TextStyle(color: Colors.white),
+                            )
                         );
                       }
                     },

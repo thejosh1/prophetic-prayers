@@ -174,17 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                        height: Dimensions
                                                            .Height8,
                                                      ),
-                                                     Text(
-                                                                            "Testify",
-                                                                            style: TextStyle(
-                                                                                fontSize:
-                                                                                    Dimensions
-                                                                                        .Width14,
-                                                                                fontWeight:
-                                                                                    FontWeight
-                                                                                        .w200,
-                                                                                color: Color(
-                                                                                    0xFF1E2432)),
+                                                     Text("Testify", style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.w200, color: const Color(0xFF1E2432)),
                                                                           ),
                                                                         ],
                                                                       )

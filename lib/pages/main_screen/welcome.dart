@@ -68,7 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     List daysofWeek = ["M", "T", "W", "T", "F", "S", "S"];
     List images = ["images/money.jfif", "images/school.jfif", "images/group-wild.jpg", "images/priest.jpg", "images/office.jfif", "images/basketball.jpg", "images/famimages2.jfif", "images/summer-seascape.jpg", "images/Cartoon_marriages.jpg", "images/warfare.webp", "images/adrianna-geo.jpg" ];
     List daysInsWeek = [getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5];
-    List colorList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange];
+    List weekimageList = ["images/monday.jpeg", "images/tuesday.jpeg", "images/wednesday.jpeg", "images/thursday.jpeg", "images/friday.jpeg", "images/saturday.jpeg", "images/sunday.jpeg"];
     String currname = "Children";
     Color _randomColor = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
     List planNames = ["Prosperity", "Academics", "Blessings", "Calling", "Career", "Discipline", "Health", "Lifestyle", "Marriage", "Warfare"];
@@ -203,26 +203,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   width: Dimensions.Width150,
                                                   decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(Dimensions.Width20),
-                                                    color: colorList[index]
-                                                  ),
-                                                  child: Center(
-                                                    child: Container(
-                                                      height: Dimensions.Height60,
-                                                      width: Dimensions.Width90-30,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.white, width: Dimensions.Width3+2),
-                                                        shape: BoxShape.circle
-                                                      ),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          color: colorList[index],
-                                                          shape: BoxShape.circle
-                                                        ),
-                                                        child: Center(
-                                                          child: Text(daysofWeek[index], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),),
-                                                        ),
-                                                      ),
-                                                    ),
+                                                    color: Colors.grey,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(weekimageList[index]),
+                                                        fit: BoxFit.cover
+                                                    )
                                                   ),
                                                 ),
                                              ),
@@ -621,7 +606,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             )
                                           ],
                                           image: const DecorationImage(
-                                            image: AssetImage("images/welcome-one.png"),
+                                            image: AssetImage("images/testimony.jpg"),
                                             fit: BoxFit.cover
                                           )
                                         )
@@ -700,7 +685,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                             Positioned(
                               bottom: Dimensions.Height40+10,
-                              child: Icon(Icons.follow_the_signs_sharp, color: Colors.grey, size: Dimensions.Width15+3,),
+                              child: Icon(Icons.follow_the_signs_sharp, color: Colors.grey, size: Dimensions.Width30,),
                             )
                           ],
                         ),

@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import '../../services/route_services.dart';
 import '../../utils/dimensions.dart';
 
 class EditScreen extends StatelessWidget {
@@ -38,6 +37,8 @@ class _EditFormState extends State<EditForm> {
   //final TextEditingController _confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool _isObscure = true;
+  var image;
+  var value;
 
   @override
   void initState() {
@@ -174,7 +175,7 @@ class _EditFormState extends State<EditForm> {
                 SizedBox(height: Dimensions.Height44-4),
                 GestureDetector(
                   onTap: (() {
-                    showInformationDialogue(context);
+                    image = showInformationDialogue(context);
                     setState(() {});
                   }),
                   child: Row(
@@ -201,14 +202,23 @@ class _EditFormState extends State<EditForm> {
                 ),
                 GestureDetector(
                   onTap: () async{
-                    await uploadPfp().then((value) {});
-                    String value = await getDownload();
-                    if(formKey.currentState!.validate()) {
-                      AuthController.instance.edit(_emailController.value.text.trim(),
-                          _nameController.text.trim(),
-                          value
-                      );
-                      AuthController.instance.Logout();
+                    if(image != null) {
+                      await uploadPfp().then((value) {});
+                      value = await getDownload();
+                      if(formKey.currentState!.validate()) {
+                        AuthController.instance.edit(_emailController.value.text.trim(),
+                            _nameController.text.trim(),
+                            value
+                        );
+                        AuthController.instance.Logout();
+                      }
+                    } else if(image == null) {
+                      if(formKey.currentState!.validate()) {
+                        AuthController.instance.editwithoutimage(_emailController.value.text.trim(),
+                            _nameController.text.trim(),
+                        );
+                        AuthController.instance.Logout();
+                      }
                     }
                   },
                   child: ClipRRect(
@@ -281,11 +291,12 @@ class _EditFormState extends State<EditForm> {
   }
 
   Future<void> uploadPfp() async {
+
     File uploadFile =File(photo!.path);
 
     try {
       await storage.ref("avatar/${uploadFile.path}").putFile(
-          uploadFile != null ? uploadFile : File("images/adrianna-geo.png"));
+          uploadFile != null ? uploadFile : File("images/app_logo.png"));
     } on FirebaseException catch(e) {
       print(e);
     }

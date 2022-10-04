@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
-import 'package:prophetic_prayers/pages/auth_pages/login.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:prophetic_prayers/pages/auth_pages/verification_screen.dart';
+
+import '../../utils/dimensions.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -51,31 +48,31 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           child: Container(
             height: double.maxFinite,
             width: double.maxFinite,
-            padding: const EdgeInsets.symmetric(horizontal: 22),
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.Width20+2),
             color: Colors.white,
             child: Form(
               key: formKey,
               child:  Column(
                   children: [
-                    SizedBox(height: 40),
+                    SizedBox(height: Dimensions.Height40),
                     TextFormField(
-                      style: const TextStyle(),
+                      style:  TextStyle(),
                       controller: _emailController,
                       textInputAction: TextInputAction.done,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                           hintText: 'Email',
                           hintStyle: TextStyle(
-                            color: Color(0xffBEC2CE),
-                            fontSize: 16,
+                            color: const Color(0xffBEC2CE),
+                            fontSize: Dimensions.Width16,
                           ),
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.email_outlined,
                             color: Color(0xffBEC2CE),
                           ),
                           border: UnderlineInputBorder(
                             borderSide: BorderSide(
-                                width: 1,
-                                color: Color(0xffBEC2CE)
+                                width: Dimensions.Width2-1,
+                                color: const Color(0xffBEC2CE)
                             ),
                           )
                       ),
@@ -87,7 +84,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                         }
                       },
                     ),
-                    const SizedBox(height: 200),
+                    SizedBox(height: Dimensions.Height100*2),
                     GestureDetector(
                       onTap: () async{
                           AuthController.instance.resetPassword(
@@ -95,17 +92,17 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                           );
                       },
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(Dimensions.Width16-4),
                         child: Container(
                           width: double.infinity,
-                          height: 50,
+                          height: Dimensions.Height100-50,
                           color: const Color(0xff515BDE),
                           alignment: Alignment.center,
-                          child: const Text(
+                          child: Text(
                             'Reset Password',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: Dimensions.Width16+2,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -129,7 +126,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xffF7F8FA),
-      padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
+      padding: EdgeInsets.only(left: Dimensions.Width20+4, right: Dimensions.Width20+4, top: Dimensions.Height40+6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -139,11 +136,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               Icon(Icons.arrow_back_outlined),
             ],
           ),
-          const SizedBox(height: 21),
-          const Text(
+          SizedBox(height: Dimensions.Height20+1),
+          Text(
             'Reset Password',
             style: TextStyle(
-              fontSize: 34,
+              fontSize: Dimensions.Height40-6,
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -153,5 +150,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(126);
+  Size get preferredSize => Size.fromHeight(Dimensions.Height100+26);
 }

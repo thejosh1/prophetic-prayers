@@ -107,17 +107,7 @@ flutter:
     - images/welcome.png
     - images/propheticpicture2.jpeg
     - images/welcome-one.png
-    - images/mountain.jpeg
-    - images/lonely_man.jpg
     - images/logo.jpeg
-    - images/gracious-adebayo.jpg
-    - images/diana-simum.jpg
-    - images/ismael-paramo.jpg
-    - images/patrick-fore.jpg
-    - images/jon-tyson.jpg
-    - images/adrianna-geo.jpg
-    - images/sean-pollock.jpg
-    - images/ibrahim-boran.jpg
     - images/facebook-logo.png
     - images/instagrams-logo.png
     - images/twitter-logo.png
@@ -134,7 +124,6 @@ flutter:
     - images/lifestyle.jpg
     - images/calling.jpg
     - images/famimages.jfif
-    - images/child(40).jpg
     - images/children.png
     - images/boy.jfif
     - images/famimages2.jfif
@@ -154,6 +143,14 @@ flutter:
     - images/banner.jpeg
     - images/app_logo.png
     - images/about_image.jpeg
+    - images/monday.jpeg
+    - images/tuesday.jpeg
+    - images/wednesday.jpeg
+    - images/thursday.jpeg
+    - images/friday.jpeg
+    - images/saturday.jpeg
+    - images/sunday.jpeg
+    - images/testimony.jpg
 
   fonts:
     - family: Poppins

@@ -43,7 +43,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         sendVerificationEmail();
 
       timer = Timer.periodic(
-        Duration(seconds: 3),
+        const Duration(seconds: 3),
           (_) => checkEmailVerified(),
       );
     }

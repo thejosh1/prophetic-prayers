@@ -124,6 +124,32 @@ class AuthController extends GetxController {
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
+  void editwithoutimage(String? email, String? name) async {
+    showDialog(
+        context: navigatorKey.currentContext!,
+        builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
+    );
+    try {
+      User? user = auth.currentUser;
+      await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
+        "uid":user?.uid,
+        "email":email,
+        "name":name,
+      });
+    } on FirebaseAuthException catch(e) {
+      Get.snackbar("Profile Information", "Couldn't update Profile info",
+          backgroundColor: Colors.black,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.TOP,
+          titleText: Text("Profile Update Failed"),
+          messageText: Text(
+            e.message.toString(), style: TextStyle(color: Colors.white),
+          )
+      );
+      print(e.message.toString());
+    }
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
   void Login(String email, password) async{
     showDialog(
       context: navigatorKey.currentContext!,
