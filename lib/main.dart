@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -11,11 +12,18 @@ import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
 
 final navigatorKey = GlobalKey<NavigatorState>();
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
+}
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await NotifyServices.init(initScheduled: true);
   await Firebase.initializeApp().then((value) => Get.put(AuthController()));
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  //await FirebaseAppCheck.instance.activate();
   //AuthController.instance.Logout();
   NotifyServices.showScheduledWeeklyNotification(
       title: "Reminder",
@@ -31,6 +39,8 @@ Future<void> main() async{
   runApp(const MyApp());
 }
 
+
+
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -40,10 +50,28 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  String notificationmsg = "Waiting for notification";
   @override
   void initState() {
     super.initState();
     initDynamicLink();
+    FirebaseMessaging.instance.getInitialMessage().then((event) {
+      if(event != null) {
+        final routeFromMessage = event.data["route"];
+        Get.toNamed(routeFromMessage);
+      }
+    });
+    //when the app is in foreground
+    FirebaseMessaging.onMessage.listen((event) {
+      if(event.notification != null) {
+        NotifyServices.displayNotification(event);
+      }
+    });
+    //when the app is in background
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      final routeFromMessage = event.data["route"];
+      Get.toNamed(routeFromMessage);
+    });
   }
 
   @override

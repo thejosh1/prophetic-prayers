@@ -1,44 +1,69 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
 class NotifyServices {
-  static final _notification = FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin _notification = FlutterLocalNotificationsPlugin();
   static final onNotifications = BehaviorSubject<String?>();
 
+  static void displayNotification(RemoteMessage message) async {
+    try {
+      final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
+      const NotificationDetails notificationDetails = NotificationDetails(
+        android: AndroidNotificationDetails(
+          "PPFC",
+          "PPFC channel",
+          channelDescription: "This is the app's notifcation channel",
+          importance: Importance.max,
+          priority: Priority.high
+        ),
+        iOS: IOSNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true
+        )
+      );
+      await _notification.show(
+          id,
+          message.notification!.title,
+          message.notification!.body,
+          notificationDetails,
+          payload: message.data["route"]
+      );
+    } on Exception catch (e) {
+      // TODO
+      print(e.toString());
+    }
+  }
   static Future _notificationDetails() async {
-    // final largeIconPath = await Utils.downloadFile(
-    //   "https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=386&q=80",
-    //   'largeIcon',
-    // );
-    // final bigPicturePath = await Utils.downloadFile(
-    //   "https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=386&q=80",
-    //   'bigPicture',
-    // )
-
-    // final styleInformation = BigPictureStyleInformation(
-    //   FilePathAndroidBitmap(bigPicturePath),
-    //   largeIcon: FilePathAndroidBitmap(largeIconPath),
-    // );
-
     return const NotificationDetails(
       android: AndroidNotificationDetails(
-          'channel id',
-          'channel name',
-          channelDescription: 'channel description',
+          "PPFC",
+          "PPFC channel",
+          channelDescription: "This is the app's notifcation channel",
           importance: Importance.max,
-          // styleInformation: styleInformation,
           priority: Priority.high
       ),
-      iOS: IOSNotificationDetails(),
+      iOS: IOSNotificationDetails(
+        presentSound: true,
+        presentBadge: true,
+        presentAlert: true
+      ),
     );
   }
 
   static Future init({bool initScheduled = false }) async {
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const ios = IOSInitializationSettings();
+    const ios = IOSInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true
+    );
     const settings = InitializationSettings(android: android, iOS: ios);
 
     //when app is closed

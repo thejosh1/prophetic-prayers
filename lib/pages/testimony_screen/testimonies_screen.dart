@@ -1,3 +1,4 @@
+import 'package:basic_utils/basic_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -154,11 +155,11 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                                         mainAxisAlignment: MainAxisAlignment.start,
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          Text("${snapdata[index]["title"]}",
+                                                          Text(StringUtils.capitalize("${snapdata[index]["title"]}"),
                                                             maxLines: 1,
                                                             overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold),),
                                                           SizedBox(height: Dimensions.Height2+1,),
-                                                          Text("${snapdata[index]["testimonies"]}", maxLines: 2, overflow: TextOverflow.ellipsis,),
+                                                          Text(StringUtils.capitalize("${snapdata[index]["testimonies"]}"), maxLines: 2, overflow: TextOverflow.ellipsis,),
                                                           SizedBox(height: Dimensions.Height2+1,),
                                                           Text("${snapdata[index]["timestamp"]}"),
                                                           SizedBox(height: Dimensions.Height2+1,),
