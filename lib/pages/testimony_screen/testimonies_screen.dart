@@ -21,7 +21,7 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
       backgroundColor: const Color(0xffF7F8FA),
       appBar: const MyAppBar(),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

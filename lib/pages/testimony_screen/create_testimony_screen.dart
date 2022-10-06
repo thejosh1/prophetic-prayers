@@ -170,7 +170,8 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                                             useruid: AuthController.instance.auth.currentUser!.uid.toString(),
                                             timestamp: DateFormat.yMMMEd().format(DateTime.now()).toString()
                                         );
-                                        Get.back();
+                                       FocusManager.instance.primaryFocus?.unfocus();
+                                       Get.back();
                                       }
 
                                       },

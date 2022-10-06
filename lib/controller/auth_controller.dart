@@ -51,6 +51,7 @@ class AuthController extends GetxController {
        "name" : name,
        "imagePath" : imagepath,
      });
+     // navigatorKey.currentState!.popUntil((route) => route.isFirst);
    }on FirebaseAuthException catch(e) {
      Get.snackbar("user creation", "for some reason we can't create your profile",
          backgroundColor: Colors.black,
@@ -58,10 +59,9 @@ class AuthController extends GetxController {
          snackPosition: SnackPosition.TOP,
          titleText: Text("Account creation failed"),
          messageText: Text(
-         e.message.toString(), style: TextStyle(color: Colors.white),
+         e.message.toString(), style: const TextStyle(color: Colors.white),
          )
      );
-     print(e.toString());
    }
   }
   void resetPassword(String email) async {
@@ -134,7 +134,7 @@ class AuthController extends GetxController {
       UserCredential userCredential = await user!.reauthenticateWithCredential(
           EmailAuthProvider.credential(email: user.email!, password: password!)
       );
-      await FirebaseFirestore.instance.collection("users").doc(user!.uid).update({
+      await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
         "uid":user!.uid,
         "email":userCredential.user!.email,
         "name":name,

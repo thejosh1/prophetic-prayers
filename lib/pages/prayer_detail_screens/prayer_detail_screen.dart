@@ -105,7 +105,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                 children: [
                                   Icon(
                                     Icons.calendar_today,
-                                    color: Color(0xFFBEC2CE),
+                                    color: const Color(0xFFBEC2CE),
                                     size: Dimensions.Width15,
                                   ),
                                   SizedBox(width: Dimensions.Width6-1,),
@@ -115,7 +115,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                     style: TextStyle(
                                         fontSize: Dimensions.Width14,
                                         fontWeight: FontWeight.bold,
-                                        color: Color(0xFFBEC2CE)),
+                                        color: const Color(0xFFBEC2CE)),
                                   )
                                 ],
                               ),

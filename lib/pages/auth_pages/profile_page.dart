@@ -76,363 +76,291 @@ class _ProfilePageState extends State<ProfilePage> {
                            ),
                            child: Container(
                              width: MediaQuery.of(context).size.width,
-                             child: Column(
-                               crossAxisAlignment: CrossAxisAlignment.start,
-                               children: [
-                                 Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: [
-                                     Row(
-                                       children: [
-                                         Icon(Icons.person, color: const Color(0xFFBEC2CE), size: Dimensions.Width15,),
-                                         SizedBox(
-                                           width: Dimensions.Width6 - 1,
-                                         ),
-                                         Text(
-                                           //prayer id
-                                           "Profile Settings",
-                                           style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.bold, color: const Color(0xFFBEC2CE)
+                             child: SingleChildScrollView(
+                               child: Column(
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
+                                   Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                     children: [
+                                       Row(
+                                         children: [
+                                           Icon(Icons.person, color: const Color(0xFFBEC2CE), size: Dimensions.Width15,),
+                                           SizedBox(
+                                             width: Dimensions.Width6 - 1,
                                            ),
-                                         )
-                                       ],
-                                     ),
-                                     Icon(
-                                       Icons.bookmark, color: const Color(0xFF1E2432), size: Dimensions.Width19,
-                                     )
-                                   ],
-                                 ),
-                                 SizedBox(
-                                   height: Dimensions.Height7,
-                                 ),
-                                 Text(
-                                   //title
-                                   "${data["name"]}",
-                                   style: TextStyle(color: const Color(0xFF1E2432), fontSize: Dimensions.Width28, fontWeight: FontWeight.w900), textAlign: TextAlign.start,),
-                                 SizedBox(height: Dimensions.Height10 * 2),
-                                 Expanded(
-                                   child: SingleChildScrollView(
-                                     child: Column(
-                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                       children: [
-                                         Text(
-                                           "${data["email"]}",
-                                           style: TextStyle(color: const Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),
-                                         ),
-                                         SizedBox(
-                                           height: Dimensions.Height10 * 2,
-                                         ),
-                                         Row(
-                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                           children: [
-                                             Column(
+                                           Text(
+                                             //prayer id
+                                             "Profile Settings",
+                                             style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.bold, color: const Color(0xFFBEC2CE)
+                                             ),
+                                           )
+                                         ],
+                                       ),
+                                       Icon(
+                                         Icons.bookmark, color: const Color(0xFF1E2432), size: Dimensions.Width19,
+                                       )
+                                     ],
+                                   ),
+                                   SizedBox(
+                                     height: Dimensions.Height7,
+                                   ),
+                                   Text(
+                                     //title
+                                     "${data["name"]}",
+                                     style: TextStyle(color: const Color(0xFF1E2432), fontSize: Dimensions.Width28, fontWeight: FontWeight.w900), textAlign: TextAlign.start,),
+                                   SizedBox(height: Dimensions.Height10 * 2),
+                                   Column(
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     children: [
+                                       Text(
+                                         "${data["email"]}", style: TextStyle(color: const Color(0xFF1E2432), fontSize: Dimensions.Width18, fontWeight: FontWeight.bold),
+                                       ),
+                                       SizedBox(
+                                         height: Dimensions.Height10 * 2,
+                                       ),
+                                       Row(
+                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                         children: [
+                                           // Column(
+                                           //   mainAxisAlignment: MainAxisAlignment.start,
+                                           //   children: [
+                                           //     InkWell(
+                                           //       onTap: () {
+                                           //         Get.toNamed(RouteServices.EDITPROFILESCREEN
+                                           //         );
+                                           //       },
+                                           //       child: Column(
+                                           //         children: [
+                                           //           Icon(
+                                           //             Icons.person_add, size: Dimensions.Height29,
+                                           //             color: const Color(0xFFD1D1D6),
+                                           //           ),
+                                           //           SizedBox(
+                                           //             height: Dimensions.Height8,
+                                           //           ),
+                                           //           Text(
+                                           //             "Edit Profile",
+                                           //             style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.w200, color: const Color(0xFF1E2432)),
+                                           //           ),
+                                           //         ],
+                                           //       ),
+                                           //     )
+                                           //   ],
+                                           // ),
+                                           // SizedBox(
+                                           //   width: Dimensions.Width6 + 2,
+                                           // ),
+                                           GestureDetector(
+                                             onTap: (() {
+                                               Get.toNamed(RouteServices.CREATETESTIMONYSCREEN);
+                                             }),
+                                             child: Column(
                                                mainAxisAlignment: MainAxisAlignment.start,
                                                children: [
-                                                 InkWell(
-                                                   onTap: () {
-                                                     Get.toNamed(RouteServices.EDITPROFILESCREEN
-                                                     );
-                                                   },
-                                                   child: Column(
-                                                     children: [
-                                                       Icon(
-                                                         Icons.person_add, size: Dimensions.Height29,
-                                                         color: const Color(0xFFD1D1D6),
-                                                       ),
-                                                       SizedBox(
-                                                         height: Dimensions.Height8,
-                                                       ),
-                                                       Text(
-                                                         "Edit Profile",
-                                                         style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.w200, color: const Color(0xFF1E2432)),
-                                                       ),
-                                                     ],
-                                                   ),
+                                                 Column(
+                                                   children: [
+                                                     Icon(Icons.edit, size: Dimensions.Height29, color: const Color(0xFFD1D1D6),),
+                                                     SizedBox(height: Dimensions.Height8,),
+                                                     Text("Testify", style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.w200, color: const Color(0xFF1E2432)),),
+                                                   ],
                                                  )
                                                ],
                                              ),
-                                             SizedBox(
-                                               width: Dimensions.Width6 + 2,
+                                           ),
+                                           SizedBox(
+                                             width: Dimensions.Width6 + 2,
+                                           ),
+                                           GestureDetector(
+                                             onTap: () {
+                                               Get.toNamed(RouteServices.PLANLISTSCREEN);
+                                             },
+                                             child: Column(
+                                               children: [
+                                                 Icon(Icons.list, size: Dimensions.Height29, color: const Color(0xFFD1D1D6)),
+                                                 SizedBox(
+                                                   height: Dimensions.Height8,
+                                                 ),
+                                                 Text(
+                                                   "prayers", style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.w200, color: const Color(0xFF1E2432)),
+                                                 ),
+                                               ],
                                              ),
-                                             GestureDetector(
-                                               onTap: (() {
-                                                 Get.toNamed(RouteServices
-                                                     .CREATETESTIMONYSCREEN);
-                                               }
-                                               ),
-                                               child: Column(
-                                                 mainAxisAlignment:
-                                                 MainAxisAlignment.start,
-                                                 children: [
-                                                   Column(children: [
-                                                     Icon(
-                                                       Icons.edit,
-                                                       size: Dimensions.Height29,
-                                                       color: Color(
-                                                           0xFFD1D1D6),
-                                                     ),
+                                           ),
+                                           SizedBox(
+                                             height: Dimensions.pageScreenSizedBoxHeight12,
+                                           ),
+                                           Column(
+                                             mainAxisAlignment: MainAxisAlignment.start,
+                                             children: [
+                                               InkWell(
+                                                 onTap: () {
+                                                   AuthController.instance.Logout();
+                                                   },
+                                                 child: Column(
+                                                   children: [
+                                                     Icon(Icons.logout, size: Dimensions.Height29, color: const Color(0xFFD1D1D6),),
                                                      SizedBox(
-                                                       height: Dimensions
-                                                           .Height8,
+                                                       height: Dimensions.Height8,
                                                      ),
-                                                     Text("Testify", style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.w200, color: const Color(0xFF1E2432)),
-                                                                          ),
-                                                                        ],
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: Dimensions.Width6 + 2,
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    Get.toNamed(RouteServices.PLANLISTSCREEN);
-                                                                  },
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Icon(
-                                                                        Icons.list,
-                                                                        size: Dimensions.Height29,
-                                                                        color: Color(0xFFD1D1D6),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            Dimensions.Height8,
-                                                                      ),
-                                                                      Text(
-                                                                        "prayers",
-                                                                        style: TextStyle(
-                                                                            fontSize: Dimensions
-                                                                                .Width14,
-                                                                            fontWeight:
-                                                                                FontWeight.w200,
-                                                                            color: Color(
-                                                                                0xFF1E2432)),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                  height: Dimensions
-                                                                      .pageScreenSizedBoxHeight12,
-                                                                ),
-                                                                Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment.start,
-                                                                  children: [
-                                                                    InkWell(
-                                                                      onTap: () {
-                                                                        AuthController.instance
-                                                                            .Logout();
-                                                                      },
-                                                                      child: Column(
-                                                                        children: [
-                                                                          Icon(
-                                                                            Icons.logout,
-                                                                            size: Dimensions
-                                                                                .Height29,
-                                                                            color: Color(
-                                                                                0xFFD1D1D6),
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height: Dimensions
-                                                                                .Height8,
-                                                                          ),
-                                                                          Text(
-                                                                            "Sign out",
-                                                                            style: TextStyle(
-                                                                                fontSize:
-                                                                                    Dimensions
-                                                                                        .Width14,
-                                                                                fontWeight:
-                                                                                    FontWeight
-                                                                                        .w200,
-                                                                                color: Color(
-                                                                                    0xFF1E2432)),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                                SizedBox(
-                                                                  width: Dimensions.Width6 + 2,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment.start,
-                                                      children: [
-                                                        StreamBuilder(
-                                                            stream: FirebaseFirestore.instance
-                                                                .collection("testimonies")
-                                                                .where("useruid",
-                                                                    isEqualTo: user?.uid)
-                                                                .snapshots(),
-                                                            builder: (BuildContext context,
-                                                                AsyncSnapshot<QuerySnapshot>
-                                                                    snapshot) {
-                                                              if (!snapshot.hasData) {
-                                                                return const Center(
-                                                                  child: Text(
-                                                                      "You don't have any Testimonies yet"),
-                                                                );
-                                                              }
-                                                              List snapdata =
-                                                                  snapshot.data!.docs;
-                                                              return snapdata.isNotEmpty
-                                                                  ? Column(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height: Dimensions
-                                                                              .Height10,
-                                                                        ),
-                                                                        Container(
-                                                                          height: Dimensions
-                                                                              .Height270,
-                                                                          width: size.width,
-                                                                          child:
-                                                                              ListView.builder(
-                                                                                  physics:
-                                                                                      const BouncingScrollPhysics(),
-                                                                                  itemCount:
-                                                                                      snapdata
-                                                                                          .length,
-                                                                                  itemBuilder:
-                                                                                      (BuildContext
-                                                                                              context,
-                                                                                          index) {
-                                                                                    String
-                                                                                        useruid =
-                                                                                        snapdata[index]
-                                                                                            [
-                                                                                            "useruid"];
-                                                                                    return Column(
-                                                                                        children: [
-                                                                                          InkWell(
-                                                                                            splashColor:
-                                                                                                Colors.grey,
-                                                                                            onTap:
-                                                                                                () {
-                                                                                              Get.toNamed(RouteServices.TESTIMONYDETAILSCREEN, arguments: [
-                                                                                                "${snapdata[index]["title"]}",
-                                                                                                "${snapdata[index]["testimonies"]}",
-                                                                                                "${snapdata[index]["timestamp"]}"
-                                                                                              ]);
-                                                                                            },
-                                                                                            child:
-                                                                                                Row(
-                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                              children: [
-                                                                                                Container(
-                                                                                                  height: 80,
-                                                                                                  width: 80,
-                                                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.grey, width: 2), color: Colors.grey
-                                                                                                      //color: data[1]
-                                                                                                      ),
-                                                                                                  child: FutureBuilder(
-                                                                                                    future: FirebaseFirestore.instance.collection("users").doc(useruid).get(),
-                                                                                                    builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                                                                                      if (!snapshot.hasData) {
-                                                                                                        return Container();
-                                                                                                      }
-                                                                                                      Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                                                                                                      return Center(child: Text("${data["name"]}"[0].toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white)));
-                                                                                                    },
-                                                                                                  ),
-                                                                                                ),
-                                                                                                Expanded(
-                                                                                                    child: Container(
-                                                                                                  height: 100,
-                                                                                                  child: Padding(
-                                                                                                    padding: const EdgeInsets.only(left: 10),
-                                                                                                    child: Column(
-                                                                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                      children: [
-                                                                                                        Text(
-                                                                                                          "${snapdata[index]["title"]}",
-                                                                                                          maxLines: 1,
-                                                                                                          overflow: TextOverflow.ellipsis,
-                                                                                                          style: TextStyle(fontWeight: FontWeight.bold),
-                                                                                                        ),
-                                                                                                        SizedBox(
-                                                                                                          height: 3,
-                                                                                                        ),
-                                                                                                        Text(
-                                                                                                          "${snapdata[index]["testimonies"]}",
-                                                                                                          maxLines: 2,
-                                                                                                          overflow: TextOverflow.ellipsis,
-                                                                                                        ),
-                                                                                                        SizedBox(
-                                                                                                          height: 3,
-                                                                                                        ),
-                                                                                                        Text("${snapdata[index]["timestamp"]}"),
-                                                                                                        SizedBox(
-                                                                                                          height: 3,
-                                                                                                        ),
-                                                                                                        Row(
-                                                                                                          children: [
-                                                                                                            Wrap(
-                                                                                                                children: List.generate(
-                                                                                                                    5,
-                                                                                                                    (index) => const Icon(
-                                                                                                                          Icons.star,
-                                                                                                                          color: Colors.amberAccent,
-                                                                                                                          size: 15,
-                                                                                                                        ))),
-                                                                                                          ],
-                                                                                                        ),
-                                                                                                      ],
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                )),
-                                                                                                PopupMenuButton(
-                                                                                                  itemBuilder: (_) {
-                                                                                                    return [
-                                                                                                      PopupMenuItem<String>(value: "delete", child: const Text("Delete"))
-                                                                                                    ];
-                                                                                                  },
-                                                                                                  onSelected: (value) async {
-                                                                                                    if (value == "delete") {
-                                                                                                      await FirebaseFirestore.instance.runTransaction((Transaction myTransaction) async {
-                                                                                                        await myTransaction.delete(snapshot.data!.docs[index].reference);
-                                                                                                      });
-                                                                                                      print("deleted");
-                                                                                                    }
-                                                                                                  },
-                                                                                                  child: const Icon(
-                                                                                                    Icons.more_horiz,
-                                                                                                    size: 24,
-                                                                                                  ),
-                                                                                                )
-                                                                                              ],
-                                                                                            ),
-                                                                                          ),
-                                                                                          SizedBox(
-                                                                                            height:
-                                                                                                20,
-                                                                                          ),
-                                                                                        ]);
-                                                                                  }),
-                                                                        ),
-                                                                      ],
-                                                                    )
-                                                                  : Container();
-                                                            }),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                  ),
+                                                     Text(
+                                                       "Sign out",
+                                                       style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.w200, color: const Color(0xFF1E2432)),
+                                                     ),
+                                                   ],
+                                                 ),
+                                               )
+                                             ],
+                                           ),
+                                           SizedBox(
+                                             width: Dimensions.Width6 + 2,
+                                           ),
+                                         ],
+                                       ),
+                                     ],
+                                   ),
+                                   Column(
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     children: [
+                                       StreamBuilder(
+                                           stream: FirebaseFirestore.instance.collection("testimonies").where("useruid", isEqualTo: user?.uid).snapshots(),
+                                           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot>snapshot) {
+                                             if (!snapshot.hasData) {
+                                               return const Center(
+                                                 child: Text(
+                                                     "You don't have any Testimonies yet"),
+                                               );
+                                             }
+                                             List snapdata = snapshot.data!.docs;
+                                             return snapdata.isNotEmpty ? Column(
+                                               children: [
+                                                 SizedBox(
+                                                   height: Dimensions.Height10,
+                                                 ),
+                                                 Container(
+                                                   height: size.height,
+                                                   width: size.width,
+                                                   child: ListView.builder(
+                                                       physics: const NeverScrollableScrollPhysics(),
+                                                       itemCount: snapdata.length,
+                                                       itemBuilder: (BuildContextcontext, index) {
+                                                         String useruid = snapdata[index]["useruid"];
+                                                         return Column(
+                                                             children: [
+                                                               InkWell(
+                                                                 splashColor: Colors.grey,
+                                                                 onTap: () {
+                                                                   Get.toNamed(RouteServices.TESTIMONYDETAILSCREEN, arguments: [
+                                                                     "${snapdata[index]["title"]}",
+                                                                     "${snapdata[index]["testimonies"]}",
+                                                                     "${snapdata[index]["timestamp"]}"
+                                                                   ]);
+                                                                   },
+                                                                 child: Row(
+                                                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                                                   children: [
+                                                                     Container(
+                                                                       height: 80,
+                                                                       width: 80,
+                                                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.grey, width: 2), color: Colors.grey
+                                                                         //color: data[1]
+                                                                       ),
+                                                                       child: FutureBuilder(
+                                                                         future: FirebaseFirestore.instance.collection("users").doc(useruid).get(),
+                                                                         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                                                           if (!snapshot.hasData) {
+                                                                             return Container();
+                                                                           }
+                                                                           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                                                                           return Center(child: Text("${data["name"]}"[0].toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white)));
+                                                                           },
+                                                                       ),
+                                                                     ),
+                                                                     Expanded(
+                                                                         child: Container(
+                                                                           height: 100,
+                                                                           child: Padding(
+                                                                             padding: const EdgeInsets.only(left: 10),
+                                                                             child: Column(
+                                                                               mainAxisAlignment: MainAxisAlignment.start,
+                                                                               crossAxisAlignment: CrossAxisAlignment.start,
+                                                                               children: [
+                                                                                 Text(
+                                                                                   "${snapdata[index]["title"]}",
+                                                                                   maxLines: 1,
+                                                                                   overflow: TextOverflow.ellipsis,
+                                                                                   style: TextStyle(fontWeight: FontWeight.bold),
+                                                                                 ),
+                                                                                 SizedBox(
+                                                                                   height: 3,
+                                                                                 ),
+                                                                                 Text(
+                                                                                   "${snapdata[index]["testimonies"]}", maxLines: 2, overflow: TextOverflow.ellipsis,
+                                                                                 ),
+                                                                                 SizedBox(
+                                                                                   height: 3,
+                                                                                 ),
+                                                                                 Text("${snapdata[index]["timestamp"]}"),
+                                                                                 SizedBox(
+                                                                                   height: 3,
+                                                                                 ),
+                                                                                 Row(
+                                                                                   children: [
+                                                                                     Wrap(
+                                                                                         children: List.generate(5, (index) => const Icon(Icons.star,
+                                                                                           color: Colors.amberAccent,
+                                                                                           size: 15,
+                                                                                         ))),
+                                                                                   ],
+                                                                                 ),
+                                                                               ],
+                                                                             ),
+                                                                           ),
+                                                                         )),
+                                                                     PopupMenuButton(
+                                                                       itemBuilder: (_) {
+                                                                         return [const PopupMenuItem<String>(value: "delete", child: Text("Delete"))];
+                                                                         },
+                                                                       onSelected: (value) async {
+                                                                         if (value == "delete") {
+                                                                           await FirebaseFirestore.instance.runTransaction((Transaction myTransaction) async {
+                                                                             await myTransaction.delete(snapshot.data!.docs[index].reference);
+                                                                           });
+                                                                           Get.snackbar(
+                                                                               "success",
+                                                                               "Testimony has been deleted successfully",
+                                                                               titleText: const Text("success", style: TextStyle(color: Colors.white),),
+                                                                               messageText: const Text("Testimony has been deleted successfully",
+                                                                                   style: TextStyle(color: Colors.white)),
+                                                                               backgroundColor: const Color(0xff515BDE),
+                                                                               colorText: Colors.white
+                                                                           );
+                                                                         }
+                                                                       },
+                                                                       child: const Icon(Icons.more_horiz, size: 24,),
+                                                                     )
+                                                                   ],
+                                                                 ),
+                                                               ),
+                                                               SizedBox(
+                                                                 height: 20,
+                                                               ),
+                                                             ]);
+                                                       }),
+                                                 ),
+                                               ],
+                                             )
+                                                 : Container();
+                                           }),
+                                     ],
+                                   ),
+                                 ],
+                               ),
+                             ),
+                           ),
+                         ),
+                      ],
+                    ),
                   )
                 ]
               );

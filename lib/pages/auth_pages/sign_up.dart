@@ -65,8 +65,7 @@ class _SignUpFormState extends State<SignUpForm> {
                    upload(true);
                    setState(() {});
 
-                   Navigator.of(context, rootNavigator: true).pop(
-                   );
+                   Navigator.of(context, rootNavigator: true).pop();
 
 
 
@@ -286,26 +285,29 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
                   GestureDetector(
                     onTap: () async{
-                      if(image != null) {
+                      showDialog(context: context, builder: (_) => const Center(child: CircularProgressIndicator(),));
+                      try {
                         await uploadPfp().then((value) {});
-                        value = await getDownload();
-                        if(formKey.currentState!.validate()) {
-                          AuthController.instance.edit(_emailController.value.text.trim(),
-                              _nameController.text.trim(),
-                              value
-                          );
-                          AuthController.instance.Logout();
-                        }
-                      } else if(image == null) {
-                        Get.snackbar("Profile Picture", "Profile Picture not set",
+                        String value = await getDownload();
+                        AuthController.instance.register(
+                          _emailController.text.trim(),
+                          _passwordController.text.trim(),
+                          _nameController.text.trim(),
+                          value,
+                        );
+                      } catch (e) {
+                        Get.snackbar("Account Creation", "You need to create a profile picture",
                             backgroundColor: Colors.black,
                             colorText: Colors.white,
                             snackPosition: SnackPosition.TOP,
-                            titleText: const Text("Profile Picture not set"),
+                            titleText: const Text("Account creation failed", style: TextStyle(color: Colors.white),),
                             messageText: const Text(
-                              "You need to choose a profile picture", style: TextStyle(color: Colors.white),
+                              "You need a profile picture for this account", style: TextStyle(color: Colors.white),
                             )
                         );
+                      }
+                      if(mounted) {
+                        Navigator.of(context).popUntil((route) => route.isFirst);
                       }
                     },
                     child: ClipRRect(
@@ -350,33 +352,45 @@ class _SignUpFormState extends State<SignUpForm> {
   Future<void> upload(bool gallery) async {
     final picker = ImagePicker();
     if (gallery) {
-      photo =
-      await picker.pickImage(source: ImageSource.gallery);
+      photo = await picker.pickImage(source: ImageSource.gallery);
 
       setState(() {});
     } else {
-      photo =
-      await picker.pickImage(source: ImageSource.camera, );
+      photo = await picker.pickImage(source: ImageSource.camera, );
       setState(() {});
     }
   }
   
   Future<void> uploadPfp() async {
-    File uploadFile =File(photo!.path);
-
-    try {
-      await storage.ref("avatar/${uploadFile.path}").putFile(
-        uploadFile != null ? uploadFile : File("images/app_logo.png"));
-    } on FirebaseException catch(e) {
-      print(e);
+    if(photo != null) {
+      File uploadFile =File(photo!.path);
+      try {
+        await storage.ref("avatar/${uploadFile.path}").putFile(
+            uploadFile
+        );
+      } on FirebaseException catch(e) {
+        print(e);
+      }
+      catch(e) {
+        print(e);
+      }
+    } else if(photo == null){
+        Get.snackbar("Account Creation", "You need to create a profile picture",
+            backgroundColor: Colors.black,
+            colorText: Colors.white,
+            snackPosition: SnackPosition.TOP,
+            titleText: const Text("Account creation failed", style: TextStyle(color: Colors.white),),
+            messageText: const Text(
+              "You need a profile picture for this account", style: TextStyle(color: Colors.white),
+            )
+        );
     }
-    catch(e) {
-      print(e);
-    }
+    
+    
   }
   Future<String> getDownload() async {
-    File uploadedFile = File(photo!.path);
-    return storage.ref("avatar/${uploadedFile.path}").getDownloadURL();
+      File uploadedFile = File(photo!.path);
+      return storage.ref("avatar/${uploadedFile.path}").getDownloadURL();
   }
 }
 
