@@ -32,9 +32,9 @@ class EditForm extends StatefulWidget {
 class _EditFormState extends State<EditForm> {
   FirebaseStorage storage = FirebaseStorage.instance;
   final TextEditingController _emailController = TextEditingController();
-  //final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  //final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool _isObscure = true;
   var image;
@@ -49,9 +49,9 @@ class _EditFormState extends State<EditForm> {
   @override
   void dispose() {
     super.dispose();
-   // _confirmPasswordController.dispose();
+    _confirmPasswordController.dispose();
     _emailController.dispose();
-   // _passwordController.dispose();
+    _passwordController.dispose();
     _nameController.dispose();
   }
 
@@ -172,6 +172,89 @@ class _EditFormState extends State<EditForm> {
                     }
                   },
                 ),
+                SizedBox(height: Dimensions.Height40),
+                TextFormField(
+                  style: const TextStyle(),
+                  obscureText: _isObscure,
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                      hintText: 'password',
+                      hintStyle: TextStyle(
+                        color: const Color(0xffBEC2CE),
+                        fontSize: Dimensions.Width16,
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Color(0xffBEC2CE),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                            _isObscure ? Icons.visibility_off:Icons.visibility,
+                            color: const Color(0xffBEC2CE)
+                        ), onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            width: Dimensions.Width2-1,
+                            color: const Color(0xffBEC2CE)
+                        ),
+                      )
+                  ),
+                  validator: (value) {
+                    if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
+                      return "please password should contain 1 Upper case,\n 1 lowercase,\n 1 Numeric Number,\n 1 Special Character";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                SizedBox(height: Dimensions.Height20+3),
+                TextFormField(
+                  style: const TextStyle(),
+                  obscureText: _isObscure,
+                  controller: _confirmPasswordController,
+                  decoration: InputDecoration(
+                      hintText: 'confirm password',
+                      hintStyle: const TextStyle(
+                        color: Color(0xffBEC2CE),
+                        fontSize: 16,
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Color(0xffBEC2CE),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                            _isObscure ? Icons.visibility_off:Icons.visibility,
+                            color: const Color(0xffBEC2CE)
+                        ), onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            width: Dimensions.Width2-1,
+                            color: const Color(0xffBEC2CE)
+                        ),
+                      )
+                  ),
+                  validator: (value) {
+                    if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
+                      return "please password should contain 1 Upper case,\n 1 lowercase,\n 1 Numeric Number,\n 1 Special Character";
+                    } else if(value != _passwordController.text) {
+                      return "passwords does not match";
+                    }
+                    else {
+                      return null;
+                    }
+                  },
+                ),
                 SizedBox(height: Dimensions.Height44-4),
                 GestureDetector(
                   onTap: (() {
@@ -216,8 +299,9 @@ class _EditFormState extends State<EditForm> {
                       if(formKey.currentState!.validate()) {
                         AuthController.instance.editwithoutimage(_emailController.value.text.trim(),
                             _nameController.text.trim(),
+                          _passwordController.text.trim()
                         );
-                        AuthController.instance.Logout();
+                        //AuthController.instance.Logout();
                       }
                     }
                   },

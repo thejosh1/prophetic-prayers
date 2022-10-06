@@ -28,7 +28,7 @@ class AuthController extends GetxController {
     } else if(user != null && !user.emailVerified) {
       Get.offAll(()=> const VerificationScreen());
     } else {
-      Get.offAllNamed(RouteServices.SPLASHSCREEN);
+      Get.offAllNamed(RouteServices.INITIAL);
     }
   }
 
@@ -97,7 +97,7 @@ class AuthController extends GetxController {
       navigatorKey.currentState!.pop();
     }
   }
-  void edit(String? email, String? name, String? imagepath) async {
+  void edit(String? email, String? name, String? imagepath,) async {
     showDialog(
         context: navigatorKey.currentContext!,
         builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
@@ -124,16 +124,19 @@ class AuthController extends GetxController {
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
-  void editwithoutimage(String? email, String? name) async {
+  void editwithoutimage(String? email, String? name, String? password) async {
     showDialog(
         context: navigatorKey.currentContext!,
         builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
     );
     try {
       User? user = auth.currentUser;
-      await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
-        "uid":user?.uid,
-        "email":email,
+      UserCredential userCredential = await user!.reauthenticateWithCredential(
+          EmailAuthProvider.credential(email: user.email!, password: password!)
+      );
+      await FirebaseFirestore.instance.collection("users").doc(user!.uid).update({
+        "uid":user!.uid,
+        "email":userCredential.user!.email,
         "name":name,
       });
     } on FirebaseAuthException catch(e) {

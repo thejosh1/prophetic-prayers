@@ -64,7 +64,11 @@ class _SignUpFormState extends State<SignUpForm> {
                   onPressed: () async{
                    upload(true);
                    setState(() {});
-                   Navigator.of(context, rootNavigator: true).pop();
+
+                   Navigator.of(context, rootNavigator: true).pop(
+                   );
+
+
 
                  },
                  child: const Text("browse gallery")
@@ -74,15 +78,15 @@ class _SignUpFormState extends State<SignUpForm> {
                     upload(false);
                     setState(() {});
                     Navigator.of(context, rootNavigator: true).pop(
-                      Get.snackbar(
-                          "success",
-                          "picture has been added successfully click the signup button to complete your signup",
-                          titleText: const Text("success", style: TextStyle(color: Colors.white),),
-                          messageText: const Text("picture has been added successfully click the signup button to complete your signup",
-                              style: TextStyle(color: Colors.white)),
-                          backgroundColor: const Color(0xff515BDE),
-                          colorText: Colors.white
-                      )
+                      // Get.snackbar(
+                      //     "success",
+                      //     "picture has been added successfully click the signup button to complete your signup",
+                      //     titleText: const Text("success", style: TextStyle(color: Colors.white),),
+                      //     messageText: const Text("picture has been added successfully click the signup button to complete your signup",
+                      //         style: TextStyle(color: Colors.white)),
+                      //     backgroundColor: const Color(0xff515BDE),
+                      //     colorText: Colors.white
+                      // )
                     );
 
                   },
