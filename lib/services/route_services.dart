@@ -19,10 +19,8 @@ import '../pages/screens/career_screen.dart';
 import '../pages/screens/health_screen.dart';
 import '../pages/screens/lifestyle_screen.dart';
 import '../pages/screens/warfare_screen.dart';
-import '../pages/main_screen/splash_screen.dart';
 
 class RouteServices {
-  static const SPLASHSCREEN = "/splash-screen";
   static const INITIAL = "/";
   static const PRAYERDETAIL = "/prayer-details";
   static const PROSPERITYSCRIPTURESCREEN = "/prosperity-scripture-screen";
@@ -44,7 +42,6 @@ class RouteServices {
   static const PLANLISTSCREEN = "/plan-list-screen";
   static const FORGOTPASSWORDSCREEN = "/forgot-password-screen";
 
-  static String getSplashScreen() => "$SPLASHSCREEN";
   static String getInitial() => "$INITIAL";
   static String getPrayerDetailScreen() => "$PRAYERDETAIL";
   static String getProsperityScriptureScreen() => "$PROSPERITYSCRIPTURESCREEN";
@@ -67,7 +64,6 @@ class RouteServices {
   static String getforgotPasswordScreen()=> "$FORGOTPASSWORDSCREEN";
 
   static List<GetPage> routes = [
-    GetPage(name: SPLASHSCREEN, page: ()=>const SplashScreen()),
     GetPage(name: INITIAL, page: ()=> const MainPage()),
     GetPage(name: PRAYERDETAIL, page: ()=> const PrayerDetailScreen(), transition: Transition.fadeIn),
     GetPage(name: PROSPERITYSCRIPTURESCREEN, page: ()=> const PrayerScreen(), transition: Transition.fadeIn),

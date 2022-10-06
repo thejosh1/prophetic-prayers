@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:prophetic_prayers/services/route_services.dart';
 
 import '../../utils/dimensions.dart';
 
@@ -114,7 +115,7 @@ class _EditFormState extends State<EditForm> {
             key: formKey,
             child:  Column(
               children: [
-                SizedBox(height: Dimensions.Height40),
+                SizedBox(height: Dimensions.Height100),
                 TextFormField(
                   style: const TextStyle(),
                   controller: _nameController,
@@ -173,23 +174,41 @@ class _EditFormState extends State<EditForm> {
                 ),
                 GestureDetector(
                   onTap: () async{
-                    if(image != null) {
-                      await uploadPfp().then((value) {});
-                      value = await getDownload();
-                      if(formKey.currentState!.validate()) {
-                        AuthController.instance.edit(
-                            _nameController.text.trim(),
-                            value
-                        );
-                        AuthController.instance.Logout();
+                    showDialog(context: context, builder: (_) => const Center(child: CircularProgressIndicator(),));
+                    try {
+                      if(image != null) {
+                        await uploadPfp().then((value) {});
+                        value = await getDownload();
+                        if(formKey.currentState!.validate()) {
+                          AuthController.instance.edit(
+                              _nameController.text.trim(),
+                              value
+                          );
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        }
+                      } else if(image == null) {
+                        if(formKey.currentState!.validate()) {
+                          AuthController.instance.editwithoutimage(
+                              _nameController.text.trim(),
+                          );
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          //AuthController.instance.Logout();
+                        }
                       }
-                    } else if(image == null) {
-                      if(formKey.currentState!.validate()) {
-                        AuthController.instance.editwithoutimage(
-                            _nameController.text.trim(),
-                        );
-                        //AuthController.instance.Logout();
-                      }
+                    } catch (e) {
+                      // TODO
+                      Get.snackbar("Account Creation", "You need to create a profile picture",
+                          backgroundColor: Colors.orange,
+                          colorText: Colors.white,
+                          snackPosition: SnackPosition.TOP,
+                          titleText: const Text("Account creation failed", style: TextStyle(color: Colors.white),),
+                          messageText: const Text(
+                            "You need a profile picture for this account", style: TextStyle(color: Colors.white),
+                          )
+                      );
+                    }
+                    if(mounted) {
+                      Get.offAllNamed(RouteServices.INITIAL);
                     }
                   },
                   child: ClipRRect(
