@@ -96,7 +96,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                         child: Container(
                           width: double.infinity,
                           height: Dimensions.Height100-50,
-                          color: const Color(0xff515BDE),
+                          color: Colors.orange,
                           alignment: Alignment.center,
                           child: Text(
                             'Reset Password',

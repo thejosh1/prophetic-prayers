@@ -48,7 +48,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                 height: Dimensions.Height44*10,
                 width: double.maxFinite,
                 decoration: const BoxDecoration(
-                  color: Color(0xff515BDE)
+                  color: Colors.orange
                 ),
               ),
             ),
@@ -180,7 +180,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                                       child: Container(
                                         width: double.infinity,
                                         height: Dimensions.Height44+8,
-                                        color: const Color(0xff515BDE),
+                                        color: Colors.orange,
                                         alignment: Alignment.center,
                                         child: Text(
                                           'Submit',

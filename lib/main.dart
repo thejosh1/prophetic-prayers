@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
         title: 'Prophetic Prayers',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primarySwatch: Colors.deepPurple,
+            primarySwatch: Colors.orange,
             fontFamily: 'Poppins',
         ),
          //initialRoute: RouteServices.SPLASHSCREEN,

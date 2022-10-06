@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/controller/scripture_controller.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/pages/prayer_detail_screens/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 import '../../models/prayers.dart';
 import '../../services/route_services.dart';
@@ -34,10 +33,10 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                      IconButton(onPressed: (){Get.back();},
                          icon: Icon(Icons.arrow_back,
                            size: Dimensions.Width18,
-                           color: Color(0xFF000000),
+                           color: const Color(0xFF000000),
                          )
                      ),
-                     SizedBox(width: 20,),
+                     SizedBox(width: Dimensions.Width20,),
                      Text("Prayers For the Year",
                        style: TextStyle(
                            fontSize: Dimensions.Width16,
@@ -49,7 +48,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                ),
                Divider(
                  height: Dimensions.Height2,
-                 color: Color(0xFFEAECEF),
+                 color: const Color(0xFFEAECEF),
                  thickness: Dimensions.Width2,
                ),
                Container(
@@ -226,7 +225,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
               // );
             ]);
       },
-    ): Container(child: Center(child: Text("nothing here"),),);
+    ): Container(child: const Center(child: Text("nothing here"),),);
   }
 }
 

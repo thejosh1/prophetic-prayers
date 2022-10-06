@@ -54,12 +54,12 @@ class AuthController extends GetxController {
      // navigatorKey.currentState!.popUntil((route) => route.isFirst);
    }on FirebaseAuthException catch(e) {
      Get.snackbar("user creation", "for some reason we can't create your profile",
-         backgroundColor: Colors.black,
+         backgroundColor: Colors.orange,
          colorText: Colors.white,
          snackPosition: SnackPosition.TOP,
-         titleText: Text("Account creation failed"),
-         messageText: Text(
-         e.message.toString(), style: const TextStyle(color: Colors.white),
+         titleText: const Text("Account creation failed", style: TextStyle(color: Colors.white),),
+         messageText: const Text(
+         "for some reason we can't create your profile", style: TextStyle(color: Colors.white),
          )
      );
    }
@@ -75,10 +75,10 @@ class AuthController extends GetxController {
         email: email,
       );
       Get.snackbar("Password Reset", "Password Reset",
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.orange,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
-          titleText: const Text("Password Reset"),
+          titleText: const Text("Password Reset", style:TextStyle(color: Colors.white),),
           messageText: const Text(
             "Please check your email", style: TextStyle(color: Colors.white),
           )
@@ -86,18 +86,18 @@ class AuthController extends GetxController {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       Get.snackbar("Error", "Error Message",
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.orange,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
-          titleText: const Text("Error Message"),
-          messageText: Text(
-            e.message.toString(), style: TextStyle(color: Colors.white),
+          titleText: const Text("Error Message", style: TextStyle(color: Colors.white),),
+          messageText: const Text(
+            "Could not reset password", style: TextStyle(color: Colors.white),
           )
       );
       navigatorKey.currentState!.pop();
     }
   }
-  void edit(String? email, String? name, String? imagepath,) async {
+  void edit(String? name, String? imagepath,) async {
     showDialog(
         context: navigatorKey.currentContext!,
         builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
@@ -106,50 +106,43 @@ class AuthController extends GetxController {
       User? user = auth.currentUser;
       await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
         "uid":user?.uid,
-        "email":email,
         "name":name,
         "imagePath":imagepath,
       });
     } on FirebaseAuthException catch(e) {
       Get.snackbar("Profile Information", "Couldn't update Profile info",
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.orange,
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
-        titleText: Text("Profile Update Failed"),
-        messageText: Text(
-          e.message.toString(), style: TextStyle(color: Colors.white),
+        titleText: const Text("Profile Update Failed", style: TextStyle(color: Colors.white),),
+        messageText: const Text(
+          "couldn't update profile info", style: TextStyle(color: Colors.white),
         )
       );
-      print(e.message.toString());
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
-  void editwithoutimage(String? email, String? name, String? password) async {
+  void editwithoutimage(String? name) async {
     showDialog(
         context: navigatorKey.currentContext!,
         builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
     );
     try {
       User? user = auth.currentUser;
-      UserCredential userCredential = await user!.reauthenticateWithCredential(
-          EmailAuthProvider.credential(email: user.email!, password: password!)
-      );
       await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
         "uid":user!.uid,
-        "email":userCredential.user!.email,
         "name":name,
       });
     } on FirebaseAuthException catch(e) {
       Get.snackbar("Profile Information", "Couldn't update Profile info",
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.orange,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
-          titleText: Text("Profile Update Failed"),
-          messageText: Text(
-            e.message.toString(), style: TextStyle(color: Colors.white),
+          titleText: const Text("Profile Update Failed", style: TextStyle(color: Colors.white),),
+          messageText: const Text(
+            "could not update profile info", style: TextStyle(color: Colors.white),
           )
       );
-      print(e.message.toString());
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
@@ -157,24 +150,19 @@ class AuthController extends GetxController {
     showDialog(
       context: navigatorKey.currentContext!,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator(),)
+      builder: (context) => const Center(child: CircularProgressIndicator(),)
     );
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch(e) {
-      Get.snackbar("Login", "for some reason you can't login profile",
-          backgroundColor: Colors.black,
+      Get.snackbar("Login", "Login failed",
+          backgroundColor: Colors.orange,
           colorText: Colors.white,
           snackPosition: SnackPosition.TOP,
-          titleText: Text("Login failed"),
-          messageText: Text(
-            e.message.toString(),
-            style: TextStyle(
-              color: Colors.white
-            ),
+          titleText: const Text("Login failed", style: TextStyle(color: Colors.white),),
+          messageText: const Text("Login failed", style: TextStyle(color: Colors.white),
           )
       );
-      print(e);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }

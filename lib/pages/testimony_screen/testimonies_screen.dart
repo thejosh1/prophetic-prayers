@@ -82,14 +82,14 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                                   height: Dimensions.Height20+8,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(Dimensions.Width20),
-                                    border: Border.all(color: const Color(0xFF515BDE)),
+                                    border: Border.all(color: Colors.orange),
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
                                       Icon(
                                         Icons.edit,
-                                        color: Color(0xFF515BDE),
+                                        color: Colors.orange,
                                       ),
                                       Text("Testify")
                                     ],

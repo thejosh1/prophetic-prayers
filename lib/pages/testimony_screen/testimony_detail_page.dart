@@ -30,7 +30,7 @@ class TestimonyDetailPage extends StatelessWidget {
                   height: Dimensions.Height20+8,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(Dimensions.Width20),
-                    border: Border.all(color: Color(0xFF515BDE), width: Dimensions.Width2-0.5),
+                    border: Border.all(color: Colors.orange, width: Dimensions.Width2-0.5),
                   ),
                   child: GestureDetector(
                     onTap: (){
@@ -41,7 +41,7 @@ class TestimonyDetailPage extends StatelessWidget {
                       children: const [
                         Icon(
                           Icons.edit,
-                          color: Color(0xFF515BDE),
+                          color: Colors.orange,
                         ),
                         Text("Have a testimony?")
                       ],

@@ -56,7 +56,7 @@ class _MainPageState extends State<MainPage> {
           unselectedFontSize: 0,
           onTap: onTap,
           currentIndex: currentIndex,
-          selectedItemColor: const Color(0xff515BDE),
+          selectedItemColor: Colors.orange,
           unselectedItemColor: Colors.grey.withOpacity(0.5),
           showSelectedLabels: true,
           showUnselectedLabels: false,

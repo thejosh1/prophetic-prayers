@@ -297,7 +297,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         );
                       } catch (e) {
                         Get.snackbar("Account Creation", "You need to create a profile picture",
-                            backgroundColor: Colors.black,
+                            backgroundColor: Colors.orange,
                             colorText: Colors.white,
                             snackPosition: SnackPosition.TOP,
                             titleText: const Text("Account creation failed", style: TextStyle(color: Colors.white),),
@@ -315,7 +315,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       child: Container(
                         width: double.infinity,
                         height: Dimensions.Height40+10,
-                        color: const Color(0xff515BDE),
+                        color: Colors.orange,
                         alignment: Alignment.center,
                         child: Text(
                           'Submit',
@@ -376,7 +376,7 @@ class _SignUpFormState extends State<SignUpForm> {
       }
     } else if(photo == null){
         Get.snackbar("Account Creation", "You need to create a profile picture",
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.orange,
             colorText: Colors.white,
             snackPosition: SnackPosition.TOP,
             titleText: const Text("Account creation failed", style: TextStyle(color: Colors.white),),

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
-import 'package:prophetic_prayers/services/testimony_services.dart';
 
 import '../../controller/auth_controller.dart';
 import '../../utils/dimensions.dart';
@@ -122,35 +121,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                          children: [
-                                           // Column(
-                                           //   mainAxisAlignment: MainAxisAlignment.start,
-                                           //   children: [
-                                           //     InkWell(
-                                           //       onTap: () {
-                                           //         Get.toNamed(RouteServices.EDITPROFILESCREEN
-                                           //         );
-                                           //       },
-                                           //       child: Column(
-                                           //         children: [
-                                           //           Icon(
-                                           //             Icons.person_add, size: Dimensions.Height29,
-                                           //             color: const Color(0xFFD1D1D6),
-                                           //           ),
-                                           //           SizedBox(
-                                           //             height: Dimensions.Height8,
-                                           //           ),
-                                           //           Text(
-                                           //             "Edit Profile",
-                                           //             style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.w200, color: const Color(0xFF1E2432)),
-                                           //           ),
-                                           //         ],
-                                           //       ),
-                                           //     )
-                                           //   ],
-                                           // ),
-                                           // SizedBox(
-                                           //   width: Dimensions.Width6 + 2,
-                                           // ),
+                                           Column(
+                                             mainAxisAlignment: MainAxisAlignment.start,
+                                             children: [
+                                               InkWell(
+                                                 onTap: () {
+                                                   Get.toNamed(RouteServices.EDITPROFILESCREEN
+                                                   );
+                                                 },
+                                                 child: Column(
+                                                   children: [
+                                                     Icon(
+                                                       Icons.person_add, size: Dimensions.Height29,
+                                                       color: const Color(0xFFD1D1D6),
+                                                     ),
+                                                     SizedBox(
+                                                       height: Dimensions.Height8,
+                                                     ),
+                                                     Text(
+                                                       "Edit Profile",
+                                                       style: TextStyle(fontSize: Dimensions.Width14, fontWeight: FontWeight.w200, color: const Color(0xFF1E2432)),
+                                                     ),
+                                                   ],
+                                                 ),
+                                               )
+                                             ],
+                                           ),
+                                           SizedBox(
+                                             width: Dimensions.Width6 + 2,
+                                           ),
                                            GestureDetector(
                                              onTap: (() {
                                                Get.toNamed(RouteServices.CREATETESTIMONYSCREEN);
@@ -243,7 +242,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                    child: ListView.builder(
                                                        physics: const NeverScrollableScrollPhysics(),
                                                        itemCount: snapdata.length,
-                                                       itemBuilder: (BuildContextcontext, index) {
+                                                       itemBuilder: (BuildContext context, index) {
                                                          String useruid = snapdata[index]["useruid"];
                                                          return Column(
                                                              children: [
@@ -260,8 +259,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                                    children: [
                                                                      Container(
-                                                                       height: 80,
-                                                                       width: 80,
+                                                                       height: Dimensions.Height60+20,
+                                                                       width: Dimensions.Width90-10,
                                                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.grey, width: 2), color: Colors.grey
                                                                          //color: data[1]
                                                                        ),
@@ -278,9 +277,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                      ),
                                                                      Expanded(
                                                                          child: Container(
-                                                                           height: 100,
+                                                                           height: Dimensions.Height100,
                                                                            child: Padding(
-                                                                             padding: const EdgeInsets.only(left: 10),
+                                                                             padding: EdgeInsets.only(left: Dimensions.Width2-1),
                                                                              child: Column(
                                                                                mainAxisAlignment: MainAxisAlignment.start,
                                                                                crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,28 +288,26 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                                    "${snapdata[index]["title"]}",
                                                                                    maxLines: 1,
                                                                                    overflow: TextOverflow.ellipsis,
-                                                                                   style: TextStyle(fontWeight: FontWeight.bold),
+                                                                                   style: const TextStyle(fontWeight: FontWeight.bold),
                                                                                  ),
                                                                                  SizedBox(
-                                                                                   height: 3,
+                                                                                   height: Dimensions.Height2+1,
                                                                                  ),
                                                                                  Text(
                                                                                    "${snapdata[index]["testimonies"]}", maxLines: 2, overflow: TextOverflow.ellipsis,
                                                                                  ),
-                                                                                 SizedBox(
-                                                                                   height: 3,
-                                                                                 ),
+                                                                                 SizedBox(height: Dimensions.Height2+1,),
                                                                                  Text("${snapdata[index]["timestamp"]}"),
-                                                                                 SizedBox(
-                                                                                   height: 3,
-                                                                                 ),
+                                                                                 SizedBox(height: Dimensions.Height2+1,),
                                                                                  Row(
                                                                                    children: [
                                                                                      Wrap(
-                                                                                         children: List.generate(5, (index) => const Icon(Icons.star,
+                                                                                         children: List.generate(5, (index) => Icon(Icons.star,
                                                                                            color: Colors.amberAccent,
-                                                                                           size: 15,
-                                                                                         ))),
+                                                                                           size: Dimensions.Width16-1,
+                                                                                         )
+                                                                                       )
+                                                                                     ),
                                                                                    ],
                                                                                  ),
                                                                                ],
@@ -324,7 +321,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                        onSelected: (value) async {
                                                                          if (value == "delete") {
                                                                            await FirebaseFirestore.instance.runTransaction((Transaction myTransaction) async {
-                                                                             await myTransaction.delete(snapshot.data!.docs[index].reference);
+                                                                             myTransaction.delete(snapshot.data!.docs[index].reference);
                                                                            });
                                                                            Get.snackbar(
                                                                                "success",
@@ -332,19 +329,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                                titleText: const Text("success", style: TextStyle(color: Colors.white),),
                                                                                messageText: const Text("Testimony has been deleted successfully",
                                                                                    style: TextStyle(color: Colors.white)),
-                                                                               backgroundColor: const Color(0xff515BDE),
+                                                                               backgroundColor: Colors.orange,
                                                                                colorText: Colors.white
                                                                            );
                                                                          }
                                                                        },
-                                                                       child: const Icon(Icons.more_horiz, size: 24,),
+                                                                       child: Icon(Icons.more_horiz, size: Dimensions.Width20+4,),
                                                                      )
                                                                    ],
                                                                  ),
                                                                ),
-                                                               SizedBox(
-                                                                 height: 20,
-                                                               ),
+                                                               SizedBox(height: Dimensions.Height20,),
                                                              ]);
                                                        }),
                                                  ),
@@ -380,7 +375,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     final user = AuthController.instance.auth.currentUser;
     // TODO: implement build
     return Container(
-      height: 100,
+      height: Dimensions.Height100,
       decoration: const BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
             blurRadius: 0.5,
@@ -388,7 +383,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             offset: Offset(0, 3),
             color: Colors.transparent)
       ]),
-      padding: const EdgeInsets.only(left: 24, right: 24, top: 46),
+      padding: EdgeInsets.only(left: Dimensions.Width20+4, right: Dimensions.Width20+4, top: Dimensions.Height40+6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -401,9 +396,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               builder: (BuildContext context,
                   AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text(
+                  return Text(
                     "Welcome",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),
                   );
                 } else if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData &&
@@ -412,31 +407,28 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                       snapshot.data!.data() as Map<String, dynamic>;
                   return Text(
                     "Welcome ${data["name"]}",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: Dimensions.Width16+2),
                   );
                 }
-                return const Text(
+                return Text(
                   "Welcome",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width16+2),
                 );
               }),
           FutureBuilder(
-              future: FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(user?.uid)
-                  .get(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+              future: FirebaseFirestore.instance.collection("users").doc(user?.uid).get(),
+              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Container(
-                    height: 30,
-                    width: 30,
+                    height: Dimensions.Height20+10,
+                    width: Dimensions.Width30,
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: AssetImage("images/Icon-48.png"),
-                            fit: BoxFit.cover)),
+                            fit: BoxFit.cover)
+                    ),
                   );
                 } else if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData &&
@@ -444,23 +436,25 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Map<String, dynamic> data =
                       snapshot.data!.data() as Map<String, dynamic>;
                   return Container(
-                    height: 30,
-                    width: 30,
+                    height: Dimensions.Width20+10,
+                    width: Dimensions.Width30,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: NetworkImage("${data["imagePath"]}"),
-                            fit: BoxFit.cover)),
+                            fit: BoxFit.cover)
+                    ),
                   );
                 }
                 return Container(
-                  height: 30,
-                  width: 30,
+                  height: Dimensions.Height20+10,
+                  width: Dimensions.Width30,
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
                           image: AssetImage("images/Icon-48.png"),
-                          fit: BoxFit.cover)),
+                          fit: BoxFit.cover)
+                  ),
                 );
               }),
         ],
@@ -470,5 +464,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(126);
+  Size get preferredSize => Size.fromHeight(Dimensions.Height100+26);
 }
