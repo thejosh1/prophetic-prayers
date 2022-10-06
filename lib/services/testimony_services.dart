@@ -29,14 +29,14 @@ class TestimonyServices {
     await documentReference.set(data).whenComplete(() => Get.snackbar(
       "Testimonies",
       "Your testimony has been successfully added",
-      titleText: Text("testimony", style: TextStyle(color: Colors.white)),
+      titleText: const Text("testimony", style: TextStyle(color: Colors.white)),
       messageText: const Text("Your testimony has been added successfully", style: TextStyle(color: Colors.white),),
-      backgroundColor: const Color(0xff515BDE),
+      backgroundColor: Colors.orange,
       colorText: Colors.white
     )).catchError((e) => Get.snackbar("Error", e,
-      titleText: Text("Error"),
+      titleText: Text("Error", style: TextStyle(color: Colors.white),),
       messageText: Text(e),
-      backgroundColor: const Color(0xff515BDE),
+      backgroundColor: Colors.orange,
       colorText: Colors.white
     ));
   }
