@@ -286,29 +286,20 @@ class _SignUpFormState extends State<SignUpForm> {
                   GestureDetector(
                     onTap: () async{
                       showDialog(context: context, builder: (_) => const Center(child: CircularProgressIndicator(),));
-                      try {
                         await uploadPfp().then((value) {});
                         String value = await getDownload();
-                        AuthController.instance.register(
-                          _emailController.text.trim(),
-                          _passwordController.text.trim(),
-                          _nameController.text.trim(),
-                          value,
-                        );
-                      } catch (e) {
-                        Get.snackbar("Account Creation", "You need to create a profile picture",
-                            backgroundColor: Colors.orange,
-                            colorText: Colors.white,
-                            snackPosition: SnackPosition.TOP,
-                            titleText: const Text("Account creation failed", style: TextStyle(color: Colors.white),),
-                            messageText: const Text(
-                              "You need a profile picture for this account", style: TextStyle(color: Colors.white),
-                            )
-                        );
-                      }
+                        if(formKey.currentState!.validate()) {
+                          AuthController.instance.register(
+                            _emailController.text.trim(),
+                            _passwordController.text.trim(),
+                            _nameController.text.trim(),
+                            value,
+                          );
+                        }
                       if(mounted) {
                         Navigator.of(context).popUntil((route) => route.isFirst);
                       }
+                      print("tapped");
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(Dimensions.Width16-4),

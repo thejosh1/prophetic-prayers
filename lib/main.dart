@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -13,8 +14,6 @@ import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
-  print(message.notification!.title);
 }
 
 Future<void> main() async{
@@ -23,7 +22,7 @@ Future<void> main() async{
   await Firebase.initializeApp().then((value) => Get.put(AuthController()));
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  //await FirebaseAppCheck.instance.activate();
+  await FirebaseAppCheck.instance.activate();
   //AuthController.instance.Logout();
   NotifyServices.showScheduledWeeklyNotification(
       title: "Reminder",
