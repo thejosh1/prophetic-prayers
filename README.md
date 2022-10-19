@@ -1,16 +1,14 @@
-# prophetic_prayers
+# prophetic prayers for children
 
-A new Flutter project.
+A mobile prayer journal based of the based of the 365 days prayer for children calendar.
 
-## Getting Started
+## Resoures Used
+- Dart/Flutter
+- Firebase
+- Flutter local notifications
+- Firebase cloud messaging
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This app was created to make praying for your children easy.
+it has a list of prayers and sends daily reminders every morning.
+It is colorful and child friendly, so your children can use the app themselves
