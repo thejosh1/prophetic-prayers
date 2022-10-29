@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
+import 'package:prophetic_prayers/widgets/big_text.dart';
 import '../../controller/auth_controller.dart';
 import '../../utils/dimensions.dart';
 
@@ -187,7 +188,12 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                           ),
                         ],
                       ),
-                    ): Container();
+                    ): Column(
+                      children: [
+                        SizedBox(height: Dimensions.Height270,),
+                        Text("No testimonies yet be the first to testify", style: TextStyle(fontSize: Dimensions.Width16+2, color: Colors.black54,))
+                      ],
+                    );
                   }),
             )
           ],

@@ -11,6 +11,8 @@ import 'package:prophetic_prayers/services/notify_services.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
+import 'data/repositories/auth_repo.dart';
+
 
 final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -19,7 +21,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await NotifyServices.init(initScheduled: true);
-  await Firebase.initializeApp().then((value) => Get.put(AuthController()));
+  Get.lazyPut(() => AuthRepo());
+  await Firebase.initializeApp().then((value) => Get.put(AuthController(authRepo: Get.find())));
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   await FirebaseAppCheck.instance.activate();
@@ -37,8 +40,6 @@ Future<void> main() async{
   await AppPreferences.init();
   runApp(const MyApp());
 }
-
-
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);

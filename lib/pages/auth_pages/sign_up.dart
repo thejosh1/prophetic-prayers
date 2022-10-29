@@ -7,6 +7,7 @@ import 'package:prophetic_prayers/controller/auth_controller.dart';
 import 'package:prophetic_prayers/pages/auth_pages/login.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../main.dart';
 import '../../utils/dimensions.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -62,32 +63,15 @@ class _SignUpFormState extends State<SignUpForm> {
             actions: [
               TextButton(
                   onPressed: () async{
-                   upload(true);
-                   setState(() {});
-
-                   Navigator.of(context, rootNavigator: true).pop();
-
-
-
+                   Get.back(result: upload(true), closeOverlays: true);
+                   Get.snackbar("Account Creation", "Picture has been saved");
                  },
                  child: const Text("browse gallery")
               ),
               TextButton(
                   onPressed: () async{
-                    upload(false);
-                    setState(() {});
-                    Navigator.of(context, rootNavigator: true).pop(
-                      // Get.snackbar(
-                      //     "success",
-                      //     "picture has been added successfully click the signup button to complete your signup",
-                      //     titleText: const Text("success", style: TextStyle(color: Colors.white),),
-                      //     messageText: const Text("picture has been added successfully click the signup button to complete your signup",
-                      //         style: TextStyle(color: Colors.white)),
-                      //     backgroundColor: const Color(0xff515BDE),
-                      //     colorText: Colors.white
-                      // )
-                    );
-
+                    Get.back(result: upload(false), closeOverlays: true);
+                    Get.snackbar("Account Creation", "Picture has been saved");
                   },
                   child: const Text("Take selfie")
               )
@@ -102,241 +86,242 @@ class _SignUpFormState extends State<SignUpForm> {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
-    return Scaffold(
-        key: _scaffoldKey,
-        body: SingleChildScrollView(
-          child: Container(
-            height: double.maxFinite,
-            width: double.maxFinite,
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.Width20+2),
-            color: Colors.white,
-            child: Form(
-              key: formKey,
-              child:  Column(
-                children: [
-                  SizedBox(height: Dimensions.Height40),
-                  TextFormField(
-                    style: const TextStyle(),
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                        hintText: 'Name',
-                        hintStyle: TextStyle(
-                          color: const Color(0xffBEC2CE),
-                          fontSize: Dimensions.Width16,
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.person_add_outlined,
-                          color: Color(0xffBEC2CE),
-                        ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              width: Dimensions.Width2-1,
-                              color: const Color(0xffBEC2CE)
-                          ),
-                        )
-                    ),
-                    validator: (value) {
-                      if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                        return "please enter a correct name";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(height: Dimensions.Height40),
-                  TextFormField(
-                    style: const TextStyle(),
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                        hintText: 'Email',
-                        hintStyle: TextStyle(
-                          color: const Color(0xffBEC2CE),
-                          fontSize: Dimensions.Width16,
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.email_outlined,
-                          color: Color(0xffBEC2CE),
-                        ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              width: Dimensions.Width2-1,
-                              color: const Color(0xffBEC2CE)
-                          ),
-                        )
-                    ),
-                    validator: (value) {
-                      if(value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}').hasMatch(value)) {
-                        return "please enter a correct email";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(height: Dimensions.Height40),
-                  TextFormField(
-                    style: const TextStyle(),
-                    obscureText: _isObscure,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                        hintText: 'password',
-                        hintStyle: TextStyle(
-                          color: const Color(0xffBEC2CE),
-                          fontSize: Dimensions.Width16,
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.lock,
-                          color: Color(0xffBEC2CE),
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isObscure ? Icons.visibility_off:Icons.visibility,
-                              color: const Color(0xffBEC2CE)
-                          ), onPressed: () {
-                            setState(() {
-                              _isObscure = !_isObscure;
-                            });
-                        },
-                        ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              width: Dimensions.Width2-1,
-                              color: const Color(0xffBEC2CE)
-                          ),
-                        )
-                    ),
-                    validator: (value) {
-                      if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
-                        return "please password should contain 1 Upper case,\n 1 lowercase,\n 1 Numeric Number,\n 1 Special Character";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(height: Dimensions.Height20+3),
-                  TextFormField(
-                    style: const TextStyle(),
-                    obscureText: _isObscure,
-                    controller: _confirmPasswordController,
-                    decoration: InputDecoration(
-                        hintText: 'confirm password',
-                        hintStyle: const TextStyle(
-                          color: Color(0xffBEC2CE),
-                          fontSize: 16,
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.lock,
-                          color: Color(0xffBEC2CE),
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                              _isObscure ? Icons.visibility_off:Icons.visibility,
-                              color: const Color(0xffBEC2CE)
-                          ), onPressed: () {
-                          setState(() {
-                            _isObscure = !_isObscure;
-                          });
-                        },
-                        ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              width: Dimensions.Width2-1,
-                              color: const Color(0xffBEC2CE)
-                          ),
-                        )
-                    ),
-                    validator: (value) {
-                      if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
-                        return "please password should contain 1 Upper case,\n 1 lowercase,\n 1 Numeric Number,\n 1 Special Character";
-                      } else if(value != _passwordController.text) {
-                        return "passwords does not match";
-                      }
-                      else {
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(height: Dimensions.Height20+3),
-                  GestureDetector(
-                    onTap: (() {
-                      showInformationDialogue(context);
-                      setState(() {});
-                    }),
-                    child: Row(
-                      children: [
-                        const Spacer(),
-                        Row(
-                          children: [
-                            const Icon(Icons.library_add, color: Color(0xffBEC2CE),),
-                            SizedBox(width: Dimensions.Width3+2,),
-                            Text(
-                              "add Image",
-                              style: TextStyle(
-                                  color: const Color(0xffBEC2CE),
-                                  fontSize: Dimensions.Width16
+    return GetBuilder<AuthController>(builder: (authController) {
+      return Scaffold(
+          key: _scaffoldKey,
+          body: SingleChildScrollView(
+            child: Container(
+              height: double.maxFinite,
+              width: double.maxFinite,
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.Width20+2),
+              color: Colors.white,
+              child: Form(
+                key: formKey,
+                child:  Column(
+                    children: [
+                      SizedBox(height: Dimensions.Height40),
+                      TextFormField(
+                        style: const TextStyle(),
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                            hintText: 'Name',
+                            hintStyle: TextStyle(
+                              color: const Color(0xffBEC2CE),
+                              fontSize: Dimensions.Width16,
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.person_add_outlined,
+                              color: Color(0xffBEC2CE),
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Dimensions.Width2-1,
+                                  color: const Color(0xffBEC2CE)
                               ),
                             )
+                        ),
+                        validator: (value) {
+                          if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                            return "please enter a correct name";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      SizedBox(height: Dimensions.Height40),
+                      TextFormField(
+                        style: const TextStyle(),
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                            hintText: 'Email',
+                            hintStyle: TextStyle(
+                              color: const Color(0xffBEC2CE),
+                              fontSize: Dimensions.Width16,
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.email_outlined,
+                              color: Color(0xffBEC2CE),
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Dimensions.Width2-1,
+                                  color: const Color(0xffBEC2CE)
+                              ),
+                            )
+                        ),
+                        validator: (value) {
+                          if(value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}').hasMatch(value)) {
+                            return "please enter a correct email";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      SizedBox(height: Dimensions.Height40),
+                      TextFormField(
+                        style: const TextStyle(),
+                        obscureText: _isObscure,
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                            hintText: 'password',
+                            hintStyle: TextStyle(
+                              color: const Color(0xffBEC2CE),
+                              fontSize: Dimensions.Width16,
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.lock,
+                              color: Color(0xffBEC2CE),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                  _isObscure ? Icons.visibility_off:Icons.visibility,
+                                  color: const Color(0xffBEC2CE)
+                              ), onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            },
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Dimensions.Width2-1,
+                                  color: const Color(0xffBEC2CE)
+                              ),
+                            )
+                        ),
+                        validator: (value) {
+                          if(value!.isEmpty || value.length < 6) {
+                            return "password is too short";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      SizedBox(height: Dimensions.Height20+3),
+                      TextFormField(
+                        style: const TextStyle(),
+                        obscureText: _isObscure,
+                        controller: _confirmPasswordController,
+                        decoration: InputDecoration(
+                            hintText: 'confirm password',
+                            hintStyle: const TextStyle(
+                              color: Color(0xffBEC2CE),
+                              fontSize: 16,
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.lock,
+                              color: Color(0xffBEC2CE),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                  _isObscure ? Icons.visibility_off:Icons.visibility,
+                                  color: const Color(0xffBEC2CE)
+                              ), onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            },
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: Dimensions.Width2-1,
+                                  color: const Color(0xffBEC2CE)
+                              ),
+                            )
+                        ),
+                        validator: (value) {
+                          if(value!.isEmpty || value.length < 6) {
+                            return "password is too short";
+                          } else if(value != _passwordController.text) {
+                            return "passwords do not match";
+                          }
+                          else {
+                            return null;
+                          }
+                        },
+                      ),
+                      SizedBox(height: Dimensions.Height20+3),
+                      GestureDetector(
+                        onTap: (() {
+                          showInformationDialogue(context);
+                        }),
+                        child: Row(
+                          children: [
+                            const Spacer(),
+                            Row(
+                              children: [
+                                const Icon(Icons.library_add, color: Color(0xffBEC2CE),),
+                                SizedBox(width: Dimensions.Width3+2,),
+                                Text(
+                                  "add Image",
+                                  style: TextStyle(
+                                      color: const Color(0xffBEC2CE),
+                                      fontSize: Dimensions.Width16
+                                  ),
+                                )
+                              ],
+                            )
                           ],
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: Dimensions.Height20+3,
-                  ),
-                  GestureDetector(
-                    onTap: () async{
-                      showDialog(context: context, builder: (_) => const Center(child: CircularProgressIndicator(),));
-                        await uploadPfp().then((value) {});
-                        String value = await getDownload();
-                        if(formKey.currentState!.validate()) {
-                          AuthController.instance.register(
-                            _emailController.text.trim(),
-                            _passwordController.text.trim(),
-                            _nameController.text.trim(),
-                            value,
-                          );
-                        }
-                      if(mounted) {
-                        Navigator.of(context).popUntil((route) => route.isFirst);
-                      }
-                      print("tapped");
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(Dimensions.Width16-4),
-                      child: Container(
-                        width: double.infinity,
-                        height: Dimensions.Height40+10,
-                        color: Colors.orange,
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: Dimensions.Width16+2,
-                            fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(
+                        height: Dimensions.Height20+3,
+                      ),
+                      GestureDetector(
+                        onTap: () async{
+                          await uploadPfp().then((value) {});
+                          String value = await getDownload();
+                          if(formKey.currentState!.validate()) {
+                            showDialog(
+                                context: navigatorKey.currentContext!,
+                                barrierDismissible: false,
+                                builder: (context) => const Center(child: CircularProgressIndicator(),)
+                            );
+                            authController.register(
+                              _emailController.text.trim(),
+                              _passwordController.text.trim(),
+                              _nameController.text.trim(),
+                              value,
+                            );
+                          }
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(Dimensions.Width16-4),
+                          child: Container(
+                            width: double.infinity,
+                            height: Dimensions.Height40+10,
+                            color: Colors.orange,
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Submit',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: Dimensions.Width16+2,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: Dimensions.Height40-10),
-                  GestureDetector(
-                    onTap: ((){
-                      Get.offAll(() => const LoginScreen());
-                    }),
-                    child: const Text(
-                      'Have an account? Login',
-                      style: TextStyle(
-                        color: Color(0xffBEC2CE),
-                      ),
-                    ),
-                  )
-                ]
+                      SizedBox(height: Dimensions.Height40-10),
+                      GestureDetector(
+                        onTap: ((){
+                          Get.offAll(() => const LoginScreen());
+                        }),
+                        child: const Text(
+                          'Have an account? Login',
+                          style: TextStyle(
+                            color: Color(0xffBEC2CE),
+                          ),
+                        ),
+                      )
+                    ]
+                ),
               ),
             ),
-          ),
-        )
-    );
+          )
+      );
+    });
   }
 
   XFile? photo;
@@ -344,13 +329,13 @@ class _SignUpFormState extends State<SignUpForm> {
     final picker = ImagePicker();
     if (gallery) {
       photo = await picker.pickImage(source: ImageSource.gallery);
-
       setState(() {});
     } else {
       photo = await picker.pickImage(source: ImageSource.camera, );
       setState(() {});
     }
   }
+
   
   Future<void> uploadPfp() async {
     if(photo != null) {
@@ -360,10 +345,11 @@ class _SignUpFormState extends State<SignUpForm> {
             uploadFile
         );
       } on FirebaseException catch(e) {
-        print(e);
-      }
-      catch(e) {
-        print(e);
+        Get.snackbar("Account Creation", e.toString(),
+            backgroundColor: Colors.orange,
+            colorText: Colors.white,
+            snackPosition: SnackPosition.TOP,
+        );
       }
     } else if(photo == null){
         Get.snackbar("Account Creation", "You need to create a profile picture",

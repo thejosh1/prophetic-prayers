@@ -66,7 +66,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                       },
                       child: const Icon(Icons.clear, color: Colors.white,),
                     ),
-                    Text("Create testimony_screen", style: TextStyle(fontSize: Dimensions.Width16+2, fontWeight: FontWeight.bold, color: Colors.white),),
+                    Text("Testimony", style: TextStyle(fontSize: Dimensions.Width16+2, fontWeight: FontWeight.bold, color: Colors.white),),
                     GestureDetector(
                       onTap: () {
                         Get.offAll(RouteServices.INITIAL);
@@ -121,6 +121,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                                       hintText: "Title here",
                                       hintStyle: TextStyle(color: Colors.blueGrey, fontSize: Dimensions.Width20+4, fontWeight: FontWeight.w600)
                                     ),
+                                    textAlign: TextAlign.center,
                                     controller: _titleController,
                                     style: TextStyle(
                                         fontSize: Dimensions.Width20+4,
@@ -136,29 +137,26 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                                       }
                                   ),
                                   SizedBox(height: Dimensions.Height20,),
-                                  Container(
-                                    width: Dimensions.Width335-15,
-                                    child: TextFormField(
-                                      maxLines: null,
-                                      keyboardType: TextInputType.multiline,
-                                      controller: _noteController,
-                                      decoration: InputDecoration.collapsed(
-                                          hintText: "testimony_screen here",
-                                          hintStyle: TextStyle(color: Colors.blueGrey, fontSize: Dimensions.Width20+4, fontWeight: FontWeight.w600)
-                                      ),
-                                      style: TextStyle(
-                                          fontSize: Dimensions.Width16+2,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black
-                                      ),
-                                        validator: (value) {
-                                          if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                                            return "please enter a text";
-                                          } else {
-                                            return null;
-                                          }
-                                        }
+                                  TextFormField(
+                                    maxLines: null,
+                                    keyboardType: TextInputType.multiline,
+                                    controller: _noteController,
+                                    decoration: InputDecoration.collapsed(
+                                        hintText: "Click here to testify",
+                                        hintStyle: TextStyle(color: Colors.blueGrey, fontSize: Dimensions.Width20+4, fontWeight: FontWeight.w600)
                                     ),
+                                    style: TextStyle(
+                                        fontSize: Dimensions.Width16+2,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black
+                                    ),
+                                      validator: (value) {
+                                        if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                                          return "please enter a text";
+                                        } else {
+                                          return null;
+                                        }
+                                      }
                                   ),
                                   SizedBox(height: Dimensions.Height270-70),
                                   GestureDetector(

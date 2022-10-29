@@ -149,7 +149,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                   InkWell(
                                     onTap: () async{
                                      ByteData imagebyte = await rootBundle.load("images/banner.jpeg");
-                                     const urlLink = "https://propheticprayers.page.link/muUh";
+                                     String urlLink = "https://propheticprayers.page.link/muUh";
 
                                       final temp = await getTemporaryDirectory();
                                       final path = '${temp.path}/banner.jpeg';
@@ -276,7 +276,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
 
                             ],
                           ),
-                          SizedBox(height: Dimensions.Height10,),
+                          SizedBox(height: Dimensions.Height20,),
                         ],
                       ),
                     ),

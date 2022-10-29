@@ -68,28 +68,16 @@ class _EditFormState extends State<EditForm> {
             actions: [
               TextButton(
                   onPressed: () async{
-                    upload(true);
-                    setState(() {});
-                    Navigator.of(context, rootNavigator: true).pop(
-                        Get.snackbar(
-                            "success",
-                            "picture has been Changed successfully",
-                            titleText: const Text("success", style: TextStyle(color: Colors.white),),
-                            messageText: const Text("picture has been changed",
-                                style: TextStyle(color: Colors.white)),
-                            backgroundColor: Colors.orange,
-                            colorText: Colors.white
-                        )
-                    );
+                    Get.back(result: upload(true), closeOverlays: true);
+                    Get.snackbar("Profile Edit", "A new picture has been chosen");
 
                   },
                   child: const Text("browse gallery")
               ),
               TextButton(
                   onPressed: () async{
-                    upload(false);
-                    setState(() {});
-                    Navigator.of(context).pop();
+                    Get.back(result: upload(false), closeOverlays: true);
+                    Get.snackbar("Profile Edit", "A new picture has been chosen");
                   },
                   child: const Text("Take selfie")
               )
@@ -105,164 +93,159 @@ class _EditFormState extends State<EditForm> {
 
     return Scaffold(
       key: _scaffoldKey,
-      body: SingleChildScrollView(
-        child: Container(
-          height: double.maxFinite,
-          width: double.maxFinite,
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.Width20+2),
-          color: Colors.white,
-          child: Form(
-            key: formKey,
-            child:  Column(
-              children: [
-                SizedBox(height: Dimensions.Height100),
-                TextFormField(
-                  style: const TextStyle(),
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                      hintText: 'Name',
-                      hintStyle: TextStyle(
-                        color: const Color(0xffBEC2CE),
-                        fontSize: Dimensions.Width16,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.person_add_outlined,
-                        color: Color(0xffBEC2CE),
-                      ),
-                      border: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: Color(0xffBEC2CE)
-                      ),
-                    )
-                  ),
-                  validator: (value) {
-                    if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                      return "please enter a correct name";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                SizedBox(height: Dimensions.Height44-4),
-                GestureDetector(
-                  onTap: (() {
-                    image = showInformationDialogue(context);
-                    setState(() {});
-                  }),
-                  child: Row(
-                    children: [
-                      const Spacer(),
-                      Row(
-                        children: [
-                          const Icon(Icons.library_add, color: Color(0xffBEC2CE),),
-                          SizedBox(width: Dimensions.Width6-1,),
-                          Text(
-                            "add Image",
-                            style: TextStyle(
-                                color: const Color(0xffBEC2CE),
-                                fontSize: Dimensions.Width16
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: Dimensions.height22+1,
-                ),
-                GestureDetector(
-                  onTap: () async{
-                    showDialog(context: context, builder: (_) => const Center(child: CircularProgressIndicator(),));
-                    try {
-                      if(image != null) {
-                        await uploadPfp().then((value) {});
-                        value = await getDownload();
-                        if(formKey.currentState!.validate()) {
-                          AuthController.instance.edit(
-                              _nameController.text.trim(),
-                              value
-                          );
-                          FocusManager.instance.primaryFocus?.unfocus();
-                        }
-                      } else if(image == null) {
-                        if(formKey.currentState!.validate()) {
-                          AuthController.instance.editwithoutimage(
-                              _nameController.text.trim(),
-                          );
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          //AuthController.instance.Logout();
-                        }
+      body: GetBuilder<AuthController>(builder: (authController) {
+        return SingleChildScrollView(
+          child: Container(
+            height: double.maxFinite,
+            width: double.maxFinite,
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.Width20+2),
+            color: Colors.white,
+            child: Form(
+              key: formKey,
+              child:  Column(
+                children: [
+                  SizedBox(height: Dimensions.Height100+50),
+                  TextFormField(
+                    style: const TextStyle(),
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                        hintText: 'Name',
+                        hintStyle: TextStyle(
+                          color: const Color(0xffBEC2CE),
+                          fontSize: Dimensions.Width16,
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.person_add_outlined,
+                          color: Color(0xffBEC2CE),
+                        ),
+                        border: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xffBEC2CE)
+                          ),
+                        )
+                    ),
+                    validator: (value) {
+                      if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                        return "please enter a correct name";
+                      } else {
+                        return null;
                       }
-                    } catch (e) {
-                      // TODO
-                      Get.snackbar("Account Creation", "You need to create a profile picture",
-                          backgroundColor: Colors.orange,
-                          colorText: Colors.white,
-                          snackPosition: SnackPosition.TOP,
-                          titleText: const Text("Account creation failed", style: TextStyle(color: Colors.white),),
-                          messageText: const Text(
-                            "You need a profile picture for this account", style: TextStyle(color: Colors.white),
-                          )
-                      );
-                    }
-                    if(mounted) {
-                      Get.offAllNamed(RouteServices.INITIAL);
-                    }
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(Dimensions.Width16-4),
-                    child: Container(
-                      width: double.infinity,
-                      height: Dimensions.Height40+10,
-                      color: Colors.orange,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: Dimensions.Width16+2,
-                          fontWeight: FontWeight.w700,
+                    },
+                  ),
+                  SizedBox(height: Dimensions.Height44-4),
+                  GestureDetector(
+                    onTap: (() {
+                      image = showInformationDialogue(context);
+                    }),
+                    child: Row(
+                      children: [
+                        const Spacer(),
+                        Row(
+                          children: [
+                            const Icon(Icons.library_add, color: Color(0xffBEC2CE),),
+                            SizedBox(width: Dimensions.Width6-1,),
+                            Text(
+                              "add Image",
+                              style: TextStyle(
+                                  color: const Color(0xffBEC2CE),
+                                  fontSize: Dimensions.Width16
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: Dimensions.height22+1,
+                  ),
+                  GestureDetector(
+                    onTap: () async{
+                      showDialog(context: context, builder: (_) => const Center(child: CircularProgressIndicator(),));
+                      try {
+                        if(image != null) {
+                          await uploadPfp().then((value) {});
+                          value = await getDownload();
+                          if(formKey.currentState!.validate()) {
+                            authController.edit(
+                                _nameController.text.trim(),
+                                value
+                            );
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          }
+                        } else if(image == null) {
+                          if(formKey.currentState!.validate()) {
+                            authController.editWithoutImage(
+                              _nameController.text.trim(),
+                            );
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            //AuthController.instance.Logout();
+                          }
+                        }
+                      } catch (e) {
+                        // TODO
+                        Get.snackbar("Account Creation", "You need to select a profile picture");
+                      }
+                      if(mounted) {
+                        Get.offAllNamed(RouteServices.INITIAL);
+                      }
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(Dimensions.Width16-4),
+                      child: Container(
+                        width: double.infinity,
+                        height: Dimensions.Height40+10,
+                        color: Colors.orange,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Dimensions.Width16+2,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: Dimensions.Height60/2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: (() {
-                        var auth = FirebaseAuth.instance.currentUser?.email;
-                        AuthController.instance.resetPassword(auth!);
-                      }),
-                      child: const Text(
-                        'Reset Password',
-                        style: TextStyle(
-                          color: Color(0xffBEC2CE),
+                  SizedBox(height: Dimensions.Height60/2),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: (() {
+                          var auth = FirebaseAuth.instance.currentUser?.email;
+                          authController.resetPassword(auth!);
+                        }),
+                        child: Text(
+                          'Reset Password',
+                          style: TextStyle(
+                            color: const Color(0xffBEC2CE),
+                            fontSize: Dimensions.Width16
+                          ),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: ((){
-                        AuthController.instance.Logout();
-                      }),
-                      child: const Text(
-                        'LogOut',
-                        style: TextStyle(
-                          color: Color(0xffBEC2CE),
+                      GestureDetector(
+                        onTap: ((){
+                          authController.Logout();
+                        }),
+                        child: Text(
+                          'Logout',
+                          style: TextStyle(
+                            color: const Color(0xffBEC2CE),
+                            fontSize: Dimensions.Width16
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-      )
+        );
+      })
     );
   }
 
