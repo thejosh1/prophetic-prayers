@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../main.dart';
+import '../../../main.dart';
 
 class AuthRepo {
 
@@ -13,7 +13,7 @@ class AuthRepo {
     return await auth.currentUser!;
   }
 
-  void register(String email, String password, String name, String imagePath) async{
+  void register(String email, String password, String name) async{
     showDialog(
       context: navigatorKey.currentContext!,
       barrierDismissible: false,
@@ -26,7 +26,7 @@ class AuthRepo {
         "uid": user?.uid,
         "email": user?.email,
         "name" : name,
-        "imagePath" : imagePath,
+        // "imagePath" : imagePath,
       });
     }on FirebaseAuthException catch(e) {
       Get.snackbar("user creation", e.toString(),
@@ -50,23 +50,6 @@ class AuthRepo {
       Get.snackbar("Error", e.toString());
       navigatorKey.currentState!.pop();
     }
-  }
-  void edit(String? name, String? imagePath,) async {
-    showDialog(
-        context: navigatorKey.currentContext!,
-        builder: (BuildContext context) => const Center(child: CircularProgressIndicator(),)
-    );
-    try {
-      User? user = auth.currentUser;
-      await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
-        "uid":user?.uid,
-        "name":name,
-        "imagePath":imagePath,
-      });
-    } on FirebaseAuthException catch(e) {
-      Get.snackbar("Profile Information", "Couldn't update Profile info");
-    }
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
   void editWithoutImage(String? name) async {
     showDialog(
@@ -99,5 +82,9 @@ class AuthRepo {
   }
   void Logout() async{
     await auth.signOut();
+  }
+
+  bool isLoggedIn () {
+    return auth.currentUser!.uid.isNotEmpty;
   }
 }

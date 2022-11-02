@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prophetic_prayers/controller/auth_controller.dart';
+import 'package:prophetic_prayers/controller/auth_controllers/auth_controller.dart';
 import 'package:prophetic_prayers/pages/auth_pages/sign_up.dart';
 import 'package:get/get.dart';
 
@@ -72,7 +72,7 @@ class _LoginFormState extends State<LoginForm> {
                         fontSize: Dimensions.Width16,
                       ),
                       prefixIcon: const Icon(
-                        Icons.person_add_outlined,
+                        Icons.email,
                         color: Color(0xffBEC2CE),
                       ),
                     ),

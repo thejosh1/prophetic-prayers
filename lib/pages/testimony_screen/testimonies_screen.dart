@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/widgets/big_text.dart';
-import '../../controller/auth_controller.dart';
+import '../../base/custom_loader.dart';
+import '../../base/no_data_page.dart';
+import '../../controller/auth_controllers/auth_controller.dart';
 import '../../utils/dimensions.dart';
 
 class TestimoniesScreen extends StatefulWidget {
@@ -35,7 +37,17 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                   stream: FirebaseFirestore.instance.collection("testimonies").snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if(!snapshot.hasData) {
-                      return const Center(child: Text("No testimonies yet be the first to testify"),);
+                      return Container(
+                          height: size.height,
+                          width: double.maxFinite,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              CustomLoader(),
+                            ],
+                          )
+                      );
                     }
                     List snapdata = snapshot.data!.docs;
                     return snapdata.isNotEmpty ? SingleChildScrollView(
@@ -188,11 +200,39 @@ class _TestimoniesScreenState extends State<TestimoniesScreen> {
                           ),
                         ],
                       ),
-                    ): Column(
-                      children: [
-                        SizedBox(height: Dimensions.Height270,),
-                        Text("No testimonies yet be the first to testify", style: TextStyle(fontSize: Dimensions.Width16+2, color: Colors.black54,))
-                      ],
+                    ): Container(
+                      height: size.height,
+                      width: double.maxFinite,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const NoDataPage(text: 'No Testimonies yet be the first to testify',),
+                          SizedBox(height: Dimensions.Height20,),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(RouteServices.CREATETESTIMONYSCREEN);
+                            },
+                            child: Container(
+                              height: Dimensions.Height10*5,
+                              width: Dimensions.Width100+50,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(Dimensions.Width10),
+                                  color: Colors.orange
+                              ),
+                              child: Center(
+                                child: Text("Testify",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: Dimensions.Width16
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     );
                   }),
             )
@@ -250,7 +290,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: AssetImage("images/app_logo.png")
+                            image: AssetImage("images/cute-boy.jpg")
                         )
                     ),
                   );
@@ -274,7 +314,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: AssetImage("images/app_logo.png")
+                          image: AssetImage("images/cute-boy.jpg")
                       )
                   ),
                 );

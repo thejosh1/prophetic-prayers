@@ -1,67 +1,38 @@
 import 'package:flutter/material.dart';
 
+import '../utils/dimensions.dart';
+import 'app_icons.dart';
+import 'big_text.dart';
+
 class ProfileWidget extends StatelessWidget {
-  final String imagePath;
-  final VoidCallback onClicked;
+  AppIcons appIcons;
+  BigText bigText;
   
-  const ProfileWidget({Key? key, required this.imagePath, required this.onClicked}) : super(key:key);
+  ProfileWidget({Key? key, required this.appIcons, required this.bigText}) : super(key:key);
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
-
-    return Center(
-      child: Stack(
-          children: [
-            buildImage(),
-            Positioned(
-              bottom: 0,
-              right: 4,
-              child: buildEditButton(color)
-            ),
-          ]
+    return Container(
+      height: Dimensions.Height100-40,
+      margin: EdgeInsets.only(top: Dimensions.Height10, bottom: Dimensions.Height10, left: Dimensions.Width10, right: Dimensions.Width10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Dimensions.Width30/2),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 1,
+            offset: const Offset(0, 2),
+            color: Colors.grey.withOpacity(0.2)
+          )
+        ]
       ),
-    );
-  }
-
-  Widget buildImage() {
-    final image = NetworkImage(imagePath);
-    
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Ink.image(
-          image: image,
-          fit: BoxFit.cover,
-          width: 200,
-          height: 200,
-          child: InkWell(onTap: onClicked,),
-        ),
-      ),
-    );
-  }
-
-  Widget buildEditButton(Color color) {
-    return buildCircle(
-      color: Colors.white,
-      all: 3,
-      child: buildCircle(
-        color: color,
-        all: 16.0,
-        child: Icon(
-          Icons.edit,
-          size: 20,
-          color: Colors.white,)
-      ),
-    );
-  }
-
-  Widget buildCircle({required Color color, required double all, required Widget child}) {
-    return ClipOval(
-      child: Container(
-        padding: EdgeInsets.all(all),
-        color: color,
-        child: child,
+      child: Row(
+        children: <Widget>[
+          SizedBox(width: Dimensions.Width10,),
+          appIcons,
+          SizedBox(width: Dimensions.Width10,),
+          bigText
+        ],
       ),
     );
   }

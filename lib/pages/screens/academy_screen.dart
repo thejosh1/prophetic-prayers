@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:prophetic_prayers/controller/scripture_controller.dart';
+import 'package:prophetic_prayers/controller/scripture_controllers/scripture_controller.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/models/academy.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
+
+import '../../base/custom_loader.dart';
 
 class AcademyScreen extends StatefulWidget {
   const AcademyScreen({Key? key}) : super(key: key);
@@ -59,7 +61,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SingleChildScrollView(
-                      child: Container(
+                      child: SizedBox(
                           height: Dimensions.Height632,
                           width: Dimensions.Width335,
                           child: FutureBuilder(
@@ -72,7 +74,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
 
                                   return buildScriptures(_scriptures);
                                 } else {
-                                  return const Center(child: Text("Loading"),);
+                                  return const Center(child: CustomLoader(),);
                                 }
                               }
                           )
@@ -126,7 +128,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
                       ),
                     ),
                     Expanded(
-                        child: Container(
+                        child: SizedBox(
                           height: Dimensions.Height60+20,
                           child: Padding(
                             padding: EdgeInsets.only(left: Dimensions.Width10),

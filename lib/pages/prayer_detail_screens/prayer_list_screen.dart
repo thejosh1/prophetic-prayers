@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prophetic_prayers/controller/scripture_controller.dart';
+import 'package:prophetic_prayers/controller/scripture_controllers/scripture_controller.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 import '../../models/prayers.dart';
@@ -118,7 +118,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                           color: data[1]
                       ),
                       child: Center(
-                          child: Text(scriptureList[index].verse.toString()[0].toUpperCase(),
+                          child: Text(scriptureList[index].prayerPoint.toString()[0].toUpperCase(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: Dimensions.Width28-4, color: Colors.white))
                       ),
@@ -132,7 +132,7 @@ class _PrayerListScreenState extends State<PrayerListScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(scriptureList[index].verse.toString(),
+                                Text(scriptureList[index].prayerPoint.toString(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,),
                                 SizedBox(height: Dimensions.Height2+1,),

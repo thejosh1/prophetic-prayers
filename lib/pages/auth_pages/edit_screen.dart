@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:prophetic_prayers/controller/auth_controller.dart';
+import 'package:prophetic_prayers/controller/auth_controllers/auth_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 
@@ -168,10 +168,6 @@ class _EditFormState extends State<EditForm> {
                           await uploadPfp().then((value) {});
                           value = await getDownload();
                           if(formKey.currentState!.validate()) {
-                            authController.edit(
-                                _nameController.text.trim(),
-                                value
-                            );
                             FocusManager.instance.primaryFocus?.unfocus();
                           }
                         } else if(image == null) {

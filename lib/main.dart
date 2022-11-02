@@ -5,13 +5,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/controller/auth_controller.dart';
+import 'package:prophetic_prayers/controller/auth_controllers/auth_controller.dart';
 import 'package:prophetic_prayers/pages/main_screen/welcome.dart';
 import 'package:prophetic_prayers/services/notify_services.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/shared_preferences.dart';
 
-import 'data/repositories/auth_repo.dart';
+import 'data/repositories/auth_repositories/auth_repo.dart';
+import 'helpers/dependencies.dart' as dep;
 
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -21,8 +22,12 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await NotifyServices.init(initScheduled: true);
-  Get.lazyPut(() => AuthRepo());
+  await dep.init();
+
   await Firebase.initializeApp().then((value) => Get.put(AuthController(authRepo: Get.find())));
+  await FirebaseAppCheck.instance.activate(
+    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+  );
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   await FirebaseAppCheck.instance.activate();

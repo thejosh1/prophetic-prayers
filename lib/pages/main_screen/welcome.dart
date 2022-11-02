@@ -12,7 +12,7 @@ import 'package:prophetic_prayers/pages/screens/warfare_screen.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../controller/auth_controller.dart';
+import '../../controller/auth_controllers/auth_controller.dart';
 import '../../models/prayers.dart';
 import '../../services/notify_services.dart';
 import '../../utils/dimensions.dart';
@@ -67,8 +67,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     Size size = MediaQuery.of(context).size;
     List daysofWeek = ["M", "T", "W", "T", "F", "S", "S"];
     List images = ["images/money.jfif", "images/school.jfif", "images/group-wild.jpg", "images/priest.jpg", "images/office.jfif", "images/basketball.jpg", "images/famimages2.jfif", "images/summer-seascape.jpg", "images/Cartoon_marriages.jpg", "images/warfare.webp", "images/adrianna-geo.jpg" ];
-    List daysInsWeek = [getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5];
-    List weekimageList = ["images/monday.jpeg", "images/tuesday.jpeg", "images/wednesday.jpeg", "images/thursday.jpeg", "images/friday.jpeg", "images/saturday.jpeg", "images/sunday.jpeg"];
+    List daysInsWeek = [getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5, getTodaysDay()+6];
+    List weekimageList = ["images/thursday.jpeg", "images/friday.jpeg", "images/saturday.jpeg", "images/sunday.jpeg", "images/monday.jpeg", "images/tuesday.jpeg", "images/wednesday.jpeg",];
     String currname = "Children";
     Color _randomColor = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
     List planNames = ["Prosperity", "Academics", "Blessings", "Calling", "Career", "Discipline", "Health", "Lifestyle", "Marriage", "Warfare"];
@@ -908,7 +908,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: AssetImage("images/app_logo.png")
+                            image: AssetImage("images/cute-boy.jpg")
                         )
                     ),
                   );
@@ -932,7 +932,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: AssetImage("images/app_logo.png")
+                      image: AssetImage("images/cute-boy.jpg")
                     )
                   ),
                 );

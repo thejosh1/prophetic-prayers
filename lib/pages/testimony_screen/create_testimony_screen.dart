@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:prophetic_prayers/controller/auth_controller.dart';
+import 'package:prophetic_prayers/controller/auth_controllers/auth_controller.dart';
 import 'package:prophetic_prayers/services/testimony_services.dart';
 
 import '../../services/route_services.dart';
@@ -69,7 +69,7 @@ class _CreateTestimonyFormState extends State<CreateTestimonyForm> {
                     Text("Testimony", style: TextStyle(fontSize: Dimensions.Width16+2, fontWeight: FontWeight.bold, color: Colors.white),),
                     GestureDetector(
                       onTap: () {
-                        Get.offAll(RouteServices.INITIAL);
+                        Get.offAllNamed(RouteServices.INITIAL);
                       },
                       child: Container(
                         height: Dimensions.Height20+10,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prophetic_prayers/controller/auth_controller.dart';
+import 'package:prophetic_prayers/controller/auth_controllers/auth_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../utils/dimensions.dart';

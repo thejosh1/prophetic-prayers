@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:prophetic_prayers/controller/auth_controller.dart';
+import 'package:prophetic_prayers/controller/auth_controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 import '../../utils/dimensions.dart';
@@ -26,16 +26,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
       try {
         _isEmailVerified = AuthController.instance.auth.currentUser!.emailVerified;
       } on FirebaseAuthException catch(e) {
-        Get.snackbar("Profile Information", "Couldn't update Profile info",
-            backgroundColor: Colors.black,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.TOP,
-            titleText: const Text("Profile Update Failed"),
-            messageText: Text(
-              e.message.toString(), style: const TextStyle(color: Colors.white),
-            )
-        );
-        print(e.message.toString());
+        Get.snackbar("Profile Information", e.message.toString());
+
       }
     }
 
@@ -54,15 +46,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
       final user = AuthController.instance.auth.currentUser;
       await user?.sendEmailVerification();
     } on FirebaseAuthException catch(e) {
-      // Get.snackbar("Error", "Error Message",
-      //     backgroundColor: Colors.black,
-      //     colorText: Colors.white,
-      //     snackPosition: SnackPosition.TOP,
-      //     titleText: const Text("Error Message"),
-      //     messageText: Text(
-      //       e.message.toString(), style: TextStyle(color: Colors.white),
-      //     )
-      // );
+      //i don't want users to see the error message firebase base sends cos of the too many requests sent to the server caused by timer.periodic
+      // Get.snackbar("Error message", e.message.toString());
       print(e.message.toString());
     }
 
@@ -87,10 +72,23 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) => _isEmailVerified ? const MainPage() : Scaffold(
     backgroundColor: const Color(0xffF7F8FA),
-    body: Center(
-      child: Text("Please Click the link in your email to verify your account", textAlign: TextAlign.center, style: TextStyle(
-        fontWeight: FontWeight.w400, fontSize: Dimensions.Width20+4, color: Colors.black45
-      ),)
+    body: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("Please Click the link in your email to verify your account",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+          fontWeight: FontWeight.w400, fontSize: Dimensions.Width20+4, color: Colors.black45
+        ),
+        ),
+        Text("In case you did not see the email, please check your spam",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.w400, fontSize: Dimensions.Width20+4, color: Colors.black45
+          ),
+        ),
+      ],
     ),
   );
 }

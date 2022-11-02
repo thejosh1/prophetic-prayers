@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:prophetic_prayers/controller/auth_controller.dart';
+import 'package:prophetic_prayers/controller/auth_controllers/auth_controller.dart';
 import 'package:prophetic_prayers/pages/auth_pages/login.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -54,42 +54,15 @@ class _SignUpFormState extends State<SignUpForm> {
     _nameController.dispose();
   }
 
-  Future<void>showInformationDialogue(BuildContext context) async {
-    return await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: const Text("Choose photo"),
-            actions: [
-              TextButton(
-                  onPressed: () async{
-                   Get.back(result: upload(true), closeOverlays: true);
-                   Get.snackbar("Account Creation", "Picture has been saved");
-                 },
-                 child: const Text("browse gallery")
-              ),
-              TextButton(
-                  onPressed: () async{
-                    Get.back(result: upload(false), closeOverlays: true);
-                    Get.snackbar("Account Creation", "Picture has been saved");
-                  },
-                  child: const Text("Take selfie")
-              )
-            ],
-          );
-        });
-  }
-
-
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
 
     return GetBuilder<AuthController>(builder: (authController) {
       return Scaffold(
           key: _scaffoldKey,
           body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Container(
               height: double.maxFinite,
               width: double.maxFinite,
@@ -240,37 +213,9 @@ class _SignUpFormState extends State<SignUpForm> {
                           }
                         },
                       ),
-                      SizedBox(height: Dimensions.Height20+3),
-                      GestureDetector(
-                        onTap: (() {
-                          showInformationDialogue(context);
-                        }),
-                        child: Row(
-                          children: [
-                            const Spacer(),
-                            Row(
-                              children: [
-                                const Icon(Icons.library_add, color: Color(0xffBEC2CE),),
-                                SizedBox(width: Dimensions.Width3+2,),
-                                Text(
-                                  "add Image",
-                                  style: TextStyle(
-                                      color: const Color(0xffBEC2CE),
-                                      fontSize: Dimensions.Width16
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.Height20+3,
-                      ),
+                      SizedBox(height: Dimensions.Height20+20),
                       GestureDetector(
                         onTap: () async{
-                          await uploadPfp().then((value) {});
-                          String value = await getDownload();
                           if(formKey.currentState!.validate()) {
                             showDialog(
                                 context: navigatorKey.currentContext!,
@@ -281,7 +226,6 @@ class _SignUpFormState extends State<SignUpForm> {
                               _emailController.text.trim(),
                               _passwordController.text.trim(),
                               _nameController.text.trim(),
-                              value,
                             );
                           }
                         },
@@ -322,52 +266,6 @@ class _SignUpFormState extends State<SignUpForm> {
           )
       );
     });
-  }
-
-  XFile? photo;
-  Future<void> upload(bool gallery) async {
-    final picker = ImagePicker();
-    if (gallery) {
-      photo = await picker.pickImage(source: ImageSource.gallery);
-      setState(() {});
-    } else {
-      photo = await picker.pickImage(source: ImageSource.camera, );
-      setState(() {});
-    }
-  }
-
-  
-  Future<void> uploadPfp() async {
-    if(photo != null) {
-      File uploadFile =File(photo!.path);
-      try {
-        await storage.ref("avatar/${uploadFile.path}").putFile(
-            uploadFile
-        );
-      } on FirebaseException catch(e) {
-        Get.snackbar("Account Creation", e.toString(),
-            backgroundColor: Colors.orange,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.TOP,
-        );
-      }
-    } else if(photo == null){
-        Get.snackbar("Account Creation", "You need to create a profile picture",
-            backgroundColor: Colors.orange,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.TOP,
-            titleText: const Text("Account creation failed", style: TextStyle(color: Colors.white),),
-            messageText: const Text(
-              "You need a profile picture for this account", style: TextStyle(color: Colors.white),
-            )
-        );
-    }
-    
-    
-  }
-  Future<String> getDownload() async {
-      File uploadedFile = File(photo!.path);
-      return storage.ref("avatar/${uploadedFile.path}").getDownloadURL();
   }
 }
 

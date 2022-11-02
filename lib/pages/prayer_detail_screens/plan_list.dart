@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screens/prayer_detail_screen.dart';
 
-import '../../controller/scripture_controller.dart';
+import '../../base/custom_loader.dart';
+import '../../controller/scripture_controllers/scripture_controller.dart';
 import '../../models/prayers.dart';
 import '../../utils/dimensions.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ class PlanListScreen extends StatefulWidget {
 class _PlanListScreenState extends State<PlanListScreen> {
 
   @override
-  void iniState(){
+  void initState(){
     super.initState();
     ScriptureController.instance.readJson();
   }
@@ -31,9 +32,9 @@ class _PlanListScreenState extends State<PlanListScreen> {
               margin: EdgeInsets.only(left: Dimensions.Width10, right: Dimensions.Width16, top: Dimensions.Height44),
               child: Row(
                 children: [
-                  IconButton(onPressed: (){Get.back();}, icon: Icon(Icons.arrow_back, size: Dimensions.Width18, color: Color(0xFF000000),)),
-                  SizedBox(width: 20,),
-                  Text("Prayers For the Year", style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.bold, color: Color(0xFF1E2432)),),
+                  IconButton(onPressed: (){Get.back();}, icon: Icon(Icons.arrow_back, size: Dimensions.Width18, color: const Color(0xFF000000),)),
+                  SizedBox(width: Dimensions.Width20,),
+                  Text("Prayers For the Year", style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.bold, color: const Color(0xFF1E2432)),),
                   //   IconButton(onPressed: (){}, icon: Icon(Icons.more_vert, size: 20, color: Color(0xFF000000),))
                 ],
               ),
@@ -49,8 +50,8 @@ class _PlanListScreenState extends State<PlanListScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                        height: 733,
+                    SizedBox(
+                        height: Dimensions.Height500+233,
                         width: Dimensions.Width335,
                         child: FutureBuilder(
                             future: ScriptureController.instance.readJson(),
@@ -63,7 +64,7 @@ class _PlanListScreenState extends State<PlanListScreen> {
 
                                 return buildScriptures(_scriptures);
                               } else {
-                                return Center(child: const Text("Loading"),);
+                                return const Center(child: CustomLoader(),);
                               }
                             }
                         )
@@ -113,7 +114,7 @@ class _PlanListScreenState extends State<PlanListScreen> {
                         ),
                       ),
                       Expanded(
-                          child: Container(
+                          child: SizedBox(
                             height: 80,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
@@ -121,14 +122,14 @@ class _PlanListScreenState extends State<PlanListScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(scriptureList[index].verse.toString(),
+                                  Text(scriptureList[index].prayerPoint.toString(),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,),
-                                  SizedBox(height: 3,),
+                                  SizedBox(height: Dimensions.Height2+1,),
                                   Text(scriptureList[index].title.toString()),
-                                  SizedBox(height: 3,),
+                                  SizedBox(height: Dimensions.Height2+1,),
                                   Text(scriptureList[index].date.toString()),
-                                  SizedBox(height: 3,),
+                                  SizedBox(height: Dimensions.Height2+1,),
                                   Row(
                                     children: [
                                       Wrap(children:
@@ -146,9 +147,9 @@ class _PlanListScreenState extends State<PlanListScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: Dimensions.Height20,),
               ]);
         },
-      ): Container(child: Center(child: Text("nothing here"),),);
+      ): const Center(child: CustomLoader());
     }
 }

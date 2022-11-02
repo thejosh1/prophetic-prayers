@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:prophetic_prayers/pages/auth_pages/login.dart';
+import 'package:prophetic_prayers/pages/auth_pages/user_pages/user_testimony_page.dart';
+import 'package:prophetic_prayers/pages/auth_pages/verification_screen.dart';
 import 'package:prophetic_prayers/pages/testimony_screen/create_testimony_screen.dart';
 import 'package:prophetic_prayers/pages/auth_pages/edit_screen.dart';
 import 'package:prophetic_prayers/pages/main_screen/main_page.dart';
@@ -41,6 +44,9 @@ class RouteServices {
   static const PRAYERLISTSCREEN = "/prayer-list-screen";
   static const PLANLISTSCREEN = "/plan-list-screen";
   static const FORGOTPASSWORDSCREEN = "/forgot-password-screen";
+  static const USERTESTIMONYPAGE = "/user-testimony-page";
+  static const LOGINPAGE = "/login-page";
+  static const VERIFICATIONSCREEN = "/verification-screen";
 
   static String getInitial() => "$INITIAL";
   static String getPrayerDetailScreen() => "$PRAYERDETAIL";
@@ -62,6 +68,9 @@ class RouteServices {
   static String getprayerListScreen() => "$PRAYERLISTSCREEN";
   static String getplanListScreen()=> "$PLANLISTSCREEN";
   static String getforgotPasswordScreen()=> "$FORGOTPASSWORDSCREEN";
+  static String getuserTestimonyPage() => "$USERTESTIMONYPAGE";
+  static String getloginPage() => "$LOGINPAGE";
+  static String getverificationScreen() => "$VERIFICATIONSCREEN";
 
   static List<GetPage> routes = [
     GetPage(name: INITIAL, page: ()=> const MainPage()),
@@ -82,6 +91,9 @@ class RouteServices {
     GetPage(name: ABOUTSCREEN, page: () => const AboutScreen(), transition: Transition.fadeIn),
     GetPage(name: PRAYERLISTSCREEN, page: () => const PrayerListScreen(), transition: Transition.fadeIn),
     GetPage(name: PLANLISTSCREEN, page:  () => const PlanListScreen(), transition: Transition.fadeIn),
-    GetPage(name: FORGOTPASSWORDSCREEN, page: () => const ForgotPasswordScreen(), transition: Transition.fadeIn)
+    GetPage(name: FORGOTPASSWORDSCREEN, page: () => const ForgotPasswordScreen(), transition: Transition.fadeIn),
+    GetPage(name: USERTESTIMONYPAGE, page: () => const UserTestimonyPage(), transition: Transition.zoom),
+    GetPage(name: LOGINPAGE, page: () => const LoginScreen(), transition: Transition.fade),
+    GetPage(name: VERIFICATIONSCREEN, page: () => const VerificationScreen(), transition: Transition.fade),
   ];
 }

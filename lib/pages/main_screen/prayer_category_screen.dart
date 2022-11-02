@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:prophetic_prayers/pages/prayer_detail_screens/prayer_detail_screen.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
-import '../../controller/auth_controller.dart';
+import '../../controller/auth_controllers/auth_controller.dart';
 import '../../models/prayers.dart';
 import '../../services/route_services.dart';
 
@@ -95,7 +95,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                             decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
-                                    image: AssetImage("images/app_logo.png")
+                                    image: AssetImage("images/cute-boy.jpg")
                                 )
                             ),
                           );
@@ -119,7 +119,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                           decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                  image: AssetImage("images/app_logo.png")
+                                  image: AssetImage("images/cute-boy.jpg")
                               )
                           ),
                         );
@@ -190,7 +190,6 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                       GestureDetector(
                         onTap: () {
                           isTapped.value = !isTapped.value;
-                          print(isTapped.value.toString());
                         },
                         child: Row(
                           children: [

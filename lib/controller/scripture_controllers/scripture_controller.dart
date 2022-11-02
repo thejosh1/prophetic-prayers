@@ -6,12 +6,12 @@ import 'package:prophetic_prayers/models/blessing.dart';
 import 'package:prophetic_prayers/models/calling.dart';
 import 'package:prophetic_prayers/models/discipline.dart';
 import 'package:prophetic_prayers/models/lifestyle.dart';
-import '../models/career.dart';
-import '../models/health.dart';
-import '../models/marriage.dart';
-import '../models/prayers.dart';
-import '../models/prosperity.dart';
-import '../models/warfare.dart';
+import '../../models/career.dart';
+import '../../models/health.dart';
+import '../../models/marriage.dart';
+import '../../models/prayers.dart';
+import '../../models/prosperity.dart';
+import '../../models/warfare.dart';
 import 'package:get/get.dart';
 
 class ScriptureController extends GetxController {

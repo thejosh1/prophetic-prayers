@@ -154,6 +154,8 @@ flutter:
     - images/saturday.jpeg
     - images/sunday.jpeg
     - images/testimony.jpg
+    - images/guest.png
+    - images/man-moving.jpg
 
   fonts:
     - family: Poppins
