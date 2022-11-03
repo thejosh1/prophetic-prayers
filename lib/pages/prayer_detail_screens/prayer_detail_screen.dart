@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 import 'package:share_plus/share_plus.dart';
@@ -119,11 +120,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                   )
                                 ],
                               ),
-                              Icon(
-                                Icons.bookmark,
-                                color: const Color(0xFF1E2432),
-                                size: Dimensions.Width19,
-                              )
+                              Text("${data[7]}" ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width15+1, color: const Color(0xFF1E2432)),)
                             ],
                           ),
                           SizedBox(
@@ -193,7 +190,7 @@ class _PrayerDetailScreenState extends State<PrayerDetailScreen> {
                                     Column(
                                       children: [
                                         Icon(
-                                          Icons.edit,
+                                          Icons.edit_note,
                                           size: Dimensions.Height29,
                                           color: const Color(0xFFD1D1D6),
                                         ),

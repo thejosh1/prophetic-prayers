@@ -60,15 +60,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    List daysofWeek = ["M", "T", "W", "T", "F", "S", "S"];
+    List daysofWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     List images = ["images/money.jfif", "images/school.jfif", "images/group-wild.jpg", "images/priest.jpg", "images/office.jfif", "images/basketball.jpg", "images/famimages2.jfif", "images/summer-seascape.jpg", "images/Cartoon_marriages.jpg", "images/warfare.webp", "images/adrianna-geo.jpg" ];
-    List daysInsWeek = [getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5, getTodaysDay()+6];
-    List weekimageList = ["images/thursday.jpeg", "images/friday.jpeg", "images/saturday.jpeg", "images/sunday.jpeg", "images/monday.jpeg", "images/tuesday.jpeg", "images/wednesday.jpeg",];
+    List daysInsWeek = [getTodaysDay()-2, getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4];
+    List weekimageList = ["images/monday.jpeg", "images/tuesday.jpeg",  "images/wednesday.jpeg", "images/thursday.jpeg", "images/friday.jpeg", "images/saturday.jpeg", "images/sunday.jpeg",];
     String currname = "Children";
     Color _randomColor = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
     List planNames = ["Prosperity", "Academics", "Blessings", "Calling", "Career", "Discipline", "Health", "Lifestyle", "Marriage", "Warfare"];
@@ -119,7 +117,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             scriptureList[getTodaysDay()-1].verse,
                             scriptureList[getTodaysDay()-1].date,
                             currname,
-                            images[0]
+                            images[0],
+                            DateFormat.MMMEd().format(DateTime.now())
                           ]);
                         },
                         child: Column(
@@ -161,7 +160,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               ),
                             ),
                             SizedBox(width: Dimensions.Width10),
-                            Text("Prayers for the rest of the week", style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w600, color: const Color(0xFF1E2432)),),
+                            Text("Prayers for the week", style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w600, color: const Color(0xFF1E2432)),),
                           ],
                         ),
                       ),
@@ -195,7 +194,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                    scriptureList[daysInsWeek[index]].verse,
                                                    scriptureList[daysInsWeek[index]].date,
                                                    currname,
-                                                   images[0]
+                                                   images[0],
+                                                   daysofWeek[index] + ', ' + scriptureList[daysInsWeek[index]].date,
                                                  ]);
                                                },
                                                child: Container(
