@@ -30,7 +30,11 @@ class _CustomLoaderState extends State<CustomLoader> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    controller.forward();
+    controller.addStatusListener((status) {
+      if(status == AnimationStatus.completed) {
+        controller.forward(from: 0);
+      }
+    });
 
     return FadeTransition(
       opacity: animation,
