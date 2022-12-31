@@ -45,6 +45,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
     List monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
     List imageList = [Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.amber, Colors.green, Colors.deepOrangeAccent, Colors.orange, Colors.brown, Colors.deepPurple, Colors.deepOrangeAccent,];
     List colorList = ["images/image1.jpg", "images/famimages2.jfif", "images/famimages.jfif", "images/pastor-conducts.jpg", "images/office.jfif", "images/discipline.jpg", "images/health.png", "images/bible.jpg", "images/summer-seascape.jpg", "images/children.png", "images/cute-boy.jpg", "images/welcomeImages.jfif",];
+    List daysInsWeek = [getTodaysDay()-2, getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4, getTodaysDay()+5];
     final user = AuthController.instance.auth.currentUser;
     RxString currname = "January".obs;
     RxBool isTapped = false.obs;
@@ -207,14 +208,15 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                        InkWell(
                          splashColor: Colors.grey,
                          onTap: () {
-                           Get.to(()=> const PrayerDetailScreen(), arguments: [
+                           Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
                              scriptureList[getTodaysDay()-1].id,
                              scriptureList[getTodaysDay()-1].prayerPoint,
                              scriptureList[getTodaysDay()-1].title,
                              scriptureList[getTodaysDay()-1].verse,
                              scriptureList[getTodaysDay()-1].date,
                              currname.value,
-                             "images/child(36).jpg"
+                             "images/child(36).jpg",
+                             scriptureList[getTodaysDay()-1].date,
                            ]);
                          },
                          child: Row(
@@ -265,14 +267,15 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                        InkWell(
                          splashColor: Colors.grey,
                          onTap: () {
-                           Get.to(()=> const PrayerDetailScreen(), arguments: [
+                           Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
                              scriptureList[getTodaysDay()].id,
                              scriptureList[getTodaysDay()].prayerPoint,
                              scriptureList[getTodaysDay()].title,
                              scriptureList[getTodaysDay()].verse,
                              scriptureList[getTodaysDay()].date,
                              currname.value,
-                             "images/child(36).jpg"
+                             "images/child(36).jpg",
+                             scriptureList[getTodaysDay()].date,
                            ]);
                          },
                          child: Row(
@@ -323,14 +326,15 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                        InkWell(
                          splashColor: Colors.grey,
                          onTap: (){
-                           Get.to(()=> const PrayerDetailScreen(), arguments: [
+                           Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
                              scriptureList[getTodaysDay()+1].id,
                              scriptureList[getTodaysDay()+1].prayerPoint,
                              scriptureList[getTodaysDay()+1].title,
                              scriptureList[getTodaysDay()+1].verse,
                              scriptureList[getTodaysDay()+1].date,
                              currname.value,
-                             "images/child(36).jpg"
+                             "images/child(36).jpg",
+                             scriptureList[getTodaysDay()+1].date,
                            ]);
                          },
                          child: Row(
@@ -383,15 +387,29 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: () {
-                             Get.to(()=> const PrayerDetailScreen(), arguments: [
-                               scriptureList[getTodaysDay()-1].id,
-                               scriptureList[getTodaysDay()-1].prayerPoint,
-                               scriptureList[getTodaysDay()-1].title,
-                               scriptureList[getTodaysDay()-1].verse,
-                               scriptureList[getTodaysDay()-1].date,
-                               currname.value,
-                               "images/child(36).jpg"
-                             ]);
+                             if(getTodaysDay()-1 > 365) {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[0].id,
+                                 scriptureList[0].prayerPoint,
+                                 scriptureList[0].title,
+                                 scriptureList[0].verse,
+                                 scriptureList[0].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[0].date,
+                               ]);
+                             } else {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[getTodaysDay()-1].id,
+                                 scriptureList[getTodaysDay()-1].prayerPoint,
+                                 scriptureList[getTodaysDay()-1].title,
+                                 scriptureList[getTodaysDay()-1].verse,
+                                 scriptureList[getTodaysDay()-1].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[getTodaysDay()-1].date,
+                               ]);
+                             }
                            },
                            child: Row(
                            children: [
@@ -441,15 +459,29 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: () {
-                             Get.to(()=> const PrayerDetailScreen(), arguments: [
-                               scriptureList[getTodaysDay()].id,
-                               scriptureList[getTodaysDay()].prayerPoint,
-                               scriptureList[getTodaysDay()].title,
-                               scriptureList[getTodaysDay()].verse,
-                               scriptureList[getTodaysDay()].date,
-                               currname.value,
-                               "images/child(36).jpg"
-                             ]);
+                             if(getTodaysDay() > 365) {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[1].id,
+                                 scriptureList[1].prayerPoint,
+                                 scriptureList[1].title,
+                                 scriptureList[1].verse,
+                                 scriptureList[1].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[1].date,
+                               ]);
+                             } else {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[getTodaysDay()].id,
+                                 scriptureList[getTodaysDay()].prayerPoint,
+                                 scriptureList[getTodaysDay()].title,
+                                 scriptureList[getTodaysDay()].verse,
+                                 scriptureList[getTodaysDay()].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[getTodaysDay()].date,
+                               ]);
+                             }
                            },
                            child: Row(
                            children: [
@@ -499,15 +531,29 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: () {
-                             Get.to(()=> const PrayerDetailScreen(), arguments: [
-                               scriptureList[getTodaysDay()+1].id,
-                               scriptureList[getTodaysDay()+1].prayerPoint,
-                               scriptureList[getTodaysDay()+1].title,
-                               scriptureList[getTodaysDay()+1].verse,
-                               scriptureList[getTodaysDay()+1].date,
-                               currname.value,
-                               "images/child(36).jpg"
-                             ]);
+                             if(getTodaysDay()+1 > 365) {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[2].id,
+                                 scriptureList[2].prayerPoint,
+                                 scriptureList[2].title,
+                                 scriptureList[2].verse,
+                                 scriptureList[2].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[2].date,
+                               ]);
+                             } else {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[getTodaysDay()+1].id,
+                                 scriptureList[getTodaysDay()+1].prayerPoint,
+                                 scriptureList[getTodaysDay()+1].title,
+                                 scriptureList[getTodaysDay()+1].verse,
+                                 scriptureList[getTodaysDay()+1].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[getTodaysDay()+1].date,
+                               ]);
+                             }
                            },
                            child: Row(
                            children: [
@@ -557,15 +603,29 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: (){
-                             Get.to(()=> const PrayerDetailScreen(), arguments: [
-                               scriptureList[getTodaysDay()+2].id,
-                               scriptureList[getTodaysDay()+2].prayerPoint,
-                               scriptureList[getTodaysDay()+2].title,
-                               scriptureList[getTodaysDay()+2].verse,
-                               scriptureList[getTodaysDay()+2].date,
-                               currname.value,
-                               "images/child(36).jpg"
-                             ]);
+                             if(getTodaysDay()+2 > 365) {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[0].id,
+                                 scriptureList[0].prayerPoint,
+                                 scriptureList[0].title,
+                                 scriptureList[0].verse,
+                                 scriptureList[0].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[0].date,
+                               ]);
+                             } else {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[getTodaysDay()+2].id,
+                                 scriptureList[getTodaysDay()+2].prayerPoint,
+                                 scriptureList[getTodaysDay()+2].title,
+                                 scriptureList[getTodaysDay()+2].verse,
+                                 scriptureList[getTodaysDay()+2].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[getTodaysDay()+2].date,
+                               ]);
+                             };
                            },
                            child: Row(
                            children: [
@@ -578,7 +638,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()+2].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
+                                   child: Text(getTodaysDay()+2 > 365 ? scriptureList[0].verse.toString()[0]:scriptureList[getTodaysDay()+2].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
                                ),
                              ),
                              Expanded(
@@ -590,11 +650,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
-                                         Text(scriptureList[getTodaysDay()+2].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         Text(getTodaysDay()+2 > 365 ? scriptureList[0].verse.toString():scriptureList[getTodaysDay()+2].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
                                          SizedBox(height: Dimensions.Height2+1,),
-                                         Text(scriptureList[getTodaysDay()+2].title.toString()),
+                                         Text(getTodaysDay()+2 > 365 ? scriptureList[0].title.toString():scriptureList[getTodaysDay()+2].title.toString()),
                                          SizedBox(height: Dimensions.Height2+1,),
-                                         Text(scriptureList[getTodaysDay()+2].date.toString()),
+                                         Text(getTodaysDay()+2 > 365 ? scriptureList[0].date.toString():scriptureList[getTodaysDay()+2].title.toString()),
                                          SizedBox(height: Dimensions.Height2+1,),
                                          Row(
                                            children: [
@@ -615,15 +675,29 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: () {
-                             Get.to(()=> const PrayerDetailScreen(), arguments: [
-                               scriptureList[getTodaysDay()+3].id,
-                               scriptureList[getTodaysDay()+3].prayerPoint,
-                               scriptureList[getTodaysDay()+3].title,
-                               scriptureList[getTodaysDay()+3].verse,
-                               scriptureList[getTodaysDay()+3].date,
-                               currname.value,
-                               "images/child(36).jpg"
-                             ]);
+                             if(getTodaysDay()+3 > 365) {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[1].id,
+                                 scriptureList[1].prayerPoint,
+                                 scriptureList[1].title,
+                                 scriptureList[1].verse,
+                                 scriptureList[1].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[1].date,
+                               ]);
+                             } else {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[getTodaysDay()+3].id,
+                                 scriptureList[getTodaysDay()+3].prayerPoint,
+                                 scriptureList[getTodaysDay()+3].title,
+                                 scriptureList[getTodaysDay()+3].verse,
+                                 scriptureList[getTodaysDay()+3].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[getTodaysDay()+3].date,
+                               ]);
+                             }
                            },
                            child: Row(
                            children: [
@@ -636,7 +710,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()+3].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
+                                   child: Text(getTodaysDay()+3 > 365 ? scriptureList[1].verse.toString()[0]:scriptureList[getTodaysDay()+3].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
                                ),
                              ),
                              Expanded(
@@ -648,11 +722,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
-                                         Text(scriptureList[getTodaysDay()+3].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         Text(getTodaysDay()+3 > 365 ? scriptureList[1].verse.toString():scriptureList[getTodaysDay()+3].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
                                          SizedBox(height: Dimensions.Height2+1,),
-                                         Text(scriptureList[getTodaysDay()+3].title.toString()),
+                                         Text(getTodaysDay()+3 > 365 ? scriptureList[1].title.toString():scriptureList[getTodaysDay()+3].title.toString()),
                                          SizedBox(height: Dimensions.Height2+1,),
-                                         Text(scriptureList[getTodaysDay()+3].date.toString()),
+                                         Text(getTodaysDay()+3 > 365 ? scriptureList[1].date.toString():scriptureList[getTodaysDay()+3].date.toString()),
                                          SizedBox(height: Dimensions.Height2+1,),
                                          Row(
                                            children: [
@@ -673,15 +747,29 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                          InkWell(
                            splashColor: Colors.grey,
                            onTap: () {
-                             Get.to(()=> const PrayerDetailScreen(), arguments: [
-                               scriptureList[getTodaysDay()+4].id,
-                               scriptureList[getTodaysDay()+4].prayerPoint,
-                               scriptureList[getTodaysDay()+4].title,
-                               scriptureList[getTodaysDay()+4].verse,
-                               scriptureList[getTodaysDay()+4].date,
-                               currname.value,
-                               "images/child(36).jpg"
-                             ]);
+                             if(getTodaysDay()+4 > 365) {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[2].id,
+                                 scriptureList[2].prayerPoint,
+                                 scriptureList[2].title,
+                                 scriptureList[2].verse,
+                                 scriptureList[2].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[2].date,
+                               ]);
+                             } else {
+                               Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                 scriptureList[getTodaysDay()+4].id,
+                                 scriptureList[getTodaysDay()+4].prayerPoint,
+                                 scriptureList[getTodaysDay()+4].title,
+                                 scriptureList[getTodaysDay()+4].verse,
+                                 scriptureList[getTodaysDay()+4].date,
+                                 currname.value,
+                                 "images/child(36).jpg",
+                                 scriptureList[getTodaysDay()+4].date,
+                               ]);
+                             };
                            },
                            child: Row(
                            children: [
@@ -694,7 +782,7 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                    color: const Color(0xffF7F8FA)
                                ),
                                child: Center(
-                                   child: Text(scriptureList[getTodaysDay()+4].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
+                                   child: Text(getTodaysDay()+4 > 365 ? scriptureList[2].verse.toString()[0]:scriptureList[getTodaysDay()+4].verse.toString()[0], style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20+4),)
                                ),
                              ),
                              Expanded(
@@ -706,11 +794,11 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
                                        mainAxisAlignment: MainAxisAlignment.start,
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                        children: [
-                                         Text(scriptureList[getTodaysDay()+4].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                         Text(getTodaysDay()+4 > 365 ? scriptureList[2].verse.toString():scriptureList[getTodaysDay()+4].verse.toString(), maxLines: 1,overflow: TextOverflow.ellipsis,),
                                          SizedBox(height: Dimensions.Height2*2,),
-                                         Text(scriptureList[getTodaysDay()+4].title.toString()),
+                                         Text(getTodaysDay()+4 > 365 ? scriptureList[2].title.toString():scriptureList[getTodaysDay()+4].title.toString()),
                                          SizedBox(height: Dimensions.Height2*2,),
-                                         Text(scriptureList[getTodaysDay()+4].date.toString()),
+                                         Text(getTodaysDay()+4 > 365 ? scriptureList[2].date.toString():scriptureList[getTodaysDay()+4].date.toString()),
                                          SizedBox(height: Dimensions.Height2*2,),
                                          Row(
                                            children: [
@@ -745,8 +833,9 @@ class _PrayerCategoryScreenState extends State<PrayerCategoryScreen> {
   }
   int getTodaysDay() {
     final date = DateTime.now();
-    final diff = date.difference(DateTime(date.year, 1, 1, 0, 0));
+    Duration diff = date.difference(DateTime(date.year, 1, 1, 0, 0));
     final diffInDays = diff.inDays;
+    print(diffInDays.toString());
     return diffInDays;
   }
   int numOfWeeks(int year) {

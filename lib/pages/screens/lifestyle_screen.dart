@@ -102,13 +102,14 @@ class _LifeStyleScreenState extends State<LifeStyleScreen> {
               InkWell(
                 splashColor: Colors.grey,
                 onTap: (){
-                  Get.to(RouteServices.OTHERDETAILSCREEN, arguments: [
+                  Get.toNamed(RouteServices.OTHERDETAILSCREEN, arguments: [
                     scriptureList[index].id,
                     scriptureList[index].title,
                     scriptureList[index].verse,
                     scriptureList[index].date,
                     data[0],
-                    data[1]
+                    data[1],
+                    "Prayers for Lifestyle"
                   ]);
                 },
                 child: Row(

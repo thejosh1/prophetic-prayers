@@ -5,7 +5,6 @@ import 'package:prophetic_prayers/models/discipline.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
-import '../prayer_detail_screens/prayer_detail_screen.dart';
 
 class DisciplineScreen extends StatefulWidget {
   const DisciplineScreen({Key? key}) : super(key: key);
@@ -107,7 +106,8 @@ class _DisciplineScreenState extends State<DisciplineScreen> {
                     scriptureList[index].verse,
                     scriptureList[index].date,
                     data[0],
-                    data[1]
+                    data[1],
+                    "Prayers for Discipline"
                   ]);
                 },
                 child: Row(

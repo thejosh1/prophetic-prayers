@@ -107,7 +107,8 @@ class _CareerScreenState extends State<CareerScreen> {
                     scriptureList[index].verse,
                     scriptureList[index].date,
                     data[0],
-                    data[1]
+                    data[1],
+                    "Prayers for Career"
                   ]);
                 },
                 child: Row(

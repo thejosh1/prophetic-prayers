@@ -107,7 +107,8 @@ class _AcademyScreenState extends State<AcademyScreen> {
                     scriptureList[index].verse,
                     scriptureList[index].date,
                     data[0],
-                    data[1]
+                    data[1],
+                    "Prayers For Academics"
                   ]);
                 },
                 child: Row(

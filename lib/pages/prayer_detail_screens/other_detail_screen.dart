@@ -114,7 +114,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                                     SizedBox(width: Dimensions.Width6-1,),
                                     Text(
                                       //prayer id
-                                      data[0],
+                                      "Day ${data[0]}",
                                       style: TextStyle(
                                           fontSize: Dimensions.Width14,
                                           fontWeight: FontWeight.bold,
@@ -132,7 +132,7 @@ class _OtherDetailScreenState extends State<OtherDetailScreen> {
                             SizedBox(
                               height: Dimensions.Height7,
                             ),
-                            Text("Prayers For Today", style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
+                            Text(data[6], style: TextStyle(fontSize: Dimensions.Width16, fontWeight: FontWeight.w600),),
                             Text(
                               //title
                               data[1],

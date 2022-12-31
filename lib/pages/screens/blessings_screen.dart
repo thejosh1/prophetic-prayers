@@ -107,7 +107,8 @@ class _BlessingsScreenState extends State<BlessingsScreen> {
                     scriptureList[index].verse,
                     scriptureList[index].date,
                     data[0],
-                    data[1]
+                    data[1],
+                    "Prayers for Blessings"
                   ]);
                 },
                 child: Row(

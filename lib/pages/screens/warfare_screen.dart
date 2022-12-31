@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/controller/scripture_controllers/scripture_controller.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/models/marriage.dart';
 import 'package:prophetic_prayers/models/warfare.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
-import '../prayer_detail_screens/prayer_detail_screen.dart';
 
 
 class WarfareScreen extends StatefulWidget {
@@ -109,7 +107,8 @@ class _WarfareScreenState extends State<WarfareScreen> {
                     scriptureList[index].verse,
                     scriptureList[index].date,
                     data[0],
-                    data[1]
+                    data[1],
+                    "Prayers for Warfare"
                   ]);
                 },
                 child: Row(

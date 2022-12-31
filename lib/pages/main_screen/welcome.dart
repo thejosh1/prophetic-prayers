@@ -111,11 +111,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         splashColor: Colors.grey,
                         onTap: () {
                           Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
-                            scriptureList[getTodaysDay()-1].id,
-                            scriptureList[getTodaysDay()-1].prayerPoint,
-                            scriptureList[getTodaysDay()-1].title,
-                            scriptureList[getTodaysDay()-1].verse,
-                            scriptureList[getTodaysDay()-1].date,
+                            scriptureList[getTodaysDay()+1].id,
+                            scriptureList[getTodaysDay()+1].prayerPoint,
+                            scriptureList[getTodaysDay()+1].title,
+                            scriptureList[getTodaysDay()+1].verse,
+                            scriptureList[getTodaysDay()+1].date,
                             currname,
                             images[0],
                             DateFormat.MMMEd().format(DateTime.now())
@@ -128,14 +128,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 margin: EdgeInsets.only(left: Dimensions.Width20),
                                 width: Dimensions.Width150*2,
                                 child: Text(
-                                    scriptureList[getTodaysDay()-1].prayerPoint.toString(),
+                                    scriptureList[getTodaysDay()+1].prayerPoint.toString(),
                                     style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w800, color: const Color(0xFF1E2432))
                                 )
                             ),
                             SizedBox(height: Dimensions.Height20,),
                             Padding(
                               padding: EdgeInsets.only(left: Dimensions.Width20),
-                              child: Text(scriptureList[getTodaysDay()-1].title.toString(),
+                              child: Text(scriptureList[getTodaysDay()+1].title.toString(),
                                 style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w800, color: const Color(0xFF1E2432)),
                               ),
                             ),
@@ -187,16 +187,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                            children: [
                                              InkWell(
                                                onTap: () {
-                                                 Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
-                                                   scriptureList[daysInsWeek[index]].id,
-                                                   scriptureList[daysInsWeek[index]].prayerPoint,
-                                                   scriptureList[daysInsWeek[index]].title,
-                                                   scriptureList[daysInsWeek[index]].verse,
-                                                   scriptureList[daysInsWeek[index]].date,
-                                                   currname,
-                                                   images[0],
-                                                   daysofWeek[index] + ', ' + scriptureList[daysInsWeek[index]].date,
-                                                 ]);
+                                                 if(daysInsWeek[index] > 365) {
+                                                   Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                                     scriptureList[0].id,
+                                                     scriptureList[0].prayerPoint,
+                                                     scriptureList[0].title,
+                                                     scriptureList[0].verse,
+                                                     scriptureList[0].date,
+                                                     currname,
+                                                     images[0],
+                                                     daysofWeek[index] + ', ' + scriptureList[0].date,
+                                                   ]);
+                                                 } else {
+                                                   Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
+                                                     scriptureList[daysInsWeek[index]].id,
+                                                     scriptureList[daysInsWeek[index]].prayerPoint,
+                                                     scriptureList[daysInsWeek[index]].title,
+                                                     scriptureList[daysInsWeek[index]].verse,
+                                                     scriptureList[daysInsWeek[index]].date,
+                                                     currname,
+                                                     images[0],
+                                                     daysofWeek[index] + ', ' + scriptureList[daysInsWeek[index]].date,
+                                                   ]);
+                                                 }
                                                },
                                                child: Container(
                                                   height: Dimensions.Height100-10,
@@ -242,7 +255,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: Dimensions.Width20),
-                          child: Text("Featured Plans", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20-4, color: const Color(0xFF1E2432)),),
+                          child: Text("Prayer Categories", style: TextStyle(fontWeight: FontWeight.bold, fontSize: Dimensions.Width20-4, color: const Color(0xFF1E2432)),),
                         ),
                         SingleChildScrollView(
                           child: Container(
@@ -263,7 +276,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           children: [
                                             GestureDetector(
                                               onTap: (){
-                                                Get.toNamed(RouteServices.PROSPERITYSCRIPTURESCREEN, arguments: [planNames[0], images[1]]);
+                                                Get.toNamed(RouteServices.PROSPERITYSCRIPTURESCREEN,
+                                                    arguments: [planNames[0], images[1]]);
                                                 setState(() {});
                                               },
                                               child: Stack(
@@ -838,7 +852,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   int getTodaysDay() {
     final date = DateTime.now();
     final diff = date.difference(DateTime(date.year, 1, 1, 0, 0));
-    final diffInDays = diff.inDays;
+    int diffInDays = diff.inDays;
     return diffInDays;
   }
   int numOfWeeks(int year) {

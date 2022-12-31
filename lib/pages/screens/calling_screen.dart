@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:prophetic_prayers/controller/scripture_controllers/scripture_controller.dart';
 import 'package:get/get.dart';
-import 'package:prophetic_prayers/models/blessing.dart';
 import 'package:prophetic_prayers/models/calling.dart';
 import 'package:prophetic_prayers/services/route_services.dart';
 import 'package:prophetic_prayers/utils/dimensions.dart';
 
-import '../prayer_detail_screens/prayer_detail_screen.dart';
 
 class CallingScreen extends StatefulWidget {
   const CallingScreen({Key? key}) : super(key: key);
@@ -108,7 +106,8 @@ class _CallingScreenState extends State<CallingScreen> {
                     scriptureList[index].verse,
                     scriptureList[index].date,
                     data[0],
-                    data[1]
+                    data[1],
+                    "Prayers for Calling"
                   ]);
                 },
                 child: Row(
