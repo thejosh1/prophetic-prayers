@@ -65,7 +65,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     Size size = MediaQuery.of(context).size;
     List daysofWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     List images = ["images/money.jfif", "images/school.jfif", "images/group-wild.jpg", "images/priest.jpg", "images/office.jfif", "images/basketball.jpg", "images/famimages2.jfif", "images/summer-seascape.jpg", "images/Cartoon_marriages.jpg", "images/warfare.webp", "images/adrianna-geo.jpg" ];
-    List daysInsWeek = [getTodaysDay()-2, getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4];
+    List daysInsWeek = [getTodaysDay()-1, getTodaysDay(), getTodaysDay()+1, getTodaysDay()+2, getTodaysDay()+3, getTodaysDay()+4];
     List weekimageList = ["images/monday.jpeg", "images/tuesday.jpeg",  "images/wednesday.jpeg", "images/thursday.jpeg", "images/friday.jpeg", "images/saturday.jpeg", "images/sunday.jpeg",];
     String currname = "Children";
     Color _randomColor = Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
@@ -111,11 +111,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         splashColor: Colors.grey,
                         onTap: () {
                           Get.toNamed(RouteServices.PRAYERDETAIL, arguments: [
-                            scriptureList[getTodaysDay()+1].id,
-                            scriptureList[getTodaysDay()+1].prayerPoint,
-                            scriptureList[getTodaysDay()+1].title,
-                            scriptureList[getTodaysDay()+1].verse,
-                            scriptureList[getTodaysDay()+1].date,
+                            scriptureList[getTodaysDay()].id,
+                            scriptureList[getTodaysDay()].prayerPoint,
+                            scriptureList[getTodaysDay()].title,
+                            scriptureList[getTodaysDay()].verse,
+                            scriptureList[getTodaysDay()].date,
                             currname,
                             images[0],
                             DateFormat.MMMEd().format(DateTime.now())
@@ -128,14 +128,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 margin: EdgeInsets.only(left: Dimensions.Width20),
                                 width: Dimensions.Width150*2,
                                 child: Text(
-                                    scriptureList[getTodaysDay()+1].prayerPoint.toString(),
+                                    scriptureList[getTodaysDay()].prayerPoint.toString(),
                                     style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w800, color: const Color(0xFF1E2432))
                                 )
                             ),
                             SizedBox(height: Dimensions.Height20,),
                             Padding(
                               padding: EdgeInsets.only(left: Dimensions.Width20),
-                              child: Text(scriptureList[getTodaysDay()+1].title.toString(),
+                              child: Text(scriptureList[getTodaysDay()].title.toString(),
                                 style: TextStyle(fontSize: Dimensions.Width15+1, fontWeight: FontWeight.w800, color: const Color(0xFF1E2432)),
                               ),
                             ),
